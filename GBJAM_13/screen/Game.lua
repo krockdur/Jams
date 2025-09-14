@@ -1,5 +1,7 @@
 
+local map = require("objects.Map")
 local player = require("objects.Player")
+local wheel = require("objects.Wheel")
 local enemies = require("objects.Enemies")
 local background = require("objects.Background")
 local ui = require("objects.Ui")
@@ -15,8 +17,11 @@ DEBUG_GAME = false
 
 function Game.load()
 
+  map.load()
+
   background.load()
   player.load()
+  wheel.load()
   enemies.load()
   ui.load()
 
@@ -28,6 +33,7 @@ function Game.update(dt)
 
   background.update(dt)
   player.update(dt)
+  wheel.update(dt)
   enemies.update(dt)
   ui.update(dt)
 
@@ -36,10 +42,22 @@ end
 -----------------------------------------------------------------------
 
 function Game.draw()
-  background.draw()
+ -- background.draw()
+  love.graphics.push()
+
+  -- position de la camera
+  love.graphics.translate(-player.x - 8 + (screengame_width /2) , -player.y -8 + (screengame_height / 2))
+  map.draw()
   player.draw()
+
+  -- Si timer out, alors on affiche la roue
+  wheel.draw(player.x + 8 - (screengame_width /2), player.y + 8 - (screengame_height / 2))
+  
+  
+  
   enemies.draw()
   ui.draw()
+  love.graphics.pop()
 end
 
 -----------------------------------------------------------------------
@@ -81,6 +99,8 @@ end
 
 function Game.keypressed(key, scancode, isrepeat)
   player.keypressed(key, scancode, isrepeat)
+  wheel.keypressed(key, scancode, isrepeat)
+  
 end
 
 -----------------------------------------------------------------------

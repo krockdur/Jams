@@ -16,9 +16,8 @@ local screenManager = require('screen.ScreenManager')
 -- meilleur rendu avec du pixel art
 -- love.graphics.setDefaultFilter('nearest')
 
--- camera postion
-camera_x = 0
-camera_y = 0
+test_x = 0
+test_y = 0
 
 local gameIsPaused = false
 
@@ -31,7 +30,6 @@ function love.load()
   love.graphics.setDefaultFilter("nearest", "nearest") -- retire l'effet de flou
 
   canvas = love.graphics.newCanvas(screengame_width, screengame_height)
-  love.window.setMode(screengame_width * screengame_scale, screengame_height * screengame_scale, { fullscreen = false, resizable = false, vsync = true })
 
   love.keyboard.setKeyRepeat(true)
   
@@ -54,12 +52,17 @@ function love.draw()
     love.graphics.setCanvas( )
   
     -- Calcul du facteur de mise à l’échelle
+    local windowWidth, windowHeight = love.graphics.getDimensions()
+    local scale = math.min(windowWidth / screengame_width, windowHeight / screengame_height)
 
+    -- Centrage
+    local offsetX = (windowWidth - screengame_width * scale) / 2
+    local offsetY = (windowHeight - screengame_height * scale) / 2
 
     -- Dessin du canvas mis à l’échelle
     love.graphics.setColor(1, 1, 1)
     
-    love.graphics.draw(canvas, 0, 0, 0, screengame_scale, screengame_scale)
+    love.graphics.draw(canvas, test_x + offsetX, test_y + offsetY, 0, scale, scale)
 end
 
 
