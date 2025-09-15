@@ -111,7 +111,8 @@ function Player.update(dt)
  
 
   -- debug
-  if (Player.x ~= old_player_x or Player.y ~= old_player_y) then
+  local debug = false
+  if ((Player.x ~= old_player_x or Player.y ~= old_player_y) and debug == true) then
     print("Move : X" .. Player.x .. "        Y" .. Player.y)
     print("top_left : I" .. tostring(Player.corner.top_left.i) .. "     J" .. tostring(Player.corner.top_left.j))
     print("bot_left : I" .. tostring(Player.corner.bot_left.i) .. "     J" .. tostring(Player.corner.bot_left.j))

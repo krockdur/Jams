@@ -9,16 +9,28 @@ function Wheel.load()
 
     wheel_sprite = love.graphics.newImage("assets/wheel.png")
 
-    Wheel.is_running = true
+    Wheel.is_running = false
 
 end
 
-local a = 0
+local arrow_angle = 0
+local arrow_x1 = 108
+local arrow_y1 = 76
+local arrow_x2 = 2
+local arrow_y2 = 2
+local arrow_length = 25
+local arrow_speed = 15
+
 function Wheel.update(dt)
 
     if (Wheel.is_running) then
         
-        a = a + 1
+        -- Calcul du deuxième point en fonction de l'angle
+        arrow_x2 = arrow_x1 + math.cos(arrow_angle) * arrow_length
+        arrow_y2 = arrow_y1 + math.sin(arrow_angle) * arrow_length
+
+        arrow_angle = arrow_angle + arrow_speed * dt
+        if arrow_angle >= 2 * math.pi then arrow_angle = 0 end
 
     end
 
@@ -26,15 +38,63 @@ end
 
 function Wheel.draw(top_left_x, top_left_y)
 
-    love.graphics.draw(wheel_sprite, top_left_x, top_left_y)
+    if (Wheel.is_running) then
+        love.graphics.push()
 
+        love.graphics.origin()
+        love.graphics.draw(wheel_sprite, 0, 0)
+        
+        love.graphics.setColor(1, 0, 0)
+        love.graphics.line(arrow_x1, arrow_y1, arrow_x2, arrow_y2)
+
+        love.graphics.setColor(1, 1, 1)
+
+        love.graphics.pop()
+    end
 end
 
+function Wheel.get_bonus(angle)
+    print("------")
+    print ("angle : " .. angle)
+
+    if ( (angle >= 0) and (angle < math.pi / 4) ) then
+        print("F+")
+    end
+
+    if ( (angle >=  math.pi / 4) and (angle < math.pi / 2) ) then
+        print("S-")
+    end
+
+    if ( (angle >=  math.pi / 2) and (angle < 3 * math.pi / 4) ) then
+        print("Verti")
+    end
+
+    if ( (angle >= 3 * math.pi / 4) and (angle < math.pi)) then
+        print("T-")
+    end
+
+    if ( (angle >= math.pi) and (angle < 5 * math.pi / 4)) then
+        print("F-")
+    end
+
+    if ( (angle >= 5 * math.pi / 4) and (angle < 3 * math.pi / 2)) then
+        print("S+")
+    end
+
+    if ( (angle >= 3 * math.pi / 2) and (angle < 7 * math.pi / 4)) then
+        print("Hori")
+    end
+
+    if ( (angle >= 7 * math.pi / 4) and (angle < 2*math.pi)) then
+        print("T+")
+    end
+end
 
 function Wheel.keypressed(key, scancode, isrepeat)
 
-    if (key == "a") then
-
+    if (key == "v" and wheel.is_running) then
+        Wheel.is_running = false
+        Wheel.get_bonus(arrow_angle)
     end
 
 end

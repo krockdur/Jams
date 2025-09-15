@@ -12,10 +12,12 @@ DEBUG_GAME = false
 
 
 
-
+local top_time
 -----------------------------------------------------------------------
 
 function Game.load()
+
+  top_time = love.timer.getTime()
 
   map.load()
 
@@ -28,8 +30,25 @@ function Game.load()
 end
 
 -----------------------------------------------------------------------
-
+local show_wheel = false
+local start_wheel_time
+local reset_wheel_time_count = false
 function Game.update(dt)
+
+  local current_time = love.timer.getTime()
+
+  if (reset_wheel_time_count) then
+    top_time = current_time
+    reset_wheel_time_count = false
+  end
+
+  if ((current_time - top_time >= 1) and (wheel.is_running == false)) then
+    show_wheel = true
+
+    wheel.is_running = true
+
+    reset_wheel_time_count = true
+  end
 
   background.update(dt)
   player.update(dt)
