@@ -4,6 +4,7 @@ local Wheel = {}
 local wheel_sprite
 
 Wheel.is_running = false
+Wheel.is_bonus_select = false
 
 function Wheel.load()
 
@@ -18,9 +19,12 @@ local arrow_x1 = 108
 local arrow_y1 = 76
 local arrow_x2 = 2
 local arrow_y2 = 2
+local arrow_win_x2 = 2
+local arrow_win_y2 = 2
 local arrow_length = 25
 local arrow_speed = 15
 
+local top_show_result_timer = 0
 function Wheel.update(dt)
 
     if (Wheel.is_running) then
@@ -34,6 +38,16 @@ function Wheel.update(dt)
 
     end
 
+    local current_time = love.timer.getTime()
+    if (Wheel.show_result) then
+        arrow_win_x2 = arrow_x2
+        arrow_win_y2 = arrow_y2
+        top_show_result_timer = love.timer.getTime()
+    end
+
+    if (Wheel.show_result) and (current_time - top_show_result_timer > 2) then
+        Wheel.show_result = false
+    end
 end
 
 function Wheel.draw(top_left_x, top_left_y)
@@ -51,9 +65,25 @@ function Wheel.draw(top_left_x, top_left_y)
 
         love.graphics.pop()
     end
+
+    if (Wheel.show_result) then
+        love.graphics.push()
+
+        love.graphics.origin()
+        love.graphics.draw(wheel_sprite, 0, 0)
+        
+        love.graphics.setColor(1, 0, 0)
+        love.graphics.line(arrow_x1, arrow_y1, arrow_win_x2, arrow_win_y2)
+
+        love.graphics.setColor(1, 1, 1)
+
+        love.graphics.pop()
+    end
+
+
 end
 
-function Wheel.get_bonus(angle)
+function Wheel.set_bonus(angle)
     print("------")
     print ("angle : " .. angle)
 
@@ -92,12 +122,18 @@ end
 
 function Wheel.keypressed(key, scancode, isrepeat)
 
-    if (key == "v" and wheel.is_running) then
+    if (key == "v" and Wheel.is_running) then
         Wheel.is_running = false
-        Wheel.get_bonus(arrow_angle)
+        Wheel.is_bonus_select = true
+        Wheel.set_bonus(arrow_angle)
+
+        Wheel.show_result = true
+
     end
 
 end
+
+
 
 
 return Wheel
