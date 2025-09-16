@@ -3,6 +3,20 @@ local Player = {}
 
 local sprite_cat_001
 
+local sprite_idle_left
+local sprite_idle_right
+local sprite_run_left_1
+local sprite_run_left_2
+local sprite_run_right_1
+local sprite_run_right_2
+
+local anim_idle_left = false
+local anim_idle_right = false
+local anim_run_left = false
+local anim_run_right = false
+local anim_run_up = false
+local anim_run_down = false
+
 Player.x = 472
 Player.y = 344
 Player.speed = 1
@@ -67,38 +81,130 @@ end
 
 function Player.load()
   sprite_cat_001 = love.graphics.newImage("assets/cat_001.png")
+
+  sprite_idle_left = love.graphics.newImage("assets/cat_left_idle.png")
+  sprite_idle_right = love.graphics.newImage("assets/cat_right_idle.png")
+  sprite_run_left_1 = love.graphics.newImage("assets/cat_left_run_1.png")
+  sprite_run_left_2 = love.graphics.newImage("assets/cat_left_run_2.png")
+  sprite_run_right_1 = love.graphics.newImage("assets/cat_right_run_1.png")
+  sprite_run_right_2 = love.graphics.newImage("assets/cat_right_run_2.png")
+
   update_corner_coord()
 end
 
 
-
-
 ---------------------------------------------------
-
+local animated_frame_to_show = 0
 function Player.draw()
 
-  love.graphics.draw(sprite_cat_001, Player.x, Player.y)
+  --love.graphics.draw(sprite_cat_001, Player.x, Player.y)
+
+  if anim_idle_left then
+    love.graphics.draw(sprite_idle_left, Player.x, Player.y)
+  end
+  if anim_idle_right then
+    love.graphics.draw(sprite_idle_right, Player.x, Player.y)
+  end
+  if anim_run_left then
+    if animated_frame_to_show == 1 then
+      love.graphics.draw(sprite_run_left_1, Player.x, Player.y)
+    end
+    if animated_frame_to_show == 2 then
+      love.graphics.draw(sprite_run_left_2, Player.x, Player.y)
+    end
+  end
+
+  if anim_run_right then
+    if animated_frame_to_show == 1 then
+      love.graphics.draw(sprite_run_right_1, Player.x, Player.y)
+    end
+    if animated_frame_to_show == 2 then
+      love.graphics.draw(sprite_run_right_2, Player.x, Player.y)
+    end
+  end
+
 
 end
 
 ---------------------------------------------------
+local timer_animation_cat = 0
+local delay_between_2_frame = 0.15
+function Player.animate_cat(dt)
+
+  timer_animation_cat = timer_animation_cat + dt
+
+  if timer_animation_cat >= 0 and timer_animation_cat < delay_between_2_frame then
+    animated_frame_to_show = 1
+  end
+  if timer_animation_cat >= delay_between_2_frame and timer_animation_cat < 2 * delay_between_2_frame then
+    animated_frame_to_show = 2
+  end
+  if timer_animation_cat >= 2 * delay_between_2_frame then
+    timer_animation_cat = 0
+  end
+
+end
+
 
 function Player.update(dt)
 
   local direction_x = 0
   local direction_y = 0
+  local direction_animation = ""
   if love.keyboard.isDown("z") or love.keyboard.isDown("w") then --UP
     direction_y = -1
+
+    anim_idle_left = false
+    anim_idle_right = false
+    anim_run_left = false
+    anim_run_right = false
+    anim_run_up = false
+    anim_run_down = false
+
   end
   if love.keyboard.isDown("q") or love.keyboard.isDown("a") then -- LEFT
     direction_x = -1
+
+    anim_idle_left = false
+    anim_idle_right = false
+    anim_run_left = true
+    anim_run_right = false
+    anim_run_up = false
+    anim_run_down = false
+
   end
   if love.keyboard.isDown("s") then -- DOWN
     direction_y = 1
+
+    anim_idle_left = false
+    anim_idle_right = false
+    anim_run_left = false
+    anim_run_right = false
+    anim_run_up = false
+    anim_run_down = false
+
   end
   if love.keyboard.isDown("d") then -- RIGHT
     direction_x = 1
+
+    anim_idle_left = false
+    anim_idle_right = false
+    anim_run_left = false
+    anim_run_right = true
+    anim_run_up = false
+    anim_run_down = false
+
   end
+
+  if direction_x == 0 and direction_y == 0 then
+    anim_idle_left = false
+    anim_idle_right = true
+    anim_run_left = false
+    anim_run_right = false
+    anim_run_up = false
+    anim_run_down = false
+  end
+
 
   local old_player_x = Player.x
   local old_player_y = Player.y
@@ -108,7 +214,7 @@ function Player.update(dt)
 
   update_corner_coord()
 
- 
+  Player.animate_cat(dt)
 
   -- debug
   local debug = false
