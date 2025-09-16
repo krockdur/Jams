@@ -15,8 +15,8 @@ function Wheel.load()
 end
 
 local arrow_angle = 0
-local arrow_x1 = 108
-local arrow_y1 = 76
+local arrow_x1 = 79
+local arrow_y1 = 81
 local arrow_x2 = 2
 local arrow_y2 = 2
 local arrow_win_x2 = 2
@@ -25,6 +25,8 @@ local arrow_length = 25
 local arrow_speed = 15
 
 local top_show_result_timer = 0
+
+local timer_show_result_started = false
 function Wheel.update(dt)
 
     if (Wheel.is_running) then
@@ -39,10 +41,12 @@ function Wheel.update(dt)
     end
 
     local current_time = love.timer.getTime()
-    if (Wheel.show_result) then
+    if (timer_show_result_started) then
         arrow_win_x2 = arrow_x2
         arrow_win_y2 = arrow_y2
         top_show_result_timer = love.timer.getTime()
+        timer_show_result_started = false
+
     end
 
     if (Wheel.show_result) and (current_time - top_show_result_timer > 2) then
@@ -128,6 +132,7 @@ function Wheel.keypressed(key, scancode, isrepeat)
         Wheel.set_bonus(arrow_angle)
 
         Wheel.show_result = true
+            timer_show_result_started = true
 
     end
 
