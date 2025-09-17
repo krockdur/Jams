@@ -9,6 +9,11 @@ local sprite_run_left_1
 local sprite_run_left_2
 local sprite_run_right_1
 local sprite_run_right_2
+local sprite_run_top_1
+local sprite_run_top_2
+local sprite_run_down_1
+local sprite_run_down_2
+
 
 local anim_idle_left = false
 local anim_idle_right = false
@@ -20,6 +25,12 @@ local anim_run_down = false
 Player.x = 472
 Player.y = 344
 Player.speed = 1
+
+Player.tab_bullets = {}
+Player.interval_shoot = 0.1 --0.5 secondes
+Player.speed_shoot = 300
+Player.target_direction = "right" --
+Player.fire_length = 50
 
 Player.corner = {}
 Player.corner.top_left = {}
@@ -45,6 +56,24 @@ Player.corner.bot_right.x = 0
 Player.corner.bot_right.y = 0
 Player.corner.bot_right.i = 0
 Player.corner.bot_right.j = 0
+
+---------------------------------------------------
+
+function Player.shoot()
+
+  table.insert(Player.tab_bullets, {
+
+      --x = Player.x+Player.sprite_bullet_w/2,
+      x = Player.x + PLAYER_SIZE / 2,
+      y = Player.y + PLAYER_SIZE / 2,
+      speed = Player.speed_shoot,
+      d = Player.target_direction,
+      x_start = Player.x + PLAYER_SIZE / 2,
+      y_start = Player.y + PLAYER_SIZE / 2
+
+    })
+
+end
 
 ---------------------------------------------------
 
@@ -88,6 +117,10 @@ function Player.load()
   sprite_run_left_2 = love.graphics.newImage("assets/cat_left_run_2.png")
   sprite_run_right_1 = love.graphics.newImage("assets/cat_right_run_1.png")
   sprite_run_right_2 = love.graphics.newImage("assets/cat_right_run_2.png")
+  sprite_run_up_1 = love.graphics.newImage("assets/cat_up_run_1.png")
+  sprite_run_up_2 = love.graphics.newImage("assets/cat_up_run_2.png")
+  sprite_run_down_1 = love.graphics.newImage("assets/cat_down_run_1.png")
+  sprite_run_down_2 = love.graphics.newImage("assets/cat_down_run_2.png")
 
   update_corner_coord()
 end
@@ -102,9 +135,11 @@ function Player.draw()
   if anim_idle_left then
     love.graphics.draw(sprite_idle_left, Player.x, Player.y)
   end
+
   if anim_idle_right then
     love.graphics.draw(sprite_idle_right, Player.x, Player.y)
   end
+
   if anim_run_left then
     if animated_frame_to_show == 1 then
       love.graphics.draw(sprite_run_left_1, Player.x, Player.y)
@@ -123,6 +158,30 @@ function Player.draw()
     end
   end
 
+  if anim_run_down then
+    if animated_frame_to_show == 1 then
+      love.graphics.draw(sprite_run_down_1, Player.x, Player.y)
+    end
+    if animated_frame_to_show == 2 then
+      love.graphics.draw(sprite_run_down_2, Player.x, Player.y)
+    end
+  end
+
+  if anim_run_up then
+    if animated_frame_to_show == 1 then
+      love.graphics.draw(sprite_run_up_1, Player.x, Player.y)
+    end
+    if animated_frame_to_show == 2 then
+      love.graphics.draw(sprite_run_up_2, Player.x, Player.y)
+    end
+  end
+
+  for i,b in pairs(Player.tab_bullets) do
+    -- love.graphics.draw(sprite_bullet_1, b.x, b.y, b.a, 1, 1, sprite_bullet_1:getWidth()/2, sprite_bullet_1:getHeight()/2)
+    love.graphics.setColor(love.math.colorFromBytes(8, 24, 32))
+    love.graphics.rectangle("fill", b.x, b.y, 2, 2)
+    love.graphics.setColor(1, 1, 1)
+  end
 
 end
 
@@ -145,25 +204,31 @@ function Player.animate_cat(dt)
 
 end
 
+---------------------------------------------------
 
+local timerShooter = 0
 function Player.update(dt)
 
   local direction_x = 0
   local direction_y = 0
   local direction_animation = ""
-  if love.keyboard.isDown("z") or love.keyboard.isDown("w") then --UP
+  if love.keyboard.isDown("up") then
     direction_y = -1
+
+    Player.target_direction = "up"
 
     anim_idle_left = false
     anim_idle_right = false
     anim_run_left = false
     anim_run_right = false
-    anim_run_up = false
+    anim_run_up = true
     anim_run_down = false
 
   end
-  if love.keyboard.isDown("q") or love.keyboard.isDown("a") then -- LEFT
+  if love.keyboard.isDown("left") then
     direction_x = -1
+
+    Player.target_direction = "left"
 
     anim_idle_left = false
     anim_idle_right = false
@@ -173,19 +238,23 @@ function Player.update(dt)
     anim_run_down = false
 
   end
-  if love.keyboard.isDown("s") then -- DOWN
+  if love.keyboard.isDown("down") then -- DOWN
     direction_y = 1
+
+    Player.target_direction = "down"
 
     anim_idle_left = false
     anim_idle_right = false
     anim_run_left = false
     anim_run_right = false
     anim_run_up = false
-    anim_run_down = false
+    anim_run_down = true
 
   end
-  if love.keyboard.isDown("d") then -- RIGHT
+  if love.keyboard.isDown("right") then -- RIGHT
     direction_x = 1
+
+    Player.target_direction = "right"
 
     anim_idle_left = false
     anim_idle_right = false
@@ -197,6 +266,8 @@ function Player.update(dt)
   end
 
   if direction_x == 0 and direction_y == 0 then
+    --Player.target_direction = "none"
+
     anim_idle_left = false
     anim_idle_right = true
     anim_run_left = false
@@ -205,6 +276,42 @@ function Player.update(dt)
     anim_run_down = false
   end
 
+  if love.keyboard.isDown("z") or love.keyboard.isDown("w") then
+    timerShooter = timerShooter + dt
+    if timerShooter >= Player.interval_shoot then
+      Player.shoot()
+      timerShooter = 0
+    end
+
+  end
+
+    -- bullets
+  for i,b in pairs(Player.tab_bullets) do
+
+    -- si la bullet va trop loin
+    local fire_length = 100
+    if  b.x > b.x_start + Player.fire_length or 
+        b.x < b.x_start - Player.fire_length or
+        b.y > b.y_start + Player.fire_length or
+        b.y < b.y_start - Player.fire_length then
+      table.remove(Player.tab_bullets, i)
+    end
+    
+
+    if b.d == "left" then
+        b.x = b.x - b.speed * dt
+    end
+    if b.d == "right" then
+        b.x = b.x + b.speed * dt
+    end
+    if b.d == "up" then
+        b.y = b.y - b.speed * dt
+    end
+    if b.d == "down" then
+        b.y = b.y + b.speed * dt
+    end
+
+  end
 
   local old_player_x = Player.x
   local old_player_y = Player.y

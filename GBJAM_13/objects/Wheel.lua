@@ -126,7 +126,7 @@ end
 
 function Wheel.keypressed(key, scancode, isrepeat)
 
-    if (key == "v" and Wheel.is_running) then
+    if (key == "a" or key == "q" and Wheel.is_running) then
         Wheel.is_running = false
         Wheel.is_bonus_select = true
         Wheel.set_bonus(arrow_angle)
