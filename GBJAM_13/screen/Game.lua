@@ -10,7 +10,8 @@ local Game = {}
 
 DEBUG_GAME = false
 
-
+Game.enemies = {}
+Game.enemies.number = 12
 
 local top_time
 local reset_wheel_time_count = false
@@ -32,16 +33,20 @@ function Game.load()
 end
 
 -----------------------------------------------------------------------
-function pop_enemy()
 
+function pop_enemy()
+  table.insert(
+    Game.enemies,
+    {
+      
+    }
+  )
 end
 -----------------------------------------------------------------------
 
 function Game.update(dt)
 
   local current_time = love.timer.getTime()
-
-
 
   if ((current_time - top_time >= timer_pop_wheel) and (wheel.is_running == false) and wheel.is_bonus_select == false) then
     wheel.is_running = true
