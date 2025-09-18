@@ -1,6 +1,7 @@
 local Map = {}
 
 tab_map = {}
+tab_events = {}
 
 local function splitCsvLine(line)
 	local values = {}
@@ -23,6 +24,7 @@ end
 
 function Map.load()
     tab_map = loadCsvFile("map.csv")
+    tab_events = loadCsvFile("events.csv")
 end
 
 function Map.draw()

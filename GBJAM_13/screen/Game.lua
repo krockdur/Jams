@@ -10,8 +10,9 @@ local Game = {}
 
 DEBUG_GAME = false
 
-Game.enemies = {}
-Game.enemies.number = 12
+
+Game.enemies={}
+
 
 local top_time
 local reset_wheel_time_count = false
@@ -33,14 +34,50 @@ function Game.load()
 end
 
 -----------------------------------------------------------------------
-
-function pop_enemy()
+function create_an_enemy(case_i, case_j)
   table.insert(
     Game.enemies,
     {
-      
+      c_i = case_i,      -- index de la case - absisse
+      c_j = case_j,      -- index de la case - ordonnée
+      lvl = 1,         -- niveau du mob
+      pv = 10,         -- pv du mob
+      x = (case_i * TILE_SIZE) - TILE_SIZE / 2,  -- centre
+      y = (case_j * TILE_SIZE) - TILE_SIZE / 2   -- centre
     }
   )
+
+end
+
+function pop_and_up_enemies()
+
+  for j = 1, NB_MAP_TILES_Y do
+    for i = 1, NB_MAP_TILES_X do
+        if tab_events[j][i] == 5 then
+          
+          local enemy_already_exist = false
+
+          if #Game.enemies > 0 then
+            for index, mob in pairs(Game.enemies) do
+              if mob.c_j == j and mob.c_i == i then
+                enemy_already_exist = true
+                
+                mob.lvl = mob.lvl + 1
+                mob.pv = mob.pv + 2
+
+              end
+            end
+          end
+          if enemy_already_exist == false then
+            -- Création du mob
+            create_an_enemy(i, j)
+          end
+
+        end
+    end
+  end
+
+
 end
 -----------------------------------------------------------------------
 
@@ -50,6 +87,9 @@ function Game.update(dt)
 
   if ((current_time - top_time >= timer_pop_wheel) and (wheel.is_running == false) and wheel.is_bonus_select == false) then
     wheel.is_running = true
+
+    pop_and_up_enemies()
+
   end
   
   if wheel.is_bonus_select then
@@ -79,9 +119,15 @@ function Game.draw()
   -- Si timer out, alors on affiche la roue
   wheel.draw(player.x + 8 - (screengame_width /2), player.y + 8 - (screengame_height / 2))
   
-  
-  
-  enemies.draw()
+  -- enemies.draw()
+  -- déssiner les enemies
+  if #Game.enemies > 0 then
+    for i,e in pairs(Game.enemies) do
+      love.graphics.setColor(1 , 0 , 0)
+      love.graphics.rectangle("fill", e.x, e.y, 3, 3)
+      love.graphics.setColor(1 , 1 , 1)
+    end
+  end
   ui.draw()
   love.graphics.pop()
 end
