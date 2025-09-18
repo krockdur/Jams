@@ -17,6 +17,7 @@ NB_MAP_TILES_X = 199
 NB_MAP_TILES_Y = 199
 TILE_SIZE = 64
 PLAYER_SIZE = 16
+ENEMIES_SIZE = 16
 
 function love.conf(t)
   
