@@ -88,6 +88,9 @@ function Enemies.draw()
 
     for i,e in pairs(Enemies.list) do
 
+      love.graphics.setColor(1, 0, 0)
+      love.graphics.rectangle()
+
       love.graphics.setColor(1 , 1 , 1)
       
       love.graphics.draw(

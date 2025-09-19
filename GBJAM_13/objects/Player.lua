@@ -179,7 +179,7 @@ function Player.draw()
   for i,b in pairs(Player.tab_bullets) do
     -- love.graphics.draw(sprite_bullet_1, b.x, b.y, b.a, 1, 1, sprite_bullet_1:getWidth()/2, sprite_bullet_1:getHeight()/2)
     love.graphics.setColor(love.math.colorFromBytes(8, 24, 32))
-    love.graphics.rectangle("fill", b.x, b.y, 2, 2)
+    love.graphics.rectangle("fill", b.x, b.y, BULLET_SIZE, BULLET_SIZE)
     love.graphics.setColor(1, 1, 1)
   end
 

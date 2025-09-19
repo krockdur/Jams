@@ -30,7 +30,68 @@ function Game.load()
 end
 
 -----------------------------------------------------------------------
+local function check_collision(r1, r2)
 
+  -- enemies rectangle
+  local p0x = r1.x
+  local p0y = r1.y + ENEMIES_SIZE
+  local p1x = r1.x + ENEMIES_SIZE
+  local p1y = r1.y
+
+  -- bullet rectangle
+  local p2x = r2.x
+  local p2y = r2.y + BULLET_SIZE
+  local p3x = r2.x + BULLET_SIZE
+  local p3y = r2.y
+
+  if
+  p2x > p1x or
+  p3x < p0x or
+  p2y < p1y or
+  p3y > p0y  then
+    return false
+  else
+    return true
+  end
+
+end
+
+-----------------------------------------------------------------------
+
+function Game.update_collision(dt)
+    -- check collision
+
+    if #enemies.list ~= 0 and #player.tab_bullets ~= 0 then
+      for j, e in pairs(enemies.list) do
+        for i, b in pairs(player.tab_bullets) do
+  
+          if check_collision(enemies.list[j], player.tab_bullets[i]) then
+            e.pv = e.pv - 1
+            
+            --sound_touch_1:stop()
+            --sound_touch_1:play()
+  
+            -- animation si énnemie touché
+            -- Game.add_anim_explosion(e.x, e.y)
+  
+            if e.pv <= 0 then
+
+              --Game.calculate_score(e.points)
+
+              table.remove(enemies.list, j)
+              
+            end
+            table.remove(player.tab_bullets, i)
+            break
+          end
+  
+        end
+  
+      end
+  
+    end
+end
+-----------------------------------------------------------------------
 -----------------------------------------------------------------------
 
 function Game.update(dt)
@@ -50,6 +111,8 @@ function Game.update(dt)
     wheel.is_bonus_select = false
   end
 
+  Game.update_collision(dt)
+
   background.update(dt)
   player.update(dt)
   wheel.update(dt)
@@ -57,6 +120,8 @@ function Game.update(dt)
   ui.update(dt)
 
 end
+
+
 
 -----------------------------------------------------------------------
 
@@ -80,36 +145,7 @@ end
 
 -----------------------------------------------------------------------
 
-local function check_collision(r1, r2)
 
-  -- enemies rectangle
-  local p0x = r1.x
-  local p0y = r1.y + 64
-  local p1x = r1.x + 64
-  local p1y = r1.y
-
-  -- bullet rectangle
-  local p2x = r2.x
-  local p2y = r2.y + player.sprite_bullet_h
-  local p3x = r2.x + player.sprite_bullet_w
-  local p3y = r2.y
-
-  if
-  p2x > p1x or
-  p3x < p0x or
-  p2y < p1y or
-  p3y > p0y  then
-    return false
-  else
-    return true
-  end
-
-end
-
------------------------------------------------------------------------
-
-
------------------------------------------------------------------------
 
 
 
