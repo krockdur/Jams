@@ -102,7 +102,7 @@ function Enemies.draw()
         e.scale,
         ENEMIES_SIZE / 2,
         ENEMIES_SIZE / 2
-    )
+      )
     
     end
   end

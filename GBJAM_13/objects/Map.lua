@@ -4,23 +4,22 @@ tab_map = {}
 tab_events = {}
 
 local function splitCsvLine(line)
-	local values = {}
+    local values = {}
 
-	for value in line:gmatch("([^;]*)") do
+    for value in line:gmatch("([^;]*)") do
         table.insert(values, tonumber(value))
-	end
+    end
 
-	return values
+    return values
 end
 
 local function loadCsvFile(filename)
-	local csv = {}
-	for line in love.filesystem.lines(filename) do
-		table.insert(csv, splitCsvLine(line))
-	end
-	return csv
+    local csv = {}
+    for line in love.filesystem.lines(filename) do
+        table.insert(csv, splitCsvLine(line))
+    end
+    return csv
 end
-
 
 function Map.load()
     tab_map = loadCsvFile("map.csv")
@@ -28,7 +27,6 @@ function Map.load()
 end
 
 function Map.draw()
-
     for j = 1, NB_MAP_TILES_Y do
         for i = 1, NB_MAP_TILES_X do
             if tab_map[j][i] == 0 then
@@ -43,14 +41,13 @@ function Map.draw()
             if tab_map[j][i] == 3 then
                 love.graphics.setColor(love.math.colorFromBytes(136, 192, 112))
             end
-            love.graphics.rectangle("fill", (i * TILE_SIZE) - TILE_SIZE, (j * TILE_SIZE) - TILE_SIZE, TILE_SIZE, TILE_SIZE)
+            love.graphics.rectangle("fill", (i * TILE_SIZE) - TILE_SIZE,
+                (j * TILE_SIZE) - TILE_SIZE, TILE_SIZE,
+                TILE_SIZE)
         end
     end
 
     love.graphics.setColor(1, 1, 1)
-
 end
-
-
 
 return Map

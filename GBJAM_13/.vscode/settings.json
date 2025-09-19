@@ -1,0 +1,7 @@
+{
+    "Lua.diagnostics.globals": [
+        "tab_map",
+        "tab_events",
+        "love"
+    ]
+}
