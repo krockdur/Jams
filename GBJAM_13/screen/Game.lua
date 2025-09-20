@@ -30,13 +30,13 @@ function Game.load()
 end
 
 -----------------------------------------------------------------------
-local function check_collision(r1, r2)
+function Game.check_collision(r1, r2)
 
   -- enemies rectangle
-  local p0x = r1.x
-  local p0y = r1.y + ENEMIES_SIZE
-  local p1x = r1.x + ENEMIES_SIZE
-  local p1y = r1.y
+  local p0x = (r1.x - ENEMIES_SIZE / 2)
+  local p0y = (r1.y - ENEMIES_SIZE / 2) + ENEMIES_SIZE
+  local p1x = (r1.x - ENEMIES_SIZE / 2) + ENEMIES_SIZE
+  local p1y = (r1.y - ENEMIES_SIZE / 2)
 
   -- bullet rectangle
   local p2x = r2.x
@@ -61,11 +61,12 @@ end
 function Game.update_collision(dt)
     -- check collision
 
+    -- Joueur touche ennemi
     if #enemies.list ~= 0 and #player.tab_bullets ~= 0 then
       for j, e in pairs(enemies.list) do
         for i, b in pairs(player.tab_bullets) do
   
-          if check_collision(enemies.list[j], player.tab_bullets[i]) then
+          if Game.check_collision(enemies.list[j], player.tab_bullets[i]) then
             e.pv = e.pv - 1
             
             --sound_touch_1:stop()
@@ -89,6 +90,15 @@ function Game.update_collision(dt)
   
       end
   
+    end
+
+    -- Ennemies touchent joueur
+    if #enemies.tab_bullets ~= 0 then
+      for i, b in pairs(enemies.tab_bullets) do
+        if Game.check_collision(player, b) then
+          print("Touché") -- todo
+        end
+      end
     end
 end
 -----------------------------------------------------------------------
@@ -134,6 +144,7 @@ function Game.draw()
   map.draw()
   player.draw()
   enemies.draw()
+
 
 
   -- Si timer out, alors on affiche la roue

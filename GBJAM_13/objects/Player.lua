@@ -3,14 +3,27 @@ local Player = {}
 
 local sprite_cat_001
 
-local sprite_idle_left
-local sprite_idle_right
+local sprite_idle_left_1
+local sprite_idle_left_2
+
+local sprite_idle_right_1
+local sprite_idle_right_2
+
+local sprite_idle_top_1
+local sprite_idle_top_2
+
+local sprite_idle_down_1
+local sprite_idle_down_2
+
 local sprite_run_left_1
 local sprite_run_left_2
+
 local sprite_run_right_1
 local sprite_run_right_2
+
 local sprite_run_top_1
 local sprite_run_top_2
+
 local sprite_run_down_1
 local sprite_run_down_2
 
@@ -111,16 +124,31 @@ end
 function Player.load()
   sprite_cat_001 = love.graphics.newImage("assets/cat_001.png")
 
-  sprite_idle_left = love.graphics.newImage("assets/cat_left_idle.png")
-  sprite_idle_right = love.graphics.newImage("assets/cat_right_idle.png")
+  sprite_idle_left_1 = love.graphics.newImage("assets/cat_left_idle_1.png")
+  sprite_idle_left_2 = love.graphics.newImage("assets/cat_left_idle_2.png")
+
+  sprite_idle_right_1 = love.graphics.newImage("assets/cat_right_idle_1.png")
+  sprite_idle_right_2 = love.graphics.newImage("assets/cat_right_idle_2.png")
+
+  sprite_idle_top_1 = love.graphics.newImage("assets/cat_top_idle_1.png")
+  sprite_idle_top_2 = love.graphics.newImage("assets/cat_top_idle_2.png")
+
+  sprite_idle_down_1 = love.graphics.newImage("assets/cat_down_idle_1.png")
+  sprite_idle_down_2 = love.graphics.newImage("assets/cat_down_idle_2.png")
+
   sprite_run_left_1 = love.graphics.newImage("assets/cat_left_run_1.png")
   sprite_run_left_2 = love.graphics.newImage("assets/cat_left_run_2.png")
+
   sprite_run_right_1 = love.graphics.newImage("assets/cat_right_run_1.png")
   sprite_run_right_2 = love.graphics.newImage("assets/cat_right_run_2.png")
+
   sprite_run_up_1 = love.graphics.newImage("assets/cat_up_run_1.png")
   sprite_run_up_2 = love.graphics.newImage("assets/cat_up_run_2.png")
+
   sprite_run_down_1 = love.graphics.newImage("assets/cat_down_run_1.png")
   sprite_run_down_2 = love.graphics.newImage("assets/cat_down_run_2.png")
+
+
 
   update_corner_coord()
 end
@@ -133,11 +161,39 @@ function Player.draw()
   --love.graphics.draw(sprite_cat_001, Player.x, Player.y)
 
   if anim_idle_left then
-    love.graphics.draw(sprite_idle_left, Player.x, Player.y)
+    if animated_frame_to_show == 1 then
+      love.graphics.draw(sprite_idle_left_1, Player.x, Player.y)
+    end
+    if animated_frame_to_show == 2 then
+      love.graphics.draw(sprite_idle_left_2, Player.x, Player.y)
+    end
   end
 
   if anim_idle_right then
-    love.graphics.draw(sprite_idle_right, Player.x, Player.y)
+    if animated_frame_to_show == 1 then
+      love.graphics.draw(sprite_idle_right_1, Player.x, Player.y)
+    end
+    if animated_frame_to_show == 2 then
+      love.graphics.draw(sprite_idle_right_2, Player.x, Player.y)
+    end
+  end
+
+  if anim_idle_down then
+    if animated_frame_to_show == 1 then
+      love.graphics.draw(sprite_idle_down_1, Player.x, Player.y)
+    end
+    if animated_frame_to_show == 2 then
+      love.graphics.draw(sprite_idle_down_2, Player.x, Player.y)
+    end
+  end
+
+  if anim_idle_down then
+    if animated_frame_to_show == 1 then
+      love.graphics.draw(sprite_idle_down_1, Player.x, Player.y)
+    end
+    if animated_frame_to_show == 2 then
+      love.graphics.draw(sprite_idle_down_2, Player.x, Player.y)
+    end
   end
 
   if anim_run_left then
@@ -176,6 +232,11 @@ function Player.draw()
     end
   end
 
+  love.graphics.setColor(1, 0, 0)
+  love.graphics.rectangle("line", Player.x, Player.y, ENEMIES_SIZE, ENEMIES_SIZE)
+  love.graphics.setColor(1, 1, 1)
+
+
   for i,b in pairs(Player.tab_bullets) do
     -- love.graphics.draw(sprite_bullet_1, b.x, b.y, b.a, 1, 1, sprite_bullet_1:getWidth()/2, sprite_bullet_1:getHeight()/2)
     love.graphics.setColor(love.math.colorFromBytes(8, 24, 32))
@@ -212,6 +273,7 @@ function Player.update(dt)
   local direction_x = 0
   local direction_y = 0
   local direction_animation = ""
+
   if love.keyboard.isDown("up") then
     direction_y = -1
 
@@ -225,6 +287,7 @@ function Player.update(dt)
     anim_run_down = false
 
   end
+
   if love.keyboard.isDown("left") then
     direction_x = -1
 
@@ -238,6 +301,7 @@ function Player.update(dt)
     anim_run_down = false
 
   end
+
   if love.keyboard.isDown("down") then -- DOWN
     direction_y = 1
 
@@ -251,6 +315,7 @@ function Player.update(dt)
     anim_run_down = true
 
   end
+
   if love.keyboard.isDown("right") then -- RIGHT
     direction_x = 1
 
@@ -289,7 +354,6 @@ function Player.update(dt)
   for i,b in pairs(Player.tab_bullets) do
 
     -- si la bullet va trop loin
-    local fire_length = 100
     if  b.x > b.x_start + Player.fire_length or 
         b.x < b.x_start - Player.fire_length or
         b.y > b.y_start + Player.fire_length or

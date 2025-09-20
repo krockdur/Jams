@@ -1,6 +1,11 @@
 local Enemies = {}
 Enemies.list = {}
 
+Enemies.tab_bullets = {}
+Enemies.shoot_interval = 0.2 -- en secondes
+Enemies.shoot_speed = 400
+Enemies.fire_length = 60
+
 local sprite_enemies
 
 -- =================================================================== --
@@ -19,7 +24,10 @@ function Enemies.create_an_enemy(case_i, case_j)
           a = 0,
           t = math.random(0.1, 1), -- timer rotation
           ct = 0, -- current timer rotation
-          scale = 1
+          scale = 1,
+          can_fire = true,
+          type_fire = 1,    -- 1=left 2=right 3=left+right
+          move_type = 1     -- 1=rotation 2= top down 3=zig zag
       }
     )
 
@@ -70,26 +78,42 @@ end
 
 function Enemies.update(dt)
     
-    for i, e in pairs(Enemies.list) do
-        e.ct = e.ct + dt
-        if e.ct >= e.t then
-            e.a = e.a - 0.2 --math.pi/2
-            e.ct = 0
-        end
-    end
+  -- Mouvement
+  for i, e in pairs(Enemies.list) do
+      e.ct = e.ct + dt
+      if e.ct >= e.t then
+          e.a = e.a - 0.2 --math.pi/2
+          e.ct = 0
+      end
+  end
+
+  -- tirs
+  Enemies.shoot(dt)
+  Enemies.move_shoots(dt)
+end
+
+-- =================================================================== --
+-- offset - scale - rotation
+function Enemies.draw()
+
+  Enemies.draw_enemies()
+  Enemies.draw_bullets()
 
 end
 
 -- =================================================================== --
 
-function Enemies.draw()
-  -- déssiner les enemies
+function Enemies.draw_enemies()
   if #Enemies.list > 0 then
 
     for i,e in pairs(Enemies.list) do
 
-      love.graphics.setColor(1, 0, 0)
-      love.graphics.rectangle()
+      love.graphics.push()
+      love.graphics.translate(-ENEMIES_SIZE / 2, -ENEMIES_SIZE / 2)
+      love.graphics.setColor(0, 1, 0)
+      love.graphics.rectangle("line", e.x, e.y, ENEMIES_SIZE , ENEMIES_SIZE)
+
+      love.graphics.pop()
 
       love.graphics.setColor(1 , 1 , 1)
       
@@ -105,6 +129,70 @@ function Enemies.draw()
       )
     
     end
+  end
+end
+
+-- =================================================================== --
+
+function Enemies.draw_bullets()
+  
+  for j,b in pairs(Enemies.tab_bullets) do
+    love.graphics.setColor(love.math.colorFromBytes(8, 24, 32))
+    love.graphics.rectangle("fill", b.x, b.y, 5, 5)
+    love.graphics.setColor(love.math.colorFromBytes(136, 192, 112))
+    love.graphics.rectangle("fill", b.x + 1, b.y + 1, 3, 3)
+  end
+end
+
+-- =================================================================== --
+
+-- déplace les tirs énnemies
+function Enemies.move_shoots(dt)
+  -- DEPLACEMENT DES BULLETS
+  for j,b in pairs(Enemies.tab_bullets) do
+
+    -- si la bullet sort de l'écran
+    local fire_length = 150
+    if  b.x > b.x_fire_start + Enemies.fire_length or 
+        b.x < b.x_fire_start - Enemies.fire_length or
+        b.y > b.y_fire_start + Enemies.fire_length or
+        b.y < b.y_fire_start - Enemies.fire_length then
+      table.remove(Enemies.tab_bullets, j)
+    end
+
+    if b.type_fire == 1 then
+      b.x = b.x - Enemies.shoot_speed * dt
+    end
+    if b.type_fire == 2 then
+      b.x = b.x + Enemies.shoot_speed * dt
+    end
+  end
+end
+
+-- =================================================================== --
+
+-- Ajoute les tirs énnemies dans tab_bullets
+local timerShooter = 0
+function Enemies.shoot(dt)
+  timerShooter = timerShooter + dt
+  if timerShooter >= Enemies.shoot_interval then
+    for i, e in pairs(Enemies.list) do
+
+      if e.type_fire ~= 0 then
+        table.insert(Enemies.tab_bullets, {
+
+          x = e.x + ENEMIES_SIZE / 2,
+          y = e.y,
+          speed = Enemies.shoot_speed,
+          x_fire_start = e.x + ENEMIES_SIZE / 2,
+          y_fire_start = e.y,
+          type_fire = e.type_fire
+    
+        })
+
+      end
+    end
+    timerShooter = 0
   end
 end
 

@@ -56,6 +56,7 @@ end
 
 function Wheel.draw(top_left_x, top_left_y)
 
+    love.graphics.setColor(1, 1, 1)
     if (Wheel.is_running) then
         love.graphics.push()
 
