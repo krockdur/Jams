@@ -387,17 +387,6 @@ function Player.update(dt)
 
   Player.animate_cat(dt)
 
-  -- debug
-  local debug = false
-  if ((Player.x ~= old_player_x or Player.y ~= old_player_y) and debug == true) then
-    print("Move : X" .. Player.x .. "        Y" .. Player.y)
-    print("top_left : I" .. tostring(Player.corner.top_left.i) .. "     J" .. tostring(Player.corner.top_left.j))
-    print("bot_left : I" .. tostring(Player.corner.bot_left.i) .. "     J" .. tostring(Player.corner.bot_left.j))
-    print("top_right : I" .. tostring(Player.corner.top_right.i) .. "     J" .. tostring(Player.corner.top_right.j))
-    print("bot_right : I" .. tostring(Player.corner.bot_right.i) .. "     J" .. tostring(Player.corner.bot_right.j))
-    print("===============")
-  end
-
   -- ckeck collisions
 
   if (tab_map[Player.corner.top_left.j][Player.corner.top_left.i] == 1 or tab_map[Player.corner.top_right.j][Player.corner.top_right.i] == 1) then collision_top = true end

@@ -30,13 +30,40 @@ function Game.load()
 end
 
 -----------------------------------------------------------------------
-function Game.check_collision(r1, r2)
+function Game.check_col_Bullet_player_enemy(r1, r2)
 
   -- enemies rectangle
   local p0x = (r1.x - ENEMIES_SIZE / 2)
   local p0y = (r1.y - ENEMIES_SIZE / 2) + ENEMIES_SIZE
   local p1x = (r1.x - ENEMIES_SIZE / 2) + ENEMIES_SIZE
   local p1y = (r1.y - ENEMIES_SIZE / 2)
+
+  -- bullet rectangle
+  local p2x = r2.x
+  local p2y = r2.y + BULLET_SIZE
+  local p3x = r2.x + BULLET_SIZE
+  local p3y = r2.y
+
+  if
+  p2x > p1x or
+  p3x < p0x or
+  p2y < p1y or
+  p3y > p0y  then
+    return false
+  else
+    return true
+  end
+
+end
+
+-----------------------------------------------------------------------
+function Game.check_col_Bullet_enemy_player(r1, r2)
+
+  -- enemies rectangle
+  local p0x = r1.x
+  local p0y = r1.y + ENEMIES_SIZE
+  local p1x = r1.x + ENEMIES_SIZE
+  local p1y = r1.y
 
   -- bullet rectangle
   local p2x = r2.x
@@ -66,7 +93,8 @@ function Game.update_collision(dt)
       for j, e in pairs(enemies.list) do
         for i, b in pairs(player.tab_bullets) do
   
-          if Game.check_collision(enemies.list[j], player.tab_bullets[i]) then
+          --if Game.check_collision(enemies.list[j], player.tab_bullets[i]) then
+          if Game.check_col_Bullet_player_enemy(e, b) then
             e.pv = e.pv - 1
             
             --sound_touch_1:stop()
@@ -95,7 +123,7 @@ function Game.update_collision(dt)
     -- Ennemies touchent joueur
     if #enemies.tab_bullets ~= 0 then
       for i, b in pairs(enemies.tab_bullets) do
-        if Game.check_collision(player, b) then
+        if Game.check_col_Bullet_enemy_player(player, b) then
           print("Touché") -- todo
         end
       end

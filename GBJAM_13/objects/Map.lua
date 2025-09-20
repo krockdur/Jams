@@ -6,7 +6,7 @@ tab_events = {}
 local function splitCsvLine(line)
     local values = {}
 
-    for value in line:gmatch("([^;]*)") do
+    for value in line:gmatch("([^,]*)") do
         table.insert(values, tonumber(value))
     end
 
