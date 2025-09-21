@@ -8,6 +8,8 @@ local ui = require("objects.Ui")
 
 local Game = {}
 
+Game.status = "none"
+
 DEBUG_GAME = false
 
 local top_time
@@ -108,6 +110,7 @@ function Game.update_collision(dt)
               --Game.calculate_score(e.points)
 
               table.remove(enemies.list, j)
+              player.status.time = player.status.time + 5
               
             end
             table.remove(player.tab_bullets, i)
@@ -124,15 +127,46 @@ function Game.update_collision(dt)
     if #enemies.tab_bullets ~= 0 then
       for i, b in pairs(enemies.tab_bullets) do
         if Game.check_col_Bullet_enemy_player(player, b) then
-          print("Touché") -- todo
+          if not wheel.is_running and not wheel.show_result and not player.status.invicible then
+            player.status.pv = player.status.pv - 1
+            player.status.invicible = true
+          end
         end
       end
     end
 end
 -----------------------------------------------------------------------
 -----------------------------------------------------------------------
+local game_time = 1
+local tmp_time = 0
+
+local invicible_timer = 3
+local tmp_time_2 = 0
 
 function Game.update(dt)
+
+  -- lose
+  if player.status.pv <= 0 or player.status.time <= 0 then
+    Game.status = "lose"
+  end
+
+  -- game timer
+  if not wheel.is_running and not wheel.show_result then
+    tmp_time = tmp_time + dt
+    if tmp_time >= game_time then
+      player.status.time = player.status.time - 1
+      tmp_time = 0
+    end
+  end
+
+  -- invicible player timer
+  if player.status.invicible then
+    tmp_time_2 = tmp_time_2 + dt
+    if tmp_time_2 >= invicible_timer then
+      player.status.invicible = false
+      tmp_time_2 = 0
+    end
+  end
 
   local current_time = love.timer.getTime()
 
@@ -150,36 +184,36 @@ function Game.update(dt)
 
     -- récupérer le bonus
     if wheel.bonus_selected == "F+" then
-        Player.status.fire = Player.status.fire + 1
+        player.status.fire = player.status.fire + 0.2
     end
     if wheel.bonus_selected == "S-" then
-      Player.status.speed = Player.status.speed - 1
+      player.status.speed = player.status.speed - 0.2
     end
     if wheel.bonus_selected == "VERTI" then
-      if Player.status.invert_y == true then
-        Player.status.invert_y = false
+      if player.status.invert_y == true then
+        player.status.invert_y = false
       else
-        Player.status.invert_y = true
+        player.status.invert_y = true
       end
     end
     if wheel.bonus_selected == "T-" then
-      Player.status.time = Player.status.time - 5
+      player.status.time = player.status.time - 5
     end
     if wheel.bonus_selected == "F-" then
-      Player.status.fire = Player.status.fire - 1
+      player.status.fire = player.status.fire - 0.2
     end
     if wheel.bonus_selected == "S+" then
-      Player.status.speed = Player.status.speed + 1
+      player.status.speed = player.status.speed + 0.2
     end
     if wheel.bonus_selected == "HORI" then
-      if Player.status.invert_x == true then
-        Player.status.invert_x = false
+      if player.status.invert_x == true then
+        player.status.invert_x = false
       else
-        Player.status.invert_x = true
+        player.status.invert_x = true
       end
     end
     if wheel.bonus_selected == "T+" then
-      Player.status.time = Player.status.time + 5
+      player.status.time = player.status.time + 5
     end
 
 
@@ -191,7 +225,9 @@ function Game.update(dt)
   player.update(dt)
   wheel.update(dt)
   enemies.update(dt)
-  ui.update(dt)
+
+  
+  ui.update(dt, player.status.time, player.status.pv)
 
 end
 
@@ -214,7 +250,7 @@ function Game.draw()
   -- Si timer out, alors on affiche la roue
   wheel.draw(player.x + 8 - (screengame_width /2), player.y + 8 - (screengame_height / 2))
   
-  ui.draw()
+  ui.draw(player.x + 8 - (screengame_width /2), player.y + 8 - (screengame_height / 2))
   love.graphics.pop()
 end
 

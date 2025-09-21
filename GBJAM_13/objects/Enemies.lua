@@ -160,7 +160,11 @@ function Enemies.move_shoots(dt)
     end
 
     if b.type_fire == 1 then
-      b.x = b.x - Enemies.shoot_speed * dt
+      --b.x = b.x - Enemies.shoot_speed * dt
+          
+      b.x = b.x - Enemies.shoot_speed * math.sin(b.fire_angle) * dt
+      b.y = b.y - Enemies.shoot_speed * math.cos(b.fire_angle) * dt
+
     end
     if b.type_fire == 2 then
       b.x = b.x + Enemies.shoot_speed * dt
@@ -181,10 +185,11 @@ function Enemies.shoot(dt)
         table.insert(Enemies.tab_bullets, {
 
           x = e.x + ENEMIES_SIZE / 2,
-          y = e.y,
+          y = e.y + ENEMIES_SIZE / 2,
           speed = Enemies.shoot_speed,
           x_fire_start = e.x + ENEMIES_SIZE / 2,
-          y_fire_start = e.y,
+          y_fire_start = e.y + ENEMIES_SIZE / 2,
+          fire_angle = -e.a,
           type_fire = e.type_fire
     
         })

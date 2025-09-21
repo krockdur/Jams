@@ -13,8 +13,8 @@ end
 screengame_width = 160
 screengame_height = 144
 screengame_scale = 3
-NB_MAP_TILES_X = 199
-NB_MAP_TILES_Y = 199
+NB_MAP_TILES_X = 50 --199
+NB_MAP_TILES_Y = 50 --199
 TILE_SIZE = 64
 PLAYER_SIZE = 16
 ENEMIES_SIZE = 16

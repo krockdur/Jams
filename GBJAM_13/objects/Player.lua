@@ -3,11 +3,12 @@ local Player = {}
 
 Player.status = {
   pv = 10,
-  speed = 10,
-  fire = 10,
-  invert_x = false,
-  invert_y = false,
-  time = 30  
+  speed = 1,       
+  fire = 1,
+  invert_x = false, --
+  invert_y = false, --
+  time = 30,
+  invicible = false  
 }
 
 local sprite_cat_001
@@ -36,6 +37,8 @@ local sprite_run_top_2
 local sprite_run_down_1
 local sprite_run_down_2
 
+local sound_shoot
+
 
 local anim_idle_left = false
 local anim_idle_right = false
@@ -50,7 +53,6 @@ Player.tile_begin_i = 5
 Player.tile_begin_j = 5
 Player.x = Player.tile_begin_i * 64 - TILE_SIZE/2 - PLAYER_SIZE/2
 Player.y = Player.tile_begin_j * 64 - TILE_SIZE/2 - PLAYER_SIZE/2
-Player.speed = 1
 
 Player.tab_bullets = {}
 Player.interval_shoot = 0.1 --0.5 secondes
@@ -174,7 +176,7 @@ function Player.load()
   sprite_run_down_1 = love.graphics.newImage("assets/cat_down_run_1.png")
   sprite_run_down_2 = love.graphics.newImage("assets/cat_down_run_2.png")
 
-
+  sound_shoot = love.audio.newSource("/assets/shoot.wav", "static")
 
   update_corner_coord()
 end
@@ -297,6 +299,10 @@ local timerShooter = 0
 local last_direction = "right"
 function Player.update(dt)
 
+  -- update status
+  Player.fire_length = 50 * Player.status.fire
+  --
+
   local direction_x = 0
   local direction_y = 0
   local direction_animation = ""
@@ -306,11 +312,19 @@ function Player.update(dt)
   if love.keyboard.isDown("up") then
     if not Player.status.invert_y then
       direction_y = -1
+      last_direction = "up"
+      Player.target_direction = "up"
+
+      anim_run_up = true
+      anim_run_down = false
     else
       direction_y = 1
-    end
+      last_direction = "down"
+      Player.target_direction = "down"
 
-    Player.target_direction = "up"
+      anim_run_up = false
+      anim_run_down = true
+    end
 
     anim_idle_left = false
     anim_idle_right = false
@@ -318,28 +332,30 @@ function Player.update(dt)
     anim_idle_down = false
     anim_run_left = false
     anim_run_right = false
-    anim_run_up = true
-    anim_run_down = false
-
-    last_direction = "up"
 
   end
 
   if love.keyboard.isDown("left") then
-    direction_x = -1
-
-    Player.target_direction = "left"
+    if not Player.status.invert_x then
+      direction_x = -1
+      last_direction = "left"
+      Player.target_direction = "left"
+      anim_run_left = true
+      anim_run_right = false
+    else
+      direction_x = 1
+      last_direction = "right"
+      Player.target_direction = "right"
+      anim_run_left = false
+      anim_run_right = true
+    end
 
     anim_idle_left = false
     anim_idle_right = false
     anim_idle_top = false
     anim_idle_down = false
-    anim_run_left = true
-    anim_run_right = false
     anim_run_up = false
     anim_run_down = false
-
-    last_direction = "left"
 
   end
 
@@ -347,11 +363,17 @@ function Player.update(dt)
 
     if not Player.status.invert_y then
       direction_y = 1
+      last_direction = "down"
+      Player.target_direction = "down"
+      anim_run_up = false
+      anim_run_down = true
     else
       direction_y = -1
+      last_direction = "up"
+      Player.target_direction = "up"
+      anim_run_up = true
+      anim_run_down = false
     end
-
-    Player.target_direction = "down"
 
     anim_idle_left = false
     anim_idle_right = false
@@ -359,28 +381,30 @@ function Player.update(dt)
     anim_idle_down = false
     anim_run_left = false
     anim_run_right = false
-    anim_run_up = false
-    anim_run_down = true
-
-    last_direction = "down"
 
   end
 
   if love.keyboard.isDown("right") then -- RIGHT
-    direction_x = 1
-
-    Player.target_direction = "right"
+    if not Player.status.invert_x then
+      direction_x = 1
+      last_direction = "right"
+      Player.target_direction = "right"
+      anim_run_left = false
+      anim_run_right = true
+    else
+      direction_x = -1
+      last_direction = "left"
+      Player.target_direction = "left"
+      anim_run_left = true
+      anim_run_right = false
+    end
 
     anim_idle_left = false
     anim_idle_right = false
     anim_idle_top = false
     anim_idle_down = false
-    anim_run_left = false
-    anim_run_right = true
     anim_run_up = false
     anim_run_down = false
-
-    last_direction = "right"
 
   end
 
@@ -419,9 +443,12 @@ function Player.update(dt)
   end
 
   if love.keyboard.isDown("z") or love.keyboard.isDown("w") then
+
     timerShooter = timerShooter + dt
     if timerShooter >= Player.interval_shoot then
       Player.shoot()
+          sound_shoot:stop()
+    sound_shoot:play()
       timerShooter = 0
     end
 
@@ -457,8 +484,8 @@ function Player.update(dt)
   local old_player_x = Player.x
   local old_player_y = Player.y
 
-  Player.x = (Player.x + (Player.speed * direction_x ))  --% love.graphics.getWidth()
-  Player.y = (Player.y + (Player.speed * direction_y ))   --% love.graphics.getHeight()
+  Player.x = (Player.x + (Player.status.speed * direction_x ))  --% love.graphics.getWidth()
+  Player.y = (Player.y + (Player.status.speed * direction_y ))   --% love.graphics.getHeight()
 
   update_corner_coord()
 

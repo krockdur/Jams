@@ -48,6 +48,10 @@ end
 
 function ScreenManager.update(dt)
 
+  if game.status == "lose" then
+    ScreenManager.screen = "credit"
+  end
+
   if ScreenManager.screen == "menu" then
     menu.update(dt)
   end
