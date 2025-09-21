@@ -147,6 +147,42 @@ function Game.update(dt)
   if wheel.is_bonus_select then
     top_time = current_time
     wheel.is_bonus_select = false
+
+    -- récupérer le bonus
+    if wheel.bonus_selected == "F+" then
+        Player.status.fire = Player.status.fire + 1
+    end
+    if wheel.bonus_selected == "S-" then
+      Player.status.speed = Player.status.speed - 1
+    end
+    if wheel.bonus_selected == "VERTI" then
+      if Player.status.invert_y == true then
+        Player.status.invert_y = false
+      else
+        Player.status.invert_y = true
+      end
+    end
+    if wheel.bonus_selected == "T-" then
+      Player.status.time = Player.status.time - 5
+    end
+    if wheel.bonus_selected == "F-" then
+      Player.status.fire = Player.status.fire - 1
+    end
+    if wheel.bonus_selected == "S+" then
+      Player.status.speed = Player.status.speed + 1
+    end
+    if wheel.bonus_selected == "HORI" then
+      if Player.status.invert_x == true then
+        Player.status.invert_x = false
+      else
+        Player.status.invert_x = true
+      end
+    end
+    if wheel.bonus_selected == "T+" then
+      Player.status.time = Player.status.time + 5
+    end
+
+
   end
 
   Game.update_collision(dt)

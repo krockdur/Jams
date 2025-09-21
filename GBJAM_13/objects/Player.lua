@@ -1,6 +1,15 @@
 
 local Player = {}
 
+Player.status = {
+  pv = 10,
+  speed = 10,
+  fire = 10,
+  invert_x = false,
+  invert_y = false,
+  time = 30  
+}
+
 local sprite_cat_001
 
 local sprite_idle_left_1
@@ -30,13 +39,17 @@ local sprite_run_down_2
 
 local anim_idle_left = false
 local anim_idle_right = false
+local anim_idle_top = false
+local anim_idle_down = false
 local anim_run_left = false
 local anim_run_right = false
 local anim_run_up = false
 local anim_run_down = false
 
-Player.x = 472
-Player.y = 344
+Player.tile_begin_i = 5
+Player.tile_begin_j = 5
+Player.x = Player.tile_begin_i * 64 - TILE_SIZE/2 - PLAYER_SIZE/2
+Player.y = Player.tile_begin_j * 64 - TILE_SIZE/2 - PLAYER_SIZE/2
 Player.speed = 1
 
 Player.tab_bullets = {}
@@ -77,12 +90,12 @@ function Player.shoot()
   table.insert(Player.tab_bullets, {
 
       --x = Player.x+Player.sprite_bullet_w/2,
-      x = Player.x + PLAYER_SIZE / 2,
-      y = Player.y + PLAYER_SIZE / 2,
+      x = Player.x + PLAYER_SIZE / 2 - 3,
+      y = Player.y + PLAYER_SIZE / 2 - 2,
       speed = Player.speed_shoot,
       d = Player.target_direction,
-      x_start = Player.x + PLAYER_SIZE / 2,
-      y_start = Player.y + PLAYER_SIZE / 2
+      x_start = Player.x + PLAYER_SIZE / 2 - 3,
+      y_start = Player.y + PLAYER_SIZE / 2 - 2
 
     })
 
@@ -97,19 +110,32 @@ local function get_tile_from_coord(x, y)
 end
 
 ---------------------------------------------------
+
+local function is_player_collide_world(j, i)
+  if  tab_map[j][i] ~= 7 and
+      tab_map[j][i] ~= 10 and
+      tab_map[j][i] ~= 5 and
+      tab_map[j][i] ~= 23 then
+    return true
+  else
+    return false
+  end
+end
+
+---------------------------------------------------
 local function update_corner_coord()
-  Player.corner.top_left.x = Player.x
-  Player.corner.top_left.y = Player.y
+  local delta = 7
+  Player.corner.top_left.x = Player.x + delta
+  Player.corner.top_left.y = Player.y + delta
 
-  Player.corner.bot_left.x = Player.x
-  Player.corner.bot_left.y = Player.y + PLAYER_SIZE
+  Player.corner.bot_left.x = Player.x + delta 
+  Player.corner.bot_left.y = Player.y + PLAYER_SIZE - delta
 
-  Player.corner.top_right.x = Player.x + PLAYER_SIZE
-  Player.corner.top_right.y = Player.y
+  Player.corner.top_right.x = Player.x + PLAYER_SIZE - delta
+  Player.corner.top_right.y = Player.y + delta
 
-
-  Player.corner.bot_right.x = Player.x + PLAYER_SIZE
-  Player.corner.bot_right.y = Player.y + PLAYER_SIZE
+  Player.corner.bot_right.x = Player.x + PLAYER_SIZE - delta
+  Player.corner.bot_right.y = Player.y + PLAYER_SIZE - delta
 
   Player.corner.top_left.i, Player.corner.top_left.j = get_tile_from_coord(Player.corner.top_left.x, Player.corner.top_left.y)  
   Player.corner.bot_left.i, Player.corner.bot_left.j = get_tile_from_coord(Player.corner.bot_left.x, Player.corner.bot_left.y)
@@ -187,12 +213,12 @@ function Player.draw()
     end
   end
 
-  if anim_idle_down then
+  if anim_idle_top then
     if animated_frame_to_show == 1 then
-      love.graphics.draw(sprite_idle_down_1, Player.x, Player.y)
+      love.graphics.draw(sprite_idle_top_1, Player.x, Player.y)
     end
     if animated_frame_to_show == 2 then
-      love.graphics.draw(sprite_idle_down_2, Player.x, Player.y)
+      love.graphics.draw(sprite_idle_top_2, Player.x, Player.y)
     end
   end
 
@@ -232,9 +258,9 @@ function Player.draw()
     end
   end
 
-  love.graphics.setColor(1, 0, 0)
-  love.graphics.rectangle("line", Player.x, Player.y, ENEMIES_SIZE, ENEMIES_SIZE)
-  love.graphics.setColor(1, 1, 1)
+  --love.graphics.setColor(1, 0, 0)
+  --love.graphics.rectangle("line", Player.x, Player.y, ENEMIES_SIZE, ENEMIES_SIZE)
+  --love.graphics.setColor(1, 1, 1)
 
 
   for i,b in pairs(Player.tab_bullets) do
@@ -268,23 +294,34 @@ end
 ---------------------------------------------------
 
 local timerShooter = 0
+local last_direction = "right"
 function Player.update(dt)
 
   local direction_x = 0
   local direction_y = 0
   local direction_animation = ""
 
+  
+
   if love.keyboard.isDown("up") then
-    direction_y = -1
+    if not Player.status.invert_y then
+      direction_y = -1
+    else
+      direction_y = 1
+    end
 
     Player.target_direction = "up"
 
     anim_idle_left = false
     anim_idle_right = false
+    anim_idle_top = false
+    anim_idle_down = false
     anim_run_left = false
     anim_run_right = false
     anim_run_up = true
     anim_run_down = false
+
+    last_direction = "up"
 
   end
 
@@ -295,24 +332,37 @@ function Player.update(dt)
 
     anim_idle_left = false
     anim_idle_right = false
+    anim_idle_top = false
+    anim_idle_down = false
     anim_run_left = true
     anim_run_right = false
     anim_run_up = false
     anim_run_down = false
 
+    last_direction = "left"
+
   end
 
   if love.keyboard.isDown("down") then -- DOWN
-    direction_y = 1
+
+    if not Player.status.invert_y then
+      direction_y = 1
+    else
+      direction_y = -1
+    end
 
     Player.target_direction = "down"
 
     anim_idle_left = false
     anim_idle_right = false
+    anim_idle_top = false
+    anim_idle_down = false
     anim_run_left = false
     anim_run_right = false
     anim_run_up = false
     anim_run_down = true
+
+    last_direction = "down"
 
   end
 
@@ -323,18 +373,45 @@ function Player.update(dt)
 
     anim_idle_left = false
     anim_idle_right = false
+    anim_idle_top = false
+    anim_idle_down = false
     anim_run_left = false
     anim_run_right = true
     anim_run_up = false
     anim_run_down = false
+
+    last_direction = "right"
 
   end
 
   if direction_x == 0 and direction_y == 0 then
     --Player.target_direction = "none"
 
-    anim_idle_left = false
-    anim_idle_right = true
+    if last_direction == "up" then
+      anim_idle_left = false
+      anim_idle_right = false
+      anim_idle_top = true
+      anim_idle_down = false
+    end
+    if last_direction == "left" then
+      anim_idle_left = true
+      anim_idle_right = false
+      anim_idle_top = false
+      anim_idle_down = false
+    end
+    if last_direction == "right" then
+      anim_idle_left = false
+      anim_idle_right = true
+      anim_idle_top = false
+      anim_idle_down = false
+    end
+    if last_direction == "down" then
+      anim_idle_left = false
+      anim_idle_right = false
+      anim_idle_top = false
+      anim_idle_down = true
+    end
+
     anim_run_left = false
     anim_run_right = false
     anim_run_up = false
@@ -389,12 +466,20 @@ function Player.update(dt)
 
   -- ckeck collisions
 
-  if (tab_map[Player.corner.top_left.j][Player.corner.top_left.i] == 1 or tab_map[Player.corner.top_right.j][Player.corner.top_right.i] == 1) then collision_top = true end
-  if (tab_map[Player.corner.bot_left.j][Player.corner.bot_left.i] == 1 or tab_map[Player.corner.bot_right.j][Player.corner.bot_right.i] == 1) then collision_bot = true end
-  if (tab_map[Player.corner.top_left.j][Player.corner.top_left.i] == 1 or tab_map[Player.corner.bot_left.j][Player.corner.bot_left.i] == 1) then collision_left = true end
-  if (tab_map[Player.corner.top_right.j][Player.corner.top_right.i] == 1 or tab_map[Player.corner.bot_right.j][Player.corner.bot_right.i] == 1) then collision_right = true end
+  if is_player_collide_world( Player.corner.top_left.j, Player.corner.top_left.i) or is_player_collide_world( Player.corner.top_right.j, Player.corner.top_right.i) then
+    collision_top = true 
+  end
+  if is_player_collide_world( Player.corner.bot_left.j, Player.corner.bot_left.i) or is_player_collide_world( Player.corner.bot_right.j, Player.corner.bot_right.i) then
+    collision_bot = true 
+  end
+  if is_player_collide_world( Player.corner.top_left.j, Player.corner.top_left.i) or is_player_collide_world( Player.corner.bot_left.j, Player.corner.bot_left.i) then
+    collision_left = true 
+  end
+  if is_player_collide_world( Player.corner.top_right.j, Player.corner.top_right.i) or is_player_collide_world( Player.corner.bot_right.j, Player.corner.bot_right.i) then
+    collision_right = true 
+  end
 
-  if ( collision_bot or collision_top or collision_left or collision_right) then
+  if collision_bot or collision_top or collision_left or collision_right then
     Player.x = old_player_x
     Player.y = old_player_y
   end

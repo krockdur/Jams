@@ -1,6 +1,8 @@
 
 local Wheel = {}
 
+Wheel.bonus_selected = "none"
+
 local wheel_sprite
 
 Wheel.is_running = false
@@ -93,35 +95,43 @@ function Wheel.set_bonus(angle)
     print ("angle : " .. angle)
 
     if ( (angle >= 0) and (angle < math.pi / 4) ) then
-        print("F+")
+        --print("F+")
+        Wheel.bonus_selected = "F+"
     end
 
     if ( (angle >=  math.pi / 4) and (angle < math.pi / 2) ) then
-        print("S-")
+        --print("S-")
+        Wheel.bonus_selected = "S-"
     end
 
     if ( (angle >=  math.pi / 2) and (angle < 3 * math.pi / 4) ) then
-        print("Verti")
+        --print("Verti")
+        Wheel.bonus_selected = "VERTI"
     end
 
     if ( (angle >= 3 * math.pi / 4) and (angle < math.pi)) then
-        print("T-")
+        --print("T-")
+        Wheel.bonus_selected = "T-"
     end
 
     if ( (angle >= math.pi) and (angle < 5 * math.pi / 4)) then
-        print("F-")
+        --print("F-")
+        Wheel.bonus_selected = "F-"
     end
 
     if ( (angle >= 5 * math.pi / 4) and (angle < 3 * math.pi / 2)) then
-        print("S+")
+        --print("S+")
+        Wheel.bonus_selected = "S+"
     end
 
     if ( (angle >= 3 * math.pi / 2) and (angle < 7 * math.pi / 4)) then
-        print("Hori")
+        --print("Hori")
+        Wheel.bonus_selected = "HORI"
     end
 
     if ( (angle >= 7 * math.pi / 4) and (angle < 2*math.pi)) then
-        print("T+")
+        --print("T+")
+        Wheel.bonus_selected = "T+"
     end
 end
 

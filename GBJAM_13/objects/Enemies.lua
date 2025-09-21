@@ -39,7 +39,7 @@ function Enemies.pop_and_up_enemies()
 
   for j = 1, NB_MAP_TILES_Y do
     for i = 1, NB_MAP_TILES_X do
-        if tab_events[j][i] == 5 then
+        if tab_enemies[j][i] == 33 then
           
           local enemy_already_exist = false
 
@@ -108,12 +108,11 @@ function Enemies.draw_enemies()
 
     for i,e in pairs(Enemies.list) do
 
-      love.graphics.push()
-      love.graphics.translate(-ENEMIES_SIZE / 2, -ENEMIES_SIZE / 2)
-      love.graphics.setColor(0, 1, 0)
-      love.graphics.rectangle("line", e.x, e.y, ENEMIES_SIZE , ENEMIES_SIZE)
-
-      love.graphics.pop()
+      --love.graphics.push()
+      --love.graphics.translate(-ENEMIES_SIZE / 2, -ENEMIES_SIZE / 2)
+      --love.graphics.setColor(0, 1, 0)
+      --love.graphics.rectangle("line", e.x, e.y, ENEMIES_SIZE , ENEMIES_SIZE)
+      --love.graphics.pop()
 
       love.graphics.setColor(1 , 1 , 1)
       
