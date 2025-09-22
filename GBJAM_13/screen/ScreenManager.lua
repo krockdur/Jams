@@ -7,7 +7,7 @@ local score = require('screen.Score')
 
 local ScreenManager = {}
 
-ScreenManager.screen = "game"
+ScreenManager.screen = "menu"
 
 
 
@@ -52,6 +52,11 @@ function ScreenManager.update(dt)
     ScreenManager.screen = "credit"
   end
 
+  if menu.status == "play" then
+    menu.status = "none"
+    ScreenManager.screen = "game"
+  end
+
   if ScreenManager.screen == "menu" then
     menu.update(dt)
   end
@@ -87,13 +92,12 @@ function ScreenManager.mousereleased(x, y, button, istouch)
 end
 
 function ScreenManager.keypressed(key, scancode, isrepeat)
-  game.keypressed(key, scancode, isrepeat)
-
-    if key == "tab" then
-      local state = not love.mouse.isVisible()   -- the opposite of whatever it currently is
-      love.mouse.setVisible(state)
+    if ScreenManager.screen == "game" then
+      game.keypressed(key, scancode, isrepeat)
     end
-   
+    if ScreenManager.screen == "menu" then
+      menu.keypressed(key, scancode, isrepeat)
+    end
 end
 
 function ScreenManager.touchpressed( id, x, y, dx, dy, pressure )

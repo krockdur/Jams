@@ -303,6 +303,21 @@ function Player.update(dt)
   Player.fire_length = 50 * Player.status.fire
   --
 
+  -- door
+  local current_case_i, current_case_j = get_tile_from_coord(Player.x + PLAYER_SIZE/2, Player.y + PLAYER_SIZE/2)
+  if tab_map[current_case_j][current_case_i] == 5 or tab_map[current_case_j][current_case_i] == 23 then
+    Player.status = {
+      pv = 10,
+      speed = 1,       
+      fire = 1,
+      invert_x = false, --
+      invert_y = false, --
+      time = 30,
+      invicible = false  
+    }
+  end
+  --
+
   local direction_x = 0
   local direction_y = 0
   local direction_animation = ""
