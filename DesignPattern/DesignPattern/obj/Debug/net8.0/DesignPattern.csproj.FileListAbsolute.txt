@@ -1,0 +1,15 @@
+D:\DEV\Jams\DesignPattern\DesignPattern\obj\Debug\net8.0\DesignPattern.GeneratedMSBuildEditorConfig.editorconfig
+D:\DEV\Jams\DesignPattern\DesignPattern\obj\Debug\net8.0\DesignPattern.AssemblyInfoInputs.cache
+D:\DEV\Jams\DesignPattern\DesignPattern\obj\Debug\net8.0\DesignPattern.AssemblyInfo.cs
+D:\DEV\Jams\DesignPattern\DesignPattern\obj\Debug\net8.0\DesignPattern.csproj.CoreCompileInputs.cache
+D:\DEV\Jams\DesignPattern\DesignPattern\obj\Debug\net8.0\DesignPattern.sourcelink.json
+D:\DEV\Jams\DesignPattern\DesignPattern\bin\Debug\net8.0\DesignPattern.exe
+D:\DEV\Jams\DesignPattern\DesignPattern\bin\Debug\net8.0\DesignPattern.deps.json
+D:\DEV\Jams\DesignPattern\DesignPattern\bin\Debug\net8.0\DesignPattern.runtimeconfig.json
+D:\DEV\Jams\DesignPattern\DesignPattern\bin\Debug\net8.0\DesignPattern.dll
+D:\DEV\Jams\DesignPattern\DesignPattern\bin\Debug\net8.0\DesignPattern.pdb
+D:\DEV\Jams\DesignPattern\DesignPattern\obj\Debug\net8.0\DesignPattern.dll
+D:\DEV\Jams\DesignPattern\DesignPattern\obj\Debug\net8.0\refint\DesignPattern.dll
+D:\DEV\Jams\DesignPattern\DesignPattern\obj\Debug\net8.0\DesignPattern.pdb
+D:\DEV\Jams\DesignPattern\DesignPattern\obj\Debug\net8.0\DesignPattern.genruntimeconfig.cache
+D:\DEV\Jams\DesignPattern\DesignPattern\obj\Debug\net8.0\ref\DesignPattern.dll
