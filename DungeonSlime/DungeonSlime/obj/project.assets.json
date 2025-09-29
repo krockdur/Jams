@@ -366,40 +366,32 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\JF\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "/Users/krock/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\DEV\\Jams\\DungeonSlime\\DungeonSlime\\DungeonSlime.csproj",
+      "projectUniqueName": "/Users/krock/Dev/Jams/DungeonSlime/DungeonSlime/DungeonSlime.csproj",
       "projectName": "DungeonSlime",
-      "projectPath": "D:\\DEV\\Jams\\DungeonSlime\\DungeonSlime\\DungeonSlime.csproj",
-      "packagesPath": "C:\\Users\\JF\\.nuget\\packages\\",
-      "outputPath": "D:\\DEV\\Jams\\DungeonSlime\\DungeonSlime\\obj\\",
+      "projectPath": "/Users/krock/Dev/Jams/DungeonSlime/DungeonSlime/DungeonSlime.csproj",
+      "packagesPath": "/Users/krock/.nuget/packages/",
+      "outputPath": "/Users/krock/Dev/Jams/DungeonSlime/DungeonSlime/obj/",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\JF\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "/Users/krock/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "D:\\DEV\\Jams\\DungeonSlime\\MonoGameLibrary\\MonoGameLibrary.csproj": {
-              "projectPath": "D:\\DEV\\Jams\\DungeonSlime\\MonoGameLibrary\\MonoGameLibrary.csproj"
+            "/Users/krock/Dev/Jams/DungeonSlime/MonoGameLibrary/MonoGameLibrary.csproj": {
+              "projectPath": "/Users/krock/Dev/Jams/DungeonSlime/MonoGameLibrary/MonoGameLibrary.csproj"
             }
           }
         }
@@ -413,8 +405,7 @@
         "enableAudit": "true",
         "auditLevel": "low",
         "auditMode": "direct"
-      },
-      "SdkAnalysisLevel": "9.0.300"
+      }
     },
     "frameworks": {
       "net8.0": {
@@ -445,7 +436,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.305/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.414/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

@@ -1,2 +1,2 @@
 Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
-"d:/DEV/Jams/DungeonSlime/DungeonSlime/Content/Images/atlas-definition.xml","d:/DEV/Jams/DungeonSlime/DungeonSlime/Content/bin/DesktopGL/Images/atlas-definition.xnb","PassThroughProcessor","Object",144,177,0,096255
+"/Users/krock/Dev/Jams/DungeonSlime/DungeonSlime/Content/Images/tilemap-definition.xml","/Users/krock/Dev/Jams/DungeonSlime/DungeonSlime/Content/bin/DesktopGL/Images/tilemap-definition.xml","CopyItem","File",676,676,0,000463

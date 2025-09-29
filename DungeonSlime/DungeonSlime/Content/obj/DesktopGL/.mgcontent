@@ -4,9 +4,11 @@
   <Platform>DesktopGL</Platform>
   <Config />
   <SourceFiles>
-    <File>d:/DEV/Jams/DungeonSlime/DungeonSlime/Content/Images/atlas-definition.xml</File>
+    <File>/Users/krock/Dev/Jams/DungeonSlime/DungeonSlime/Content/Images/atlas.png</File>
+    <File>/Users/krock/Dev/Jams/DungeonSlime/DungeonSlime/Content/Images/logo.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
   </DestFiles>
 </SourceFileCollection>
