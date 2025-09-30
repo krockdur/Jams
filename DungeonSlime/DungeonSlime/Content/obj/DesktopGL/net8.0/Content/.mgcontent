@@ -4,10 +4,16 @@
   <Platform>DesktopGL</Platform>
   <Config />
   <SourceFiles>
+    <File>/Users/krock/Dev/Jams/DungeonSlime/DungeonSlime/Content/Audio/bounce.wav</File>
+    <File>/Users/krock/Dev/Jams/DungeonSlime/DungeonSlime/Content/Audio/collect.wav</File>
+    <File>/Users/krock/Dev/Jams/DungeonSlime/DungeonSlime/Content/Audio/theme.ogg</File>
     <File>/Users/krock/Dev/Jams/DungeonSlime/DungeonSlime/Content/Images/atlas.png</File>
     <File>/Users/krock/Dev/Jams/DungeonSlime/DungeonSlime/Content/Images/logo.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
   </DestFiles>

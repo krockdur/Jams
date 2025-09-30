@@ -73,3 +73,7 @@ D:/DEV/Jams/DungeonSlime/DungeonSlime/bin/Debug/net8.0/Content/Images/atlas-defi
 /Users/krock/Dev/Jams/DungeonSlime/DungeonSlime/bin/Debug/net8.0/Content/Images/atlas-definition.xml
 /Users/krock/Dev/Jams/DungeonSlime/DungeonSlime/bin/Debug/net8.0/Content/Images/atlas.xnb
 /Users/krock/Dev/Jams/DungeonSlime/DungeonSlime/bin/Debug/net8.0/Content/Images/tilemap-definition.xml
+/Users/krock/Dev/Jams/DungeonSlime/DungeonSlime/bin/Debug/net8.0/Content/Audio/bounce.xnb
+/Users/krock/Dev/Jams/DungeonSlime/DungeonSlime/bin/Debug/net8.0/Content/Audio/collect.xnb
+/Users/krock/Dev/Jams/DungeonSlime/DungeonSlime/bin/Debug/net8.0/Content/Audio/theme.ogg
+/Users/krock/Dev/Jams/DungeonSlime/DungeonSlime/bin/Debug/net8.0/Content/Audio/theme.xnb

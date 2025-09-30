@@ -1,2 +1,4 @@
 Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
-"/Users/krock/Dev/Jams/DungeonSlime/DungeonSlime/Content/Images/tilemap-definition.xml","/Users/krock/Dev/Jams/DungeonSlime/DungeonSlime/Content/bin/DesktopGL/Images/tilemap-definition.xml","CopyItem","File",676,676,0,000463
+"/Users/krock/Dev/Jams/DungeonSlime/DungeonSlime/Content/Audio/bounce.wav","/Users/krock/Dev/Jams/DungeonSlime/DungeonSlime/Content/bin/DesktopGL/Audio/bounce.xnb","SoundEffectProcessor","SoundEffectContent",50664,50725,1,450226
+"/Users/krock/Dev/Jams/DungeonSlime/DungeonSlime/Content/Audio/collect.wav","/Users/krock/Dev/Jams/DungeonSlime/DungeonSlime/Content/bin/DesktopGL/Audio/collect.xnb","SoundEffectProcessor","SoundEffectContent",22092,22153,0,055852
+"/Users/krock/Dev/Jams/DungeonSlime/DungeonSlime/Content/Audio/theme.ogg","/Users/krock/Dev/Jams/DungeonSlime/DungeonSlime/Content/bin/DesktopGL/Audio/theme.xnb","SongProcessor","SongContent",1079706,123,0,277965
