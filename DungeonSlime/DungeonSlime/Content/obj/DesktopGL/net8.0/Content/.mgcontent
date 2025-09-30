@@ -4,16 +4,20 @@
   <Platform>DesktopGL</Platform>
   <Config />
   <SourceFiles>
-    <File>/Users/krock/Dev/Jams/DungeonSlime/DungeonSlime/Content/Audio/bounce.wav</File>
-    <File>/Users/krock/Dev/Jams/DungeonSlime/DungeonSlime/Content/Audio/collect.wav</File>
-    <File>/Users/krock/Dev/Jams/DungeonSlime/DungeonSlime/Content/Audio/theme.ogg</File>
-    <File>/Users/krock/Dev/Jams/DungeonSlime/DungeonSlime/Content/Images/atlas.png</File>
-    <File>/Users/krock/Dev/Jams/DungeonSlime/DungeonSlime/Content/Images/logo.png</File>
+    <File>D:/DEV/Jams/DungeonSlime/DungeonSlime/Content/Audio/bounce.wav</File>
+    <File>D:/DEV/Jams/DungeonSlime/DungeonSlime/Content/Audio/collect.wav</File>
+    <File>D:/DEV/Jams/DungeonSlime/DungeonSlime/Content/Audio/theme.ogg</File>
+    <File>D:/DEV/Jams/DungeonSlime/DungeonSlime/Content/fonts/04B_30_5x.spritefont</File>
+    <File>D:/DEV/Jams/DungeonSlime/DungeonSlime/Content/fonts/File.spritefont</File>
+    <File>D:/DEV/Jams/DungeonSlime/DungeonSlime/Content/Images/atlas.png</File>
+    <File>D:/DEV/Jams/DungeonSlime/DungeonSlime/Content/Images/logo.png</File>
   </SourceFiles>
   <DestFiles>
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File>fonts/04B_30.spritefont</File>
     <File xsi:nil="true" />
     <File xsi:nil="true" />
   </DestFiles>

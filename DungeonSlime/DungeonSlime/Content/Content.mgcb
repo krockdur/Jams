@@ -31,6 +31,20 @@
 /processorParam:Quality=Best
 /build:Audio/theme.ogg
 
+#begin fonts/04B_30_5x.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:fonts/04B_30_5x.spritefont
+
+#begin fonts/File.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:fonts/File.spritefont;fonts/04B_30.spritefont
+
 #begin Images/atlas-definition.xml
 /copy:Images/atlas-definition.xml
 
