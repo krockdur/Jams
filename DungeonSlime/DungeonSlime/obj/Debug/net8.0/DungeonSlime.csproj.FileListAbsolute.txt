@@ -121,3 +121,4 @@ D:\DEV\Jams\DungeonSlime\DungeonSlime\obj\Debug\net8.0\DungeonSlime.genruntimeco
 D:\DEV\Jams\DungeonSlime\DungeonSlime\obj\Debug\net8.0\ref\DungeonSlime.dll
 D:\DEV\Jams\DungeonSlime\DungeonSlime\bin\Debug\net8.0\Content\fonts\04B_30.xnb
 D:\DEV\Jams\DungeonSlime\DungeonSlime\bin\Debug\net8.0\Content\fonts\04B_30_5x.xnb
+D:\DEV\Jams\DungeonSlime\DungeonSlime\bin\Debug\net8.0\Content\Images\background-pattern.xnb

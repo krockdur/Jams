@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <SourceFile>d:/DEV/Jams/DungeonSlime/DungeonSlime/Content/fonts/04B_30_5x.spritefont</SourceFile>
-  <SourceTime>2025-06-02T12:42:50+02:00</SourceTime>
+  <SourceTime>2025-09-30T13:07:10.5725225+02:00</SourceTime>
   <DestFile>d:/DEV/Jams/DungeonSlime/DungeonSlime/Content/bin/DesktopGL/fonts/04B_30_5x.xnb</DestFile>
-  <DestTime>2025-09-30T13:00:53.9798655+02:00</DestTime>
+  <DestTime>2025-10-01T13:24:48.5669998+02:00</DestTime>
   <Importer>FontDescriptionImporter</Importer>
   <ImporterTime>2025-06-02T12:31:02+02:00</ImporterTime>
   <Processor>FontDescriptionProcessor</Processor>

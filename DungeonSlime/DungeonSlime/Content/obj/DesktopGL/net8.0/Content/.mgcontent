@@ -10,6 +10,7 @@
     <File>D:/DEV/Jams/DungeonSlime/DungeonSlime/Content/fonts/04B_30_5x.spritefont</File>
     <File>D:/DEV/Jams/DungeonSlime/DungeonSlime/Content/fonts/File.spritefont</File>
     <File>D:/DEV/Jams/DungeonSlime/DungeonSlime/Content/Images/atlas.png</File>
+    <File>D:/DEV/Jams/DungeonSlime/DungeonSlime/Content/Images/background-pattern.png</File>
     <File>D:/DEV/Jams/DungeonSlime/DungeonSlime/Content/Images/logo.png</File>
   </SourceFiles>
   <DestFiles>
@@ -18,6 +19,7 @@
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File>fonts/04B_30.spritefont</File>
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
   </DestFiles>

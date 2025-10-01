@@ -1,2 +1,3 @@
 Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
-"d:/DEV/Jams/DungeonSlime/DungeonSlime/Content/fonts/04B_30_5x.spritefont","d:/DEV/Jams/DungeonSlime/DungeonSlime/Content/bin/DesktopGL/fonts/04B_30_5x.xnb","FontDescriptionProcessor","SpriteFontContent",2068,21529,0,1392706
+"d:/DEV/Jams/DungeonSlime/DungeonSlime/Content/fonts/04B_30_5x.spritefont","d:/DEV/Jams/DungeonSlime/DungeonSlime/Content/bin/DesktopGL/fonts/04B_30_5x.xnb","FontDescriptionProcessor","SpriteFontContent",2075,1053721,0,2904925
+"d:/DEV/Jams/DungeonSlime/DungeonSlime/Content/Images/background-pattern.png","d:/DEV/Jams/DungeonSlime/DungeonSlime/Content/bin/DesktopGL/Images/background-pattern.xnb","TextureProcessor","Texture2DContent",1056,107669,0,2162206
