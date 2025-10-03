@@ -4,16 +4,18 @@
   <Platform>DesktopGL</Platform>
   <Config />
   <SourceFiles>
-    <File>d:/DEV/Jams/DungeonSlime/DungeonSlime/Content/Audio/bounce.wav</File>
-    <File>d:/DEV/Jams/DungeonSlime/DungeonSlime/Content/Audio/collect.wav</File>
-    <File>d:/DEV/Jams/DungeonSlime/DungeonSlime/Content/Audio/theme.ogg</File>
-    <File>d:/DEV/Jams/DungeonSlime/DungeonSlime/Content/fonts/04B_30_5x.spritefont</File>
-    <File>d:/DEV/Jams/DungeonSlime/DungeonSlime/Content/fonts/File.spritefont</File>
-    <File>d:/DEV/Jams/DungeonSlime/DungeonSlime/Content/Images/atlas.png</File>
-    <File>d:/DEV/Jams/DungeonSlime/DungeonSlime/Content/Images/background-pattern.png</File>
-    <File>d:/DEV/Jams/DungeonSlime/DungeonSlime/Content/Images/logo.png</File>
+    <File>/Users/krock/Dev/Jams/DungeonSlime/DungeonSlime/Content/Audio/bounce.wav</File>
+    <File>/Users/krock/Dev/Jams/DungeonSlime/DungeonSlime/Content/Audio/collect.wav</File>
+    <File>/Users/krock/Dev/Jams/DungeonSlime/DungeonSlime/Content/Audio/theme.ogg</File>
+    <File>/Users/krock/Dev/Jams/DungeonSlime/DungeonSlime/Content/Audio/ui.wav</File>
+    <File>/Users/krock/Dev/Jams/DungeonSlime/DungeonSlime/Content/fonts/04B_30_5x.spritefont</File>
+    <File>/Users/krock/Dev/Jams/DungeonSlime/DungeonSlime/Content/fonts/File.spritefont</File>
+    <File>/Users/krock/Dev/Jams/DungeonSlime/DungeonSlime/Content/Images/atlas.png</File>
+    <File>/Users/krock/Dev/Jams/DungeonSlime/DungeonSlime/Content/Images/background-pattern.png</File>
+    <File>/Users/krock/Dev/Jams/DungeonSlime/DungeonSlime/Content/Images/logo.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

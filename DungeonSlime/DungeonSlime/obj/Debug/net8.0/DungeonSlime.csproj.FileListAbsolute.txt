@@ -94,3 +94,4 @@ D:/DEV/Jams/DungeonSlime/DungeonSlime/bin/Debug/net8.0/Content/Images/background
 /Users/krock/Dev/Jams/DungeonSlime/DungeonSlime/bin/Debug/net8.0/MonoGameGum.dll
 /Users/krock/Dev/Jams/DungeonSlime/DungeonSlime/bin/Debug/net8.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll
 /Users/krock/Dev/Jams/DungeonSlime/DungeonSlime/bin/Debug/net8.0/TextCopy.dll
+/Users/krock/Dev/Jams/DungeonSlime/DungeonSlime/bin/Debug/net8.0/Content/fonts/04b_30.fnt

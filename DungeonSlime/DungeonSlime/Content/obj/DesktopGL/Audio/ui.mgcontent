@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <SourceFile>/Users/krock/Dev/Jams/DungeonSlime/DungeonSlime/Content/Audio/bounce.wav</SourceFile>
-  <SourceTime>2025-09-30T04:49:55.4302629+02:00</SourceTime>
-  <DestFile>/Users/krock/Dev/Jams/DungeonSlime/DungeonSlime/Content/bin/DesktopGL/Audio/bounce.xnb</DestFile>
-  <DestTime>2025-10-02T21:33:04.9510641+02:00</DestTime>
+  <SourceFile>/Users/krock/Dev/Jams/DungeonSlime/DungeonSlime/Content/Audio/ui.wav</SourceFile>
+  <SourceTime>2025-10-01T20:28:56.0212621+02:00</SourceTime>
+  <DestFile>/Users/krock/Dev/Jams/DungeonSlime/DungeonSlime/Content/bin/DesktopGL/Audio/ui.xnb</DestFile>
+  <DestTime>2025-10-02T21:33:05.3487456+02:00</DestTime>
   <Importer>WavImporter</Importer>
   <ImporterTime>2025-06-02T12:31:02+02:00</ImporterTime>
   <Processor>SoundEffectProcessor</Processor>

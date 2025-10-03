@@ -1,1 +1,3 @@
 Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
+"/Users/krock/Dev/Jams/DungeonSlime/DungeonSlime/Content/fonts/04b_30.fnt","/Users/krock/Dev/Jams/DungeonSlime/DungeonSlime/Content/bin/DesktopGL/Content/fonts/04b_30.fnt","CopyItem","File",11127,11127,0.000162
+"/Users/krock/Dev/Jams/DungeonSlime/DungeonSlime/Content/Images/atlas.png","/Users/krock/Dev/Jams/DungeonSlime/DungeonSlime/Content/bin/DesktopGL/Content/Images/atlas.xnb","TextureProcessor","Texture2DContent",8634,1048661,0.068105
