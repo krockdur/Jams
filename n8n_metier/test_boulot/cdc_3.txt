@@ -1,0 +1,409 @@
+
+ 
+
+12.	MODES
+	La mise en oeuvre des modes de marche doit respecter les principes de la norme métier ACI-M14-0901.
+	Les modes de marche et de fonctionnement sont associés à une zone de mise en service.
+12.1.	MODE DE MARCHE :
+MODE AUTOMATIQUE
+Ce mode autorise l’exécution automatique des cycles des sous-ensembles mécaniques d’une installation.
+Il n’est possible qu’avec toutes les mesures de sécurité des personnes imposées par les normes en vigueur.
+L’IHM permet la sélection d’un mode de fonctionnement (voir chapitre suivant)
+
+MODE SEMI-AUTOMATIQUE (à utiliser si nécessité)
+Ce mode autorise l’exécution automatique d’un cycle d’un des sous-ensembles mécanique d’une installation.
+Il n’est possible qu’avec toutes les mesures de sécurité des personnes imposées par les normes en vigueur.
+
+MODE MANUEL
+Ce mode n’est possible qu’avec toutes les mesures de sécurité des personnes imposées par les normes en vigueur.
+De base ce mode permet de commander le déplacement d’un mouvement sélectionné sur l’IHM en tenant compte uniquement des sécurités mécaniques ; dans certains cas la commande de déplacement de mouvement hors enchaînement du cycle peut engendrer des défauts de qualité du produit.
+Alors des conditions supplémentaires de déplacement seront mise en place.
+
+MODE MANUEL SECURITE REDUITE
+Ce mode permet de commander indépendamment le mouvement sélectionné sur l’IHM de l’installation, portillon de maintenance ouvert.
+Tous les mouvements doivent s’effectuer à vitesse réduite par une action maintenue sur un bouton type « homme mort » qui réalise la mise en énergie.
+
+MODE REPRISE DE TRAJECTOIRE
+Ce mode permet de réaliser une modification d’une trajectoire d’un robot tout en maintenant les énergies sur les outillages de bridage pour conserver la géométrie des pièces.
+Ce mode interdit les 2 autres modes (manuel et automatique), seul le robot mis en manuel peut être déplacé.
+
+12.2.	MODE DE FONCTIONNEMENT
+NORMAL
+C’est le mode de production en cycle de l’installation. Si le besoin est exprimé, les cycles de remplissage font partis de ce mode.
+VIDAGE
+Ce mode permet d’arrêter en origine de cycle une zone en laissant tous les outillages et les préhensions concernés sans pièce.
+La marche automatique est coupée à la fin du cycle de vidage.
+Afin de « tirer » le flux des pièces ; le vidage est réalisé automatiquement dans le cas d’une attente pièce.
+DEVERMINAGE
+Ce mode permet d’exécuter les cycles de l’installation en marche automatique sans pièce. Les robots effectuent leur trajectoire  à vide.
+
+
+ 
+12.3.	MODE DE COMMANDE
+ARRET CYCLE : (ou touche STOP)
+Provoque un arrêt du cycle immédiatement après la fin des mouvements en cours.
+Un bouton poussoir lumineux est dédié à cette fonction.
+ARRET FIN DE CYCLE :
+C’est un arrêt de la zone en origine de cycle. Plusieurs positions d’origine peuvent être programmées.
+•	Eteint 		Aucune demande en cours.
+•	Clignotant	Demande d’arrêt fin de cycle enregistrée et en cours de traitement.
+•	Allumé Fixe 	Installation arrêtée en origine de cycle.
+Cette fonction est assurée par une commande de l’IHM.
+ARRET LOTO : 
+Provoque un arrêt du cycle après vidage machine, mise en position Repli des robots et mise en veille (arrêt des énergies).
+Cette fonction est assurée par une commande de l’IHM.
+
+MARCHE CYCLE:
+Un ou plusieurs boutons poussoir lumineux sont dédiés à cette fonction.
+L’appui sur ce bouton permet la mise en énergie de la zone et le départ du cycle automatique si le mode auto est sélectionné et si toutes les conditions de sécurité sont réunies.
+Un seul appui peut générer la mise en marche automatique.
+•	Eteint 		Hors service et pas de demande.
+•	Clignotant	En service et hors marche cycle automatique.
+•	Allumé Fixe	En marche cycle automatique.
+
+12.4.	FONCTIONS
+Toutes ces fonctions doivent être précisées dans le CDC spécifique lié au projet.
+Une description succincte de chaque fonction est réalisée ci-dessous.
+CHANGEMENT DE RAFALE
+Lorsque l’installation ne sait produire qu’un type de pièce à la fois, il est nécessaire de créer un cycle de mise en configuration plus ou moins automatique pour permettre à l’installation de reconnaître et de produire des pièces d’un autre type.
+REINTRODUCTION DE PIECES
+La fonction « réintroduction » est constituée d’un poste qui permet de remettre dans le flux de production des pièces qui ont été sortie antérieurement. Un système de reconnaissance du type de pièce est le plus souvent nécessaire.
+EVACUATION DES PIECES NON CONFORMES
+La fonction « évacuation des NC » est constituée d’un poste qui permet de sortir du flux de production des pièces qui ont été déclaré par le PROCESS non-conforme ; une signalisation au poste est nécessaire afin d’informer du type de défaut déclaré.
+PRELEVEMENT DE PIECES A L’INITIATIVE DE L’OPERATEUR
+La fonction « prélèvement » est constituée d’un poste qui permet à l’opérateur de sortir une pièce du flux de production ; dans certain cas un IHM permet de choisir le chemin de production.
+FREQUENTIEL DE CONTROLE DE LA PIECE
+Cette fonction est déclenchée automatiquement grâce à un décompteur; au bout du décomptage une pièce est sortie du flux sur un poste prévu à cet effet, pour un contrôle. Ce contrôle peut être visuel ou macrographique.
+FREQUENTIEL DE CHANGEMENT OUTILS
+Cette fonction est déclenchée automatiquement grâce à un décompteur; au bout du décomptage l’installation s’arrêt automatiquement dans une position facilitant l’échange des outils de production.
+ETALONNAGE AVEC MISE EN PLACE D’UN ETALON EN AUTOMATIQUE
+Cette fonction est déclenchée automatiquement grâce à un décompteur; au bout du décomptage un étalon est mise en place et la procédure d’étalonnage est lancée, le tout en marche automatique.
+
+
+
+ 
+12.5.	COMMANDE MANUELLE
+La sélection d’un mouvement en marche manuelle doit être réalisée sur l’IHM.
+La commande d’un mouvement est réalisée par appui sur les boutons poussoirs + (avance ) et –(recul) de la page IHM des commandes manuelles en priorité, ou par appui sur des Boutons Poussoirs Lumineux.
+La signalisation de position et d’autorisation de mouvement se fait sur l’IHM, sinon ces informations sont fournies par BPL + et - :
+-	Eteint :	Mouvement interdit.
+-	Clignotant :	Mouvement possible.
+-	Fixe :		Mouvement terminé en position.
+
+Commande de mouvement en sécurité réduite par un pupitre mobile.
+A utiliser suivant la taille de l’installation, pour permettre à l’intervenant d’avoir la visibilité des mouvements pilotés. 
+Les mouvements pilotés depuis le pupitre mobile ne doivent pas être possibles simultanément depuis le pupitre principal.
+
+ 
+13.	AUTOMATE
+13.1.	FONCTIONNEMENT
+Prescription DIESC DIPLAS
+Par défaut l’automate doit fonctionner en monotâche; c’est à dire en utilisant la tâche maître.
+Le fonctionnement en multitâche sera  examiné au cas par cas par demande de dérogation.
+Par défaut le chien de garde sera positionné à 50mS pour la tâche maître.
+Par défaut l’automate doit fonctionner en exécution cyclique.
+Le fonctionnement en exécution périodique sera examiné au cas par cas par demande de dérogation.
+L’unité centrale doit avoir sa mémoire utilisée inférieure ou égale à 80% de sa capacité mémoire installée.
+L’unité centrale doit avoir un temps de cycle moyen inférieur à 40MS. Si un dépassement de cette valeur apparaît un changement de l’unité centrale sera demandé.
+Un Guide de programmation TIA Portal définit comment paramêtrer l’automate Siemens
+
+13.2.	CHOIX MATERIEL
+Le système de commande doit comporter une connexion ETHERNET pour une connexion avec le réseau « usine »
+L’alimentation du rack doit être une alimentation 24V= ; un calcul de puissance de la configuration doit être effectué et décrit dans l’analyse organique.
+Le 24V de l’alimentation du rack de l’automate ne doit pas être utilisé pour alimenter des entrées et des sorties.
+Les cartes mixtes sont interdites.
+Les cartes de comptage rapide sont interdites sur des axes à déplacement linéaire.
+Les architectures doivent respectées le document Architecture Automatismes Chassis
+Les adresses IP doivent respecter le document Plan adressage IP automatisme
+13.3.	LANGAGE
+Prescription DIESC DIPLAS
+Le langage à contacts LADDER est imposé pour l’animation de l’installation.
+Le langage GRAFCET et STRUCTURE (SCL) est interdit ; les modes de fonctionnement rendent les programmes selon ces langages trop complexes à exploiter.
+Le langage LIST peut être utilisé à la condition qu’il soit traductible en réseaux de contact automatiquement.
+Dans le cas de l’utilisation de boîtes fonctionnelles ou fonctions complexes, elles doivent s’accompagner d’un descriptif qui permet leur compréhension.
+
+13.4.	REGLES A RESPECTER
+Prescription DIESC DIPLAS
+Le nombre de variables en série et en parallèle doit être compatible avec les caractéristiques d’affichage du système de visualisation.
+Les variables ne peuvent être activées / désactivées que dans une seule équation.
+Les lignes de programme sont exécutées de façon linéaire. L’utilisation des sauts est interdite afin de faciliter la compréhension du programme.
+Dans le programme, l’appellation des variables (mnémoniques) et commentaires associés doit correspondre à l’identification des éléments sur l’installation.
+Dans la mesure où le programmateur a besoin de bits toujours à 1 et à 0, ceux-ci doivent avoir comme mnémonique Ba1 et Ba0.
+Les mnémoniques et commentaires doivent être dans la langue des exploitants de l’installation.
+
+Une norme métier Guide de Qualité Logiciel précise la façon de programmer sur différents thèmes :
+•	Contrôle d’un mouvement tout ou rien à 2 positions
+•	Contrôle du changement d’état d’une détection issue d’une étude AMDEC ;
+•	Principe de programmation selon les mémoires de pièce.
+
+14.	AIDE AU DIAGNOSTIC
+14.1.	GENERALITES
+Le système de diagnostic doit être fiable et précis et permettre de :
+Signaler la présence d’un incident sur une zone de mise en service.
+Localiser physiquement l’incident sur une zone de mise en service.
+Aider l’intervenant à corriger l’incident.
+La gestion des incidents doit éviter les phénomènes d’avalanche de message et n’indiquer que l’incident initial.
+
+La messagerie sera de 3 types.
+	ACTION	AFFICHAGE	REARMEMENT
+DEFAUT	Est mémorisé
+A toujours une action sur l’installation
+
+Arrêt Immédiat et perte des énergies 
+Arrêt Immédiat du cycle
+Arrêt fin de cycle et perte des énergies
+Arrêt fin de cycle	En rouge	Indispensable après la disparition du défaut
+ALERTE	Sert à avertir l’opérateur 	En jaune ou orange	Non
+INFORMATION	Donne l’état de la zone dès que celle-ci est hors fonctionnement normale	En bleu	Non
+
+14.2.	GESTION DES ELEMENTS PERIPHERIQUES
+Dans le cas ou des sous-ensembles « standard » sont intégrés dans la zone ; il faut que l’ensemble des défauts et alertes de chaque sous-ensemble soit géré dans l’IHM de la zone concernée.
+	
+14.3.	ACQUITTEMENT DES DEFAUTS
+Tout défaut, même fugitif, doit être mémorisé et nécessite une action volontaire sur un organe de commande pour pouvoir redémarrer l’installation. L’acquittement peut s’effectuer dans tous les modes de marche.
+Si un défaut nécessite un acquittement particulier, il doit être précisé.
+Une alerte ne nécessite pas d’acquittement.
+
+Acquittement défaut :BPL rouge ou touche fonction sur IHM
+-	Eteint :		Pas de défaut 
+-	Allumé fixe :	Présence d’un défaut.
+
+14.4.	REDACTION
+Si l’afficheur le permet, le traitement multi-langue de tous les textes ou messages de l’IHM est obligatoire.
+Dans tous les cas, les intitulés doivent être de base dans la langue des utilisateurs de l’installation.
+	La deuxième langue étant la langue d’origine du fournisseur de bien d’équipement et la troisième langue est le français
+	
+ 
+15.	 PREPARATION A LA MAINTENANCE
+15.1.	MAINTENABILITE
+Lorsque des interventions de maintenance doivent se faire machine consignée (LOTO), vérifier si il y a nécessité d’un éclairage spécifique machine hors tension
+
+1- Dans la mesure du possible tous les coffrets et les têtes de station du réseau de terrain doivent être accessibles de l’extérieur de l’installation.
+
+2- Afin de faciliter l’échange des câbles contenus dans les chaînes porte câbles ; des points de raccordement aux deux extrémités de la chaîne porte câbles seront mise en place. La durée d’un échange ne doit pas dépasser 3h.
+
+3- Les câbles ne doivent pas être attachés entre eux ou à des tuyauteries. 
+
+4- Les goulottes fermées ne doivent pas renfermer de connecteurs sauf prescriptions particulières.
+
+5- La signalisation doit être réalisée à partir de voyant à LED.
+
+6- Les boîtiers multipistes doivent être piétés.
+
+7- La conception du montage des variateurs doit permettre un remplacement aisé. Cela implique de l’espace disponible autour du variateur, un dispositif de soutien en cas de forte charge.
+
+8- La conception du montage des motoréducteurs doit permettre un remplacement aisé.
+
+15.2.	RESEAU DE COMMUNICATION
+La norme métier « Architectures Automatismes Chassis » explique la mise en œuvre du réseau de communication à respecter.
+Que ce soit le réseau niveau 2 « usine », niveau 1 « DATA » ou niveau 0 « machine », les cables  doivent être de catégorie 5e minimum, avec un blindage S FTP (paire torsadée avec tresse et feuille de blindage) et PUR dans les ateliers d’usinage.
+
+	Réseau niveau 2 « usine » : chaque installation doit être prédisposée pour être raccordée à un réseau de communication « usine » qui sera de type Ethernet. La couleur des cables RJ45 doit etre en bleu.
+Les câbles réseaux usine doivent passés dans des chemins de câbles spécifiques réseaux (dit courant faible) de couleur jaune.
+
+Réseau niveau 1 « DATA » et réseau niveau 0 « machine » : les robots, IHM, variateurs, réseau I/O link, et autres équipements câblés en Ethernet doivent être connectés sur un réseau machine. Les cables doivent être de couleur verte. Les switchs doivent etre manageable et peuvent etre de 16 ports. Un emplacement libre doit être réservé pour permettre la connexion d’un PC dans un but de recherche de panne réseau
+Les adresses IP sont fournies par la DIESC DIPLAS lors de la phase étude et doivent respectées la norme métier « Plan d’Adressage IP Automatismes ».
+Les câbles réseaux machine doivent passer dans des chemins de câbles spécifiques réseaux (dit courant faible).
+
+
+ 
+15.3.	PUPITRE D’EXPLOITATION
+	Le nombre de ces pupitres d’exploitation sera déterminé en fonction de l’architecture de la ligne et précisé dans le retour d’offre du fournisseur.
+	Un maximum de 3 applications d’automatisme, fonctionnant en simultanées sur le PC, est à ne pas dépasser pour des raisons d’accès des différents intervenants en même temps.
+	
+15.4.	LICENCE LOGICIELS
+Au début des études, un accord doit être trouvé sur la version des logiciels mis en œuvre. La DIESC DIPLAS fournira une liste des logiciels et de leur version en possession du site.
+ Pour tout logiciel ou version de logiciel non présent dans cette liste, le fournisseur s’engage à fournir la licence du logiciel. 
+
+15.5.	SUIVI DES MOYENS PRODUCIM
+Le périmètre de la prestation comprend la prédisposition au système et non le système lui-même.
+La prédisposition concerne :
+La mise à disposition d’un port ETHERNET.
+La programmation de variables.
+Cette programmation doit être conforme à la norme métier Predisposition automate PRODUCIM.
+
+15.6.	FORMATION
+Elle doit concerner l’application et non la formation de base de l’automatisme sur les automates, le réseau de terrain, la commande numérique.
+Tous les blocs fonctionnels développés par le fournisseur doivent faire partie de la formation.
+
+15.7.	MANUEL DE MAINTENANCE
+Un manuel de maintenance doit contenir :
+1.	Le manuel d’utilisation et de mise en œuvre des composants d’automatisme installés sur l’installation.
+2.	La maintenance préventive des composants.
+3.	Les procédures d’échange des composants.
+4.	Les procédures de diagnostic.
+Un manuel de maintenance doit contenir :
+
+15.8.	KMO
+TEMPS DE CYCLE :
+Une mesure avec le logiciel DIZISOFT sera effectuée pour le jalon ATFMR.
+AXE NUMERISE :
+Un enregistrement sera effectué pour le jalon ATFMR.
+
+15.9.	TELEMAINTENANCE
+La télémaintenance s’effectue par une prise en main à distance du PC de maintenance. Voir notice ESIL Le Mans
+
+
+ 
+16.	ECONOMIE D’ENERGIE
+16.1.	CONCEPTION ECONOMIQUE
+Prescription DIESC DIPLAS
+L’installation doit être conçue en prenant en compte la recherche d’économie d’énergie.
+
+1-	La récupération des énergies sur le réseau électrique des axes à variateur de vitesse.
+
+2-	L’utilisation de relais à faible consommation.
+
+3-	L’utilisation de moteurs asynchrones de type EFF1 ou EFF2 en fonction de utilisation.
+
+4-	La mise en œuvre de marche économique sur les convoyeurs :
+Provoquer l’arrêt des convoyeurs par non fonctionnement de l’installation.
+Relancer ceux-ci sur une reprise du fonctionnement de l’installation.
+	
+5-	La mise en œuvre d’une fonction « mise en veille » d’une zone de mise en service :
+Appel de cette fonction par une action volontaire d’un opérateur.
+Arrêt en fin de cycle de l’installation, vidage de l’installation et mise au repli des robots.
+Coupure des énergies.
+	
+ 
+17.	DOCUMENTATION PENDANT LE PROJET
+17.1.	LE RETOUR D’OFFRE
+Le Découpage en zone de sécurité.
+L’architecture des automatismes.
+Un synoptique des réseaux (implantation géographique sur l’installation).
+Le Descriptif technique Automatisme DTA lié au process 
+17.2.	LE DOSSIER REFERENCE
+Le Découpage en zone de sécurité et de mise en service.
+L’architecture des automatismes.
+Les choix technologiques retenus.
+Un synoptique des réseaux (implantation géographique sur l’installation).
+Le Descriptif technique Automatisme DTA lié au process 
+17.3.	L’ACCORD TECHNIQUE FIN D’ETUDE
+Les documents nécessaires pour signer l’accord sont :
+Le découpage des inventaires de la documentation.
+L’évaluation des risques.
+Le Sistema, la table de vérité et le fichier 3D
+Respect du guide de mise en œuvre de la sécurité par l’automatisme ACI-M14-0401.
+L’analyse fonctionnelle.
+L’analyse organique.
+Le schéma de principe avec le schéma d’interconnexion.
+La structure du (des ) programme (s).
+L’architecture des pages de l’IHM.
+La nomenclature.
+17.4.	L’ACCORD TECHNIQUE POUR LIVRAISON
+Une mise à jour des documents précédents et les documents suivants sont nécessaires pour signer l’accord sont :
+Le (les ) programme (s).
+Une ébauche du manuel de maintenance.
+17.5.	L’ACCORD TECHNIQUE FIN DE MISE EN ROUTE
+Une mise à jour des documents précédents et les documents suivants sont nécessaires pour signer l’accord sont :
+Le manuel de maintenance.
+Le dossier KMO
+Le document de certification des matériels de sécurité (contrôleur et scrutateur laser)
+Ces documents doivent être à jour, et le schéma de principe doit être rangé dans l’armoire électrique de l’installation sous format papier.
+17.6.	L’ACCORD TECHNIQUE DE MISE EN PRODUCTION
+Toute la documentation définitive sera livrée pour cet accord.
+	
+ 
+18.	CONTENU DE LA DOCUMENTATION
+	En automatisme, la documentation doit être conforme à la norme européenne CEI 60 204-1.
+
+18.1.	ANALYSE FONCTIONNELLE
+L’analyse fonctionnelle doit décrire selon le guide de rédaction DIPLAS-MTECH-2009-0237:
+LE DECOUPAGE FONCTIONNEL DE L’NSTALLATION
+Un synoptique d’implantation de l’installation
+LES NOTIONS DE SECURITE
+Le découpage de l’installation en zone de sécurité et de mise en service.
+Les critères de choix et le choix des organes de sécurité.
+LES MODES
+Les différents modes de marche
+Les différents modes de fonctionnement
+Les différents modes de commande
+L’interaction entre les différents modes
+LES DEFAUTS
+Gestion des défauts et de leur action.
+Gestion des défauts PROCESS.
+Gestion des messages d’alerte.
+LE DESCRIPTIF DES CYCLES
+Le cycle normal de l’installation avec les marguerites du robot.
+Les cycles dégradés.
+Les cycles de remplissage et de vidage.
+L’organisation de choix des cycles robots et aiguillages dans les cycles
+LA GESTION DE LA DIVERSITE
+	La diversité du produit fabriqué.
+	La détection de cette diversité.
+	La Gamme de production.
+Le changement de rafale en rafale ou en aléatoire.
+SURETE DE FONCTIONNEMENT
+Descriptif des moyens d’automatisme qui agissent sur la qualité et la traçabilité des pièces parfois issu d’une étude AMDEC.
+CHOIX TECHNOLOGIQUES
+Descriptif des raisons de certains choix.
+	
+ 
+18.2.	L'ANALYSE ORGANIQUE
+L’analyse organique doit décrire selon le guide de rédaction DIPLAS-METCH-2009-0238 :
+ARMOIRE
+Le calcul d’échauffement de l’armoire électrique.
+Le calcul de la puissance de l’alimentation de l’automate.
+Le calcul de la taille du dispositif de sectionnement.
+Les échanges d’informations entre installations.
+EQUIPEMENT ELECTRIQUE 
+Une topologie de chaque réseau.
+Le calcul du réseau de terrain en longueur et en courant.
+SYSTEME DE COMMANDE
+La configuration matérielle de l’automatisme (référence de carte installée)
+La configuration logicielle de l’automatisme (récapitulatif des variables)
+La composition des tables d’échanges entre sous ensembles
+La liste des logiciels avec leur version.
+CHAINE CINEMATIQUE DES AXES NUMERISES
+		Un synoptique de la chaîne cinématique.
+		Le calcul de détermination de la taille des variateurs, moteurs et réducteurs.
+		La précision de mesure et d’arrêt.
+		Un enregistrement des caractéristiques des axes sur le cycle principal.
+ENTREE ou SORTIE ANALOGIQUE
+		Un synoptique de la chaîne de mesure.
+		La précision de mesure et d’arrêt.
+
+ 
+18.3.	SCHEMA DE PRINCIPE ET D’INTERCONNEXION
+Un schéma de principe et d’interconnexion doit décrire :
+Une page de garde
+Un sommaire
+Un synoptique général de l’installation
+La distribution de puissance unifilaire
+La distribution de commande unifilaire
+Une topologie des réseaux (implantation géographique sur l’installation)
+Les entrées sorties avec leur liaison physique (bornier) et logique (adresse logique)
+Les échanges d’information unifilaire
+Un synoptique de raccordement des câbles (araignée de câblage)
+Un plan d’implantation de l’armoire électrique
+Un plan d’implantation de coffrets électriques comportant du matériel de commande
+Un plan d’implantation de pupitre
+Un plan des borniers de raccordement
+Un plan d’implantation des capteurs
+
+Les schémas électriques doivent être développés avec l’un des 2 logiciel suivant:
+EPLAN electric P8
+SEE Electrical Expert  V4 R3
+- L’environnement Renault V4R3 est téléchargeable à l’adresse suivante :
+https://ige-xao-delivery.j-doc.com/login?clear=1
+Username : igexao
+Password : Renault1*
+- Un fois connecté, télécharger les fichier de l’onglet DOW-36 le dernier environnement Renault indice 43.
+- Ainsi que les fichiers xlsm permettant de réaliser le TDI en automatique à partir de la nomenclature de See Electrical.
+
+	
+18.4.	NOMENCLATURE
+La nomenclature de tous les matériels installés (électrique, robotique, mécanique, pneumatique, hydraulique, etc..) doit être sur un seul fichier informatisé sous la base Excel suivant la norme métier ACI-M29-102
+
+Elle doit précisée le lieu de l’installation par le repère en respectant le principe suivant :
+La liste du matériel mis en œuvre dans une armoire électrique NE1
+La liste du matériel mis en œuvre dans les pupitres et coffrets NE2
+La liste du matériel électrique installé dans la zone concernée NE3(détecteurs, moteurs, câbles…)
+
+18.5.	INVENTAIRE
+Un document EXCEL appelé LED sera constitué en début de projet ; son but étant de lister la totalité de la documentation attendue avec les bons numéros de matricule d’inventaire et de suffixes.
+Le suffixe dédié à l’automatisme est le D8.
+Un caractère supplémentaire permet de classer la documentation automatisme de manière suivante :
+D8E : schéma électrique
+D8F : analyse fonctionnelle
+D8D : analyse organique
