@@ -1,15 +1,11 @@
-function init(self)
-	-- Add initialization code here
-	-- Learn more: https://defold.com/manuals/script/
-	-- Remove this function if not needed
+go.property("start_pos_x", 150)
+go.property("start_pos_y", 150)
 
-	self.start_pos_x = 150
-	self.start_pos_y = 150
+function init(self)
 	self.pos_x = self.start_pos_x
 	self.pos_y = self.start_pos_y
-
 	go.set_position(vmath.vector3(self.pos_x, self.pos_y, 0))
-	factory.create("/go_pop#factory", go.get_position())
+	factory.create("#factory", go.get_position())
 end
 
 function final(self)
@@ -22,31 +18,15 @@ function update(self, dt)
 	-- Add update code here
 	-- Learn more: https://defold.com/manuals/script/
 	-- Remove this function if not needed
-
-	
 end
 
-local tmp_time = 0
-local time_to_move = 0.02
 function fixed_update(self, dt)
-
-	tmp_time = tmp_time + dt
-	if tmp_time >= time_to_move then
-		
-		self.pos_x = self.pos_x + 0.5
-
-		go.set_position(vmath.vector3(self.pos_x, self.pos_y, 0))
-
-		local t = self.pos_x - self.start_pos_x
-		if t % 32 == 0 then
-			print("POP  " .. self.pos_x)
-			print(t)
-			factory.create("/go_pop#factory", vmath.vector3(self.pos_x, self.pos_y, 0))
-		end
-		
-		tmp_time = 0
-	end
-	
+	-- This function is called if 'Fixed Update Frequency' is enabled in the Engine section of game.project
+	-- Can be coupled with fixed updates of the physics simulation if 'Use Fixed Timestep' is enabled in
+	-- Physics section of game.project
+	-- Add update code here
+	-- Learn more: https://defold.com/manuals/script/
+	-- Remove this function if not needed
 end
 
 function on_message(self, message_id, message, sender)

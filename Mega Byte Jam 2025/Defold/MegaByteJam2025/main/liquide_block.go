@@ -1,7 +1,3 @@
-components {
-  id: "liquid_travel"
-  component: "/main/liquid_travel.script"
-}
 embedded_components {
   id: "sprite"
   type: "sprite"
@@ -11,11 +7,5 @@ embedded_components {
   "  sampler: \"texture_sampler\"\n"
   "  texture: \"/main/test.atlas\"\n"
   "}\n"
-  ""
-}
-embedded_components {
-  id: "factory"
-  type: "factory"
-  data: "prototype: \"/main/liquide_block.go\"\n"
   ""
 }
