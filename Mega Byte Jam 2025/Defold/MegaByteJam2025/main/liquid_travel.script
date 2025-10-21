@@ -5,50 +5,50 @@ function init(self)
 	self.pos_x = self.start_pos_x
 	self.pos_y = self.start_pos_y
 	go.set_position(vmath.vector3(self.pos_x, self.pos_y, 0))
+	-- création du premier élément
 	factory.create("#factory", go.get_position())
 end
 
 function final(self)
-	-- Add finalization code here
-	-- Learn more: https://defold.com/manuals/script/
-	-- Remove this function if not needed
+
 end
 
 function update(self, dt)
-	-- Add update code here
-	-- Learn more: https://defold.com/manuals/script/
-	-- Remove this function if not needed
+
 end
 
+local tmp_time = 0
+local time_to_move = 0.02
 function fixed_update(self, dt)
-	-- This function is called if 'Fixed Update Frequency' is enabled in the Engine section of game.project
-	-- Can be coupled with fixed updates of the physics simulation if 'Use Fixed Timestep' is enabled in
-	-- Physics section of game.project
-	-- Add update code here
-	-- Learn more: https://defold.com/manuals/script/
-	-- Remove this function if not needed
+
+	tmp_time = tmp_time + dt
+	if tmp_time >= time_to_move then
+
+		self.pos_x = self.pos_x + 0.5
+
+		go.set_position(vmath.vector3(self.pos_x, self.pos_y, 0))
+
+		local t = self.pos_x - self.start_pos_x
+		if t % 32 == 0 then
+			print("POP  " .. self.pos_x)
+			print(t)
+			factory.create("/go_pop#factory", vmath.vector3(self.pos_x, self.pos_y, 0))
+		end
+
+		tmp_time = 0
+	end
+
 end
+
 
 function on_message(self, message_id, message, sender)
-	-- Add message-handling code here
-	-- Learn more: https://defold.com/manuals/message-passing/
-	-- Remove this function if not needed
+
 end
 
 function on_input(self, action_id, action)
-	-- Add input-handling code here. The game object this script is attached to
-	-- must have acquired input focus:
-	--
-	--    msg.post(".", "acquire_input_focus")
-	--
-	-- All mapped input bindings will be received. Mouse and touch input will
-	-- be received regardless of where on the screen it happened.
-	-- Learn more: https://defold.com/manuals/input/
-	-- Remove this function if not needed
+
 end
 
 function on_reload(self)
-	-- Add reload-handling code here
-	-- Learn more: https://defold.com/manuals/hot-reload/
-	-- Remove this function if not needed
+
 end

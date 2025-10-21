@@ -1,35 +1,20 @@
 name: "main"
 scale_along_z: 0
 embedded_instances {
-  id: "go"
-  data: "components {\n"
-  "  id: \"test\"\n"
-  "  component: \"/main/test.script\"\n"
-  "}\n"
-  "embedded_components {\n"
-  "  id: \"sprite\"\n"
-  "  type: \"sprite\"\n"
-  "  data: \"default_animation: \\\"square\\\"\\n"
-  "material: \\\"/builtins/materials/sprite.material\\\"\\n"
-  "textures {\\n"
-  "  sampler: \\\"texture_sampler\\\"\\n"
-  "  texture: \\\"/main/test.atlas\\\"\\n"
-  "}\\n"
-  "\"\n"
-  "}\n"
-  ""
-  position {
-    x: 39.0
-    y: 33.0
-  }
-}
-embedded_instances {
   id: "go_pop"
   data: "embedded_components {\n"
   "  id: \"factory\"\n"
   "  type: \"factory\"\n"
   "  data: \"prototype: \\\"/main/liquide.go\\\"\\n"
   "\"\n"
+  "}\n"
+  ""
+}
+embedded_instances {
+  id: "main"
+  data: "components {\n"
+  "  id: \"main\"\n"
+  "  component: \"/main/main.script\"\n"
   "}\n"
   ""
 }
