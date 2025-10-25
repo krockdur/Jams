@@ -18,3 +18,11 @@ embedded_instances {
   "}\n"
   ""
 }
+embedded_instances {
+  id: "go_map"
+  data: "components {\n"
+  "  id: \"Map\"\n"
+  "  component: \"/main/Map1.tilemap\"\n"
+  "}\n"
+  ""
+}

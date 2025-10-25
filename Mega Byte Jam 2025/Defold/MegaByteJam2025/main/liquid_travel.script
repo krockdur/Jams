@@ -1,12 +1,21 @@
 go.property("start_pos_x", 150)
 go.property("start_pos_y", 150)
+go.property("start_direction", 1)
+-- 1:x+ 2:x- 3:y+ 4:y-
 
 function init(self)
+	print(self.direction)
 	self.pos_x = self.start_pos_x
 	self.pos_y = self.start_pos_y
-	go.set_position(vmath.vector3(self.pos_x, self.pos_y, 0))
+	self.pos_z = 1
+	go.set_position(vmath.vector3(self.pos_x, self.pos_y, self.pos_z))
 	-- création du premier élément
 	factory.create("#factory", go.get_position())
+	-- définition de la direction de départ
+	if self.start_direction == 1 then
+		self.dir_x = 1
+		self.dir_y = 0
+	end
 end
 
 function final(self)
@@ -19,27 +28,66 @@ end
 
 local tmp_time = 0
 local time_to_move = 0.02
+
 function fixed_update(self, dt)
 
+	-- GESTION DU MOUVEMENT
+	
 	tmp_time = tmp_time + dt
 	if tmp_time >= time_to_move then
 
-		self.pos_x = self.pos_x + 0.5
+		if self.dir_x == 1 and self.dir_y == 0 then
+			self.pos_x = self.pos_x + 0.5
+		elseif self.dir_x == -1 and self.dir_y == 0 then
+			self.pos_x = self.pos_x - 0.5
+		elseif self.dir_x == 0 and self.dir_y == 1 then
+			self.pos_y = self.pos_y + 0.5
+		elseif self.dir_x == 0 and self.dir_y == -1 then
+			self.pos_y = self.pos_y - 0.5
+		end
 
-		go.set_position(vmath.vector3(self.pos_x, self.pos_y, 0))
+		-- Mouvement du carré
+		go.set_position(vmath.vector3(self.pos_x, self.pos_y, self.pos_z))
 
-		local t = self.pos_x - self.start_pos_x
-		if t % 32 == 0 then
-			print("POP  " .. self.pos_x)
-			print(t)
-			factory.create("/go_pop#factory", vmath.vector3(self.pos_x, self.pos_y, 0))
+		-- affichage d'un carré pour former une ligne
+		if (self.dir_x == 1 or self.dir_x == -1) and self.dir_y == 0 then
+			local t = self.pos_x - self.start_pos_x
+			if t % 32 == 0 then
+				factory.create("#factory", vmath.vector3(self.pos_x, self.pos_y, self.pos_z))
+			end
+		end
+		if self.dir_x == 0 and (self.dir_y == 1 or self.dir_y == -1) then
+			local t = self.pos_y - self.start_pos_y
+			if t % 32 == 0 then
+				factory.create("#factory", vmath.vector3(self.pos_x, self.pos_y, self.pos_z))
+			end
 		end
 
 		tmp_time = 0
 	end
 
+	-- GESTION DES DIRECTIONS
+
+	
+	update_current_tile(self)
+	
+	
+	if self.pos_x >= 32*6 then 
+		self.dir_x = 0
+		self.dir_y = 1
+	end
+
 end
 
+function update_current_tile(self)
+
+	self.c_tile = tilemap.get_tile("/go_map#Map", "layer1", (self.pos_x / 64) + 1, (self.pos_y / 64) + 1)
+	self.c_tile_top = tilemap.get_tile("/go_map#Map", "layer1", (self.pos_x / 64) + 1, (self.pos_y / 64) + 2)
+	self.c_tile_down = tilemap.get_tile("/go_map#Map", "layer1", (self.pos_x / 64) + 1, (self.pos_y / 64))
+	self.c_tile_left = tilemap.get_tile("/go_map#Map", "layer1", (self.pos_x / 64), (self.pos_y / 64) + 1)
+	self.c_tile_right = tilemap.get_tile("/go_map#Map", "layer1", (self.pos_x / 64) + 2, (self.pos_y / 64) + 1)
+	
+end
 
 function on_message(self, message_id, message, sender)
 

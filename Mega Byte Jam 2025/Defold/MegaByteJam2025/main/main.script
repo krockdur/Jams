@@ -1,8 +1,10 @@
 function init(self)
 
-	factory.create("/go_pop#factory", nil, nil, {start_pos_x = 150, start_pos_y = 150})
+	local id1 = factory.create("/go_pop#factory", nil, nil, {start_pos_x = -32, start_pos_y = 160, start_direction = 1})
 
-	
+
+	local id2 = factory.create("/go_pop#factory", nil, nil, {start_pos_x = -32, start_pos_y = 260, start_direction = 1})
+	print("test")
 end
 
 function final(self)
