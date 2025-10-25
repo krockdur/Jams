@@ -3,7 +3,7 @@ scale_along_z: 0
 embedded_instances {
   id: "go_pop"
   data: "embedded_components {\n"
-  "  id: \"factory\"\n"
+  "  id: \"liquid_factory\"\n"
   "  type: \"factory\"\n"
   "  data: \"prototype: \\\"/main/liquide.go\\\"\\n"
   "\"\n"
