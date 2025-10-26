@@ -9,6 +9,7 @@ function init(self)
 	self.pos_x = self.start_pos_x
 	self.pos_y = self.start_pos_y
 	self.pos_z = 1
+	self.speed = 0.5
 
 	self.tmp_time = 0
 	self.time_to_move = 0.02
@@ -66,19 +67,24 @@ end
 
 function fixed_update(self, dt)
 
+	print(go.get_position("#"))
+	
 	-- GESTION DU MOUVEMENT
 	
 	self.tmp_time = self.tmp_time + dt
 	if self.tmp_time >= self.time_to_move then
 
 		if self.dir_x == 1 and self.dir_y == 0 then
-			self.pos_x = self.pos_x + 0.5
+			self.pos_x = self.pos_x + self.speed
 		elseif self.dir_x == -1 and self.dir_y == 0 then
-			self.pos_x = self.pos_x - 0.5
+			self.pos_x = self.pos_x - self.speed
 		elseif self.dir_x == 0 and self.dir_y == 1 then
-			self.pos_y = self.pos_y + 0.5
+			self.pos_y = self.pos_y + self.speed
 		elseif self.dir_x == 0 and self.dir_y == -1 then
-			self.pos_y = self.pos_y - 0.5
+			self.pos_y = self.pos_y - self.speed
+		elseif self.pos_x == 0 and self.pos_y == 0 then
+			self.pos_x = self.pos_x
+			self.pos_y = self.pos_y
 		end
 
 		-- Mouvement du carré
@@ -109,6 +115,7 @@ function fixed_update(self, dt)
 	self.next_tile = get_next_tile(self)
 	
 	if self.next_tile == 32 then
+		self.speed = 0
 		msg.post("/main#main", "liquide_col", {tile = self.next_tile})
 	end
 	

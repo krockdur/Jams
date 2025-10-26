@@ -19,3 +19,14 @@ embedded_components {
   data: "prototype: \"/main/liquide_block.go\"\n"
   ""
 }
+embedded_components {
+  id: "spr_pixel"
+  type: "sprite"
+  data: "default_animation: \"pixel\"\n"
+  "material: \"/builtins/materials/sprite.material\"\n"
+  "textures {\n"
+  "  sampler: \"texture_sampler\"\n"
+  "  texture: \"/main/test.atlas\"\n"
+  "}\n"
+  ""
+}
