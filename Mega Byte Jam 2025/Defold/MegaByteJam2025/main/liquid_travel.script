@@ -42,7 +42,7 @@ local function update_current_tile(self)
 end
 
 local function get_tile_from_coord(x, y, self)
-	return tilemap.get_tile("/go_map#Map", "layer1", x, y)
+	return tilemap.get_tile("/go_map#Map", "layer1", (x / 64) + 1, (y / 64) + 1)
 end
 
 local function get_next_tile(self)
@@ -108,10 +108,10 @@ function fixed_update(self, dt)
 
 	self.next_tile = get_next_tile(self)
 	
-	if self.pos_x >= 32*6 then 
-		self.dir_x = 0
-		self.dir_y = 1
+	if self.next_tile == 32 then
+		msg.post("/main#main", "liquide_col", {tile = self.next_tile})
 	end
+	
 
 end
 

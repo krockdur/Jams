@@ -1,10 +1,8 @@
 function init(self)
 
-	local id1 = factory.create("/go_pop#liquid_factory", nil, nil, {start_pos_x = 32, start_pos_y = 160, start_direction = 1, debug=11})
-
-
-	local id2 = factory.create("/go_pop#liquid_factory", nil, nil, {start_pos_x = 32, start_pos_y = 260, start_direction = 1, debug=31})
-
+	local id1 = factory.create("/go_pop#liquid_factory", nil, nil, {start_pos_x = -32, start_pos_y = 160, start_direction = 1, debug=11})
+	self.list_flow = {}
+	table.insert(self.list_flow, id1)
 end
 
 function final(self)
@@ -29,9 +27,9 @@ function fixed_update(self, dt)
 end
 
 function on_message(self, message_id, message, sender)
-	-- Add message-handling code here
-	-- Learn more: https://defold.com/manuals/message-passing/
-	-- Remove this function if not needed
+	if message_id == hash("liquide_col") then 
+		print("MESSAGE : " .. message.tile .. "     DE : " .. sender)
+	end
 end
 
 function on_input(self, action_id, action)
