@@ -1,28 +1,17 @@
 name: "main"
 scale_along_z: 0
 embedded_instances {
-  id: "go_pop"
+  id: "bg"
   data: "embedded_components {\n"
-  "  id: \"liquid_factory\"\n"
-  "  type: \"factory\"\n"
-  "  data: \"prototype: \\\"/main/liquide.go\\\"\\n"
+  "  id: \"sprite\"\n"
+  "  type: \"sprite\"\n"
+  "  data: \"default_animation: \\\"background\\\"\\n"
+  "material: \\\"/builtins/materials/sprite.material\\\"\\n"
+  "textures {\\n"
+  "  sampler: \\\"texture_sampler\\\"\\n"
+  "  texture: \\\"/assets/AtlasGame.atlas\\\"\\n"
+  "}\\n"
   "\"\n"
-  "}\n"
-  ""
-}
-embedded_instances {
-  id: "main"
-  data: "components {\n"
-  "  id: \"main\"\n"
-  "  component: \"/main/main.script\"\n"
-  "}\n"
-  ""
-}
-embedded_instances {
-  id: "go_map"
-  data: "components {\n"
-  "  id: \"Map\"\n"
-  "  component: \"/main/Map1.tilemap\"\n"
   "}\n"
   ""
 }
