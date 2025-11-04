@@ -3,4 +3,7 @@ images {
   pivot_x: 0.0
   pivot_y: 1.0
 }
+images {
+  image: "/assets/red_rect.png"
+}
 extrude_borders: 2
