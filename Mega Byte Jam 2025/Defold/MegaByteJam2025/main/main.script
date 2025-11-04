@@ -5,13 +5,24 @@ function test_canalisation(self)
 	
 	local current_tile_x = 0
 	local current_tile_y = 0
+	local current_tile_type = 0
 	
 	if self.starter_orientation == "bot" then
 		current_tile_x = self.starter_x
-		current_tile_y = self.starter_y - 1	
+		current_tile_y = self.starter_y - 1
+	elseif self.starter_orientation == "top" then
+		current_tile_x = self.starter_x
+		current_tile_y = self.starter_y + 1
+	elseif self.starter_orientation == "left" then
+		current_tile_x = self.starter_x - 1
+		current_tile_y = self.starter_y
+	elseif self.starter_orientation == "right" then
+		current_tile_x = self.starter_x + 1
+		current_tile_y = self.starter_y
 	end
 
 	-- recherche type de tuile
+	current_tile_type = go.get(self.board[current_tile_y][current_tile_x].."#pipe", "number")
 
 	-- recherche des connexions de type de tuile
 
@@ -109,6 +120,12 @@ function on_input(self, action_id, action)
 				self.board[ay][ax] = id
 				msg.post("/Script#incomming_pipes", "give_me_next_pipe")
 			end
+		end
+	end
+
+	if action_id == hash("mouse_button_left") then
+		if action.released then
+			test_canalisation(self)
 		end
 	end
 end
