@@ -6,3 +6,7 @@ mouse_trigger {
   input: MOUSE_BUTTON_LEFT
   action: "mouse_button_left"
 }
+mouse_trigger {
+  input: MOUSE_BUTTON_RIGHT
+  action: "mouse_button_right"
+}

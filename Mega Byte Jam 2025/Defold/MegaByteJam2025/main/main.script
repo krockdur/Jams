@@ -8,26 +8,43 @@ function test_canalisation(self)
 	local current_tile_type = 0
 	
 	if self.starter_orientation == "bot" then
+		
 		current_tile_x = self.starter_x
 		current_tile_y = self.starter_y - 1
+		current_tile_type = 10
+		
 	elseif self.starter_orientation == "top" then
+		
 		current_tile_x = self.starter_x
 		current_tile_y = self.starter_y + 1
+		current_tile_type = 9
+		
 	elseif self.starter_orientation == "left" then
+		
 		current_tile_x = self.starter_x - 1
 		current_tile_y = self.starter_y
+		current_tile_type = 11
+		
 	elseif self.starter_orientation == "right" then
+		
 		current_tile_x = self.starter_x + 1
 		current_tile_y = self.starter_y
+		current_tile_type = 12
+		
 	end
 
-	-- recherche type de tuile
-	current_tile_type = go.get(self.board[current_tile_y][current_tile_x].."#pipe", "number")
+	-- Ajout du stater pipe dans le tableau de continuité des pipe
+	table.insert( tab_continuity, { self.starter_x , self.starter_y, current_tile_type } )
+	
+	-- recherche type de tuile	suivant
+	current_tile_type = go.get( msg.url(nil, self.board[current_tile_y][current_tile_x], "pipe"), "number")
 
 	-- recherche des connexions de type de tuile
+	local tmp_pipes_connection = self.pipes_connection[self.type_pipes[current_tile_type]]
+	
 
 	-- si la connexion est vraie alors ajout de la tuile à la tab_continuity
-	table.insert( tab_continuity, {current_tile_x, current_tile_y} )
+	table.insert( tab_continuity, {current_tile_x, current_tile_y, current_tile_type} )
 
 	-- obtention connexions suivantes
 	
@@ -44,7 +61,10 @@ function init(self)
 		"pipe_empty_4_3",	-- ┘
 		"pipe_empty_4_4",	-- └
 		"empty",			--
-		"starter_pipe"		--
+		"starter_pipe_top", --  ┘└
+		"starter_pipe_bot", --  ┐┌
+		"starter_pipe_left", -- ==|
+		"starter_pipe_right" -- |==
 	}
 
 	self.pipes_connection = {
@@ -55,6 +75,10 @@ function init(self)
 		["pipe_empty_4_2"] = {"droit", "bas"},
 		["pipe_empty_4_3"] = {"gauche", "haut"},
 		["pipe_empty_4_4"] = {"droit", "haut"},
+		["starter_pipe_top"] = {"haut"},
+		["starter_pipe_bot"] = {"bas"},
+		["starter_pipe_left"] = {"gauche"},
+		["starter_pipe_right"] = {"droit"}
 	}
 	
 	--msg.post(".", "acquire_input_focus")
@@ -123,7 +147,7 @@ function on_input(self, action_id, action)
 		end
 	end
 
-	if action_id == hash("mouse_button_left") then
+	if action_id == hash("mouse_button_right") then
 		if action.released then
 			test_canalisation(self)
 		end
