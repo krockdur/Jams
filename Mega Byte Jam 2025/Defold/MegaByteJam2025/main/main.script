@@ -6,30 +6,35 @@ function test_canalisation(self)
 	local current_tile_x = 0
 	local current_tile_y = 0
 	local current_tile_type = 0
+	local previous_tile_type = 0
 	
 	if self.starter_orientation == "bot" then
 		
 		current_tile_x = self.starter_x
 		current_tile_y = self.starter_y - 1
 		current_tile_type = 10
+		previous_tile_type = 10
 		
 	elseif self.starter_orientation == "top" then
 		
 		current_tile_x = self.starter_x
 		current_tile_y = self.starter_y + 1
 		current_tile_type = 9
+		previous_tile_type = 9
 		
 	elseif self.starter_orientation == "left" then
 		
 		current_tile_x = self.starter_x - 1
 		current_tile_y = self.starter_y
 		current_tile_type = 11
+		previous_tile_type = 11
 		
 	elseif self.starter_orientation == "right" then
 		
 		current_tile_x = self.starter_x + 1
 		current_tile_y = self.starter_y
 		current_tile_type = 12
+		previous_tile_type = 12
 		
 	end
 
@@ -40,12 +45,25 @@ function test_canalisation(self)
 	current_tile_type = go.get( msg.url(nil, self.board[current_tile_y][current_tile_x], "pipe"), "number")
 
 	-- recherche des connexions de type de tuile
-	local tmp_pipes_connection = self.pipes_connection[self.type_pipes[current_tile_type]]
+	local tmp_previous_pipes_connection = self.pipes_connection[self.type_pipes[previous_tile_type]]
+	local tmp_current_pipes_connection = self.pipes_connection[self.type_pipes[current_tile_type]]
 	
+	-- Est ce que la connexion est vraie
+	local connection_to_previous = false
+	for c_key, c_conn in tmp_current_pipes_connection do
+		for p_key, p_conn in tmp_previous_pipes_connection do
 
+			if c_conn == p_conn then
+				connection_to_previous = true
+			end
+			
+		end 
+	end
+	
 	-- si la connexion est vraie alors ajout de la tuile à la tab_continuity
-	table.insert( tab_continuity, {current_tile_x, current_tile_y, current_tile_type} )
-
+	if connection_to_previous == true then
+		table.insert( tab_continuity, {current_tile_x, current_tile_y, current_tile_type} )
+	end
 	-- obtention connexions suivantes
 	
 end
