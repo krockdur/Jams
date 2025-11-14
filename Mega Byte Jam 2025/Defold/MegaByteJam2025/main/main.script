@@ -1,5 +1,26 @@
 
-function test_canalisation(self)
+local function test_connected(current_pipe_connections, previous_pipe_connections)
+	local connection_to_previous = false
+	for c_key, c_conn in ipairs( current_pipe_connections ) do
+		for p_key, p_conn in ipairs( previous_pipe_connections ) do
+
+			if p_conn == "bas" and c_conn == "haut" then
+				connection_to_previous = true
+			elseif p_conn == "haut"  and c_conn == "bas" then
+				connection_to_previous = true
+			elseif p_conn == "droite"  and c_conn == "gauche" then
+				connection_to_previous = true
+			elseif p_conn == "gauche"  and c_conn == "droite" then
+				connection_to_previous = true
+			end
+
+		end 
+	end
+
+	return connection_to_previous
+end
+
+local function test_canalisation(self)
 
 	local tab_continuity = {}
 	
@@ -7,64 +28,61 @@ function test_canalisation(self)
 	local current_tile_y = 0
 	local current_tile_type = 0
 	local previous_tile_type = 0
-	
+
+	-- Paramètrage de la tuile de départ en fonction de son placement et de son orientation
+	-- current_tile_type est la tuile suivante
 	if self.starter_orientation == "bot" then
 		
 		current_tile_x = self.starter_x
 		current_tile_y = self.starter_y - 1
-		current_tile_type = 10
 		previous_tile_type = 10
 		
 	elseif self.starter_orientation == "top" then
 		
 		current_tile_x = self.starter_x
 		current_tile_y = self.starter_y + 1
-		current_tile_type = 9
 		previous_tile_type = 9
 		
 	elseif self.starter_orientation == "left" then
 		
 		current_tile_x = self.starter_x - 1
 		current_tile_y = self.starter_y
-		current_tile_type = 11
 		previous_tile_type = 11
 		
 	elseif self.starter_orientation == "right" then
 		
 		current_tile_x = self.starter_x + 1
 		current_tile_y = self.starter_y
-		current_tile_type = 12
 		previous_tile_type = 12
 		
 	end
 
-	-- Ajout du stater pipe dans le tableau de continuité des pipe
-	table.insert( tab_continuity, { self.starter_x , self.starter_y, current_tile_type } )
-	
-	-- recherche type de tuile	suivant
-	current_tile_type = go.get( msg.url(nil, self.board[current_tile_y][current_tile_x], "pipe"), "number")
+	-- Ajout de la tuile de départ dans le tableau de continuité des pipe
+	table.insert( tab_continuity, { self.starter_x , self.starter_y, previous_tile_type } )
 
-	-- recherche des connexions de type de tuile
-	local tmp_previous_pipes_connection = self.pipes_connection[self.type_pipes[previous_tile_type]]
-	local tmp_current_pipes_connection = self.pipes_connection[self.type_pipes[current_tile_type]]
-	
-	-- Est ce que la connexion est vraie
-	local connection_to_previous = false
-	for c_key, c_conn in tmp_current_pipes_connection do
-		for p_key, p_conn in tmp_previous_pipes_connection do
 
-			if c_conn == p_conn then
-				connection_to_previous = true
-			end
+	local line_break = false
+
+	while not line_break do
+	
+		-- recherche type de tuile	suivant
+		current_tile_type = go.get( msg.url(nil, self.board[current_tile_y][current_tile_x], "pipe"), "number")
+
+		-- recherche des connexions de type de tuile
+		local tmp_previous_pipe_connections = self.pipes_connection[self.type_pipes[previous_tile_type]]
+		local tmp_current_pipe_connections = self.pipes_connection[self.type_pipes[current_tile_type]]
+		
+		-- si la connexion est vraie alors ajout de la tuile à la tab_continuity
+		if test_connected(tmp_current_pipe_connections, tmp_previous_pipe_connections) == true then
 			
-		end 
+			table.insert( tab_continuity, {current_tile_x, current_tile_y, current_tile_type} )
+		else
+			line_break = true
+		end
+
+		previous_tile_type = current_tile_type
+
 	end
-	
-	-- si la connexion est vraie alors ajout de la tuile à la tab_continuity
-	if connection_to_previous == true then
-		table.insert( tab_continuity, {current_tile_x, current_tile_y, current_tile_type} )
-	end
-	-- obtention connexions suivantes
 	
 end
 
@@ -86,17 +104,17 @@ function init(self)
 	}
 
 	self.pipes_connection = {
-		["pipe_empty_1"] = {"gauche", "droit"},
+		["pipe_empty_1"] = {"gauche", "droite"},
 		["pipe_empty_2"] = {"haut", "bas"},
-		["pipe_empty_3"] = {"gauche", "droit", "haut", "bas"},
+		["pipe_empty_3"] = {"gauche", "droite", "haut", "bas"},
 		["pipe_empty_4_1"] = {"gauche", "bas"},
-		["pipe_empty_4_2"] = {"droit", "bas"},
+		["pipe_empty_4_2"] = {"droite", "bas"},
 		["pipe_empty_4_3"] = {"gauche", "haut"},
-		["pipe_empty_4_4"] = {"droit", "haut"},
+		["pipe_empty_4_4"] = {"droite", "haut"},
 		["starter_pipe_top"] = {"haut"},
 		["starter_pipe_bot"] = {"bas"},
 		["starter_pipe_left"] = {"gauche"},
-		["starter_pipe_right"] = {"droit"}
+		["starter_pipe_right"] = {"droite"}
 	}
 	
 	--msg.post(".", "acquire_input_focus")
