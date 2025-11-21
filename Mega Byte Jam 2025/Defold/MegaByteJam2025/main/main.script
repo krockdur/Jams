@@ -21,8 +21,6 @@ local function test_connected(current_pipe_connections, previous_pipe_connection
 end
 
 local function test_canalisation(self)
-
-	local tab_continuity = {}
 	
 	local current_tile_x = 0
 	local current_tile_y = 0
@@ -58,7 +56,7 @@ local function test_canalisation(self)
 	end
 
 	-- Ajout de la tuile de départ dans le tableau de continuité des pipe
-	table.insert( tab_continuity, { self.starter_x , self.starter_y, previous_tile_type } )
+	table.insert( self.board_continuity, { self.starter_x , self.starter_y, previous_tile_type } )
 
 
 	local line_break = false
@@ -66,16 +64,16 @@ local function test_canalisation(self)
 	while not line_break do
 	
 		-- recherche type de tuile	suivant
-		current_tile_type = go.get( msg.url(nil, self.board[current_tile_y][current_tile_x], "pipe"), "number")
+		current_tile_type = go.get( msg.url(nil, self.board_id[current_tile_y][current_tile_x], "pipe"), "number")
 
 		-- recherche des connexions de type de tuile
 		local tmp_previous_pipe_connections = self.pipes_connection[self.type_pipes[previous_tile_type]]
 		local tmp_current_pipe_connections = self.pipes_connection[self.type_pipes[current_tile_type]]
 		
-		-- si la connexion est vraie alors ajout de la tuile à la tab_continuity
+		-- si la connexion est vraie alors ajout de la tuile à la self.board_continuity
 		if test_connected(tmp_current_pipe_connections, tmp_previous_pipe_connections) == true then
 			
-			table.insert( tab_continuity, {current_tile_x, current_tile_y, current_tile_type} )
+			table.insert( self.board_continuity, {current_tile_x, current_tile_y, current_tile_type} )
 		else
 			line_break = true
 		end
@@ -121,13 +119,19 @@ function init(self)
 	
 	
 	-- Créer tous les pipes
-	self.board = {}
+	self.board_id = {}			-- table contenant les id de factory create
+	self.board = {}				-- table contenant les type de tuiles
+	self.board_continuity = {}	-- table représentant le board, avec à les pipes connectés
 
 	for j = 1, 6 do
+		self.board_id[j] = {}
 		self.board[j] = {}
+		self.board_continuity[j] = {}
 		for i = 1, 11 do
 			local id = factory.create("/board#board_factory", vmath.vector3(64*i+32, 64*j+32, 0.25), nil, {number = 8})
-			self.board[j][i] = id
+			self.board_id[j][i] = id
+			self.board[j][i] = 8
+			self.board_continuity[j][i] = 0
 		end
 	end
 
@@ -135,12 +139,14 @@ function init(self)
 	-- suppression pipe en 5 4 pour test
 	self.starter_orientation = "bot"
 	self.starter_x = 5
-	self.starter_y = 5
-	go.delete(self.board[self.starter_y][self.starter_x])
-
-	local id = factory.create("/board#board_factory", vmath.vector3(64*5+32, 64*5+32, 0.25), nil, {number = 9})
-	self.board[self.starter_y][self.starter_x] = id
+	self.starter_y = 3
 	
+	go.delete(self.board_id[self.starter_y][self.starter_x]) -- suppression du pipe
+
+	local id = factory.create("/board#board_factory", vmath.vector3(64 * self.starter_x + 32, 64 * self.starter_y + 32, 0.25), nil, {number = 9})
+	self.board_id[self.starter_y][self.starter_x] = id
+	self.board[self.starter_y][self.starter_x] = 9
+	self.board_continuity[self.starter_y][self.starter_x] = 1
 end
 
 function final(self)
@@ -174,18 +180,23 @@ function on_input(self, action_id, action)
 				local ax, bx = (math.modf(pos.x / 64))
 				local ay, by = (math.modf(pos.y / 64))
 				
-				go.delete(self.board[ay][ax])
+				go.delete(self.board_id[ay][ax])
 
 				local id = factory.create("/board#board_factory", vmath.vector3(64*ax+32, 64*ay+32, 0.25), nil, {number = self.current_pipe})
-				self.board[ay][ax] = id
+				self.board_id[ay][ax] = id
+				self.board[ay][ax] = self.current_pipe
 				msg.post("/Script#incomming_pipes", "give_me_next_pipe")
+
+				-- tests des continuités
+				
 			end
 		end
 	end
 
 	if action_id == hash("mouse_button_right") then
 		if action.released then
-			test_canalisation(self)
+			-- test_canalisation(self)
+			print("debug")
 		end
 	end
 end
