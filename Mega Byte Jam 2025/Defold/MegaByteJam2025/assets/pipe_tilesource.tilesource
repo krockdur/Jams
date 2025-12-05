@@ -809,7 +809,7 @@ animations {
   flip_vertical: 1
 }
 animations {
-  id: "starter_pipe"
+  id: "starter_pipe_bot"
   start_tile: 103
   end_tile: 107
   playback: PLAYBACK_LOOP_FORWARD

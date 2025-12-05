@@ -1,87 +1,59 @@
 
-local function test_connected(current_pipe_connections, previous_pipe_connections)
-	local connection_to_previous = false
-	for c_key, c_conn in ipairs( current_pipe_connections ) do
-		for p_key, p_conn in ipairs( previous_pipe_connections ) do
-
-			if p_conn == "bas" and c_conn == "haut" then
-				connection_to_previous = true
-			elseif p_conn == "haut"  and c_conn == "bas" then
-				connection_to_previous = true
-			elseif p_conn == "droite"  and c_conn == "gauche" then
-				connection_to_previous = true
-			elseif p_conn == "gauche"  and c_conn == "droite" then
-				connection_to_previous = true
-			end
-
-		end 
+local function test_right_connected_pipe(current_pipe, right_pipe)
+	local isconnected = false
+	
+	if current_pipe == 1 or current_pipe == 3 or current_pipe == 5 or current_pipe == 7 or current_pipe == 12 then
+		if right_pipe == 1 or right_pipe == 3 or right_pipe == 4 or right_pipe == 6 or right_pipe == 11 then
+			isconnected = true
+		end
 	end
 
-	return connection_to_previous
+	return isconnected
+	
 end
 
-local function test_canalisation(self)
-	
-	local current_tile_x = 0
-	local current_tile_y = 0
-	local current_tile_type = 0
-	local previous_tile_type = 0
+local function test_top_connected_pipe(current_pipe, top_pipe)
+	local isconnected = false
 
-	-- Paramètrage de la tuile de départ en fonction de son placement et de son orientation
-	-- current_tile_type est la tuile suivante
-	if self.starter_orientation == "bot" then
-		
-		current_tile_x = self.starter_x
-		current_tile_y = self.starter_y - 1
-		previous_tile_type = 10
-		
-	elseif self.starter_orientation == "top" then
-		
-		current_tile_x = self.starter_x
-		current_tile_y = self.starter_y + 1
-		previous_tile_type = 9
-		
-	elseif self.starter_orientation == "left" then
-		
-		current_tile_x = self.starter_x - 1
-		current_tile_y = self.starter_y
-		previous_tile_type = 11
-		
-	elseif self.starter_orientation == "right" then
-		
-		current_tile_x = self.starter_x + 1
-		current_tile_y = self.starter_y
-		previous_tile_type = 12
-		
-	end
-
-	-- Ajout de la tuile de départ dans le tableau de continuité des pipe
-	table.insert( self.board_continuity, { self.starter_x , self.starter_y, previous_tile_type } )
-
-
-	local line_break = false
-
-	while not line_break do
-	
-		-- recherche type de tuile	suivant
-		current_tile_type = go.get( msg.url(nil, self.board_id[current_tile_y][current_tile_x], "pipe"), "number")
-
-		-- recherche des connexions de type de tuile
-		local tmp_previous_pipe_connections = self.pipes_connection[self.type_pipes[previous_tile_type]]
-		local tmp_current_pipe_connections = self.pipes_connection[self.type_pipes[current_tile_type]]
-		
-		-- si la connexion est vraie alors ajout de la tuile à la self.board_continuity
-		if test_connected(tmp_current_pipe_connections, tmp_previous_pipe_connections) == true then
-			
-			table.insert( self.board_continuity, {current_tile_x, current_tile_y, current_tile_type} )
-		else
-			line_break = true
+	if current_pipe == 2 or current_pipe == 3 or current_pipe == 6 or current_pipe == 7 or current_pipe == 9 then
+		if top_pipe == 2 or top_pipe == 3 or top_pipe == 4 or top_pipe == 5 or top_pipe == 10 then
+			isconnected = true
 		end
-
-		previous_tile_type = current_tile_type
-
 	end
-	
+
+	return isconnected
+
+end
+
+local function update_table_continuity(self)
+	for j = 1, 6 do
+		for i = 1, 11 do
+			local top_pipe = 0
+			local right_pipe = 0
+
+			if j < 6 then
+				top_pipe = self.board[j+1][i]
+			else
+				top_pipe = 8
+			end
+			
+			if i < 11 then
+				right_pipe = self.board[j][i+1]
+			else
+				right_pipe = 8
+			end
+
+			if test_right_connected_pipe(self.board[j][i], right_pipe) == true then
+				self.board_continuity[j][i] = 1
+				self.board_continuity[j][i+1] = 1
+			end
+			if test_top_connected_pipe(self.board[j][i], top_pipe) == true then
+				self.board_continuity[j][i] = 1
+				self.board_continuity[j+1][i] = 1
+			end
+		end
+	end
+	print("test")
 end
 
 function init(self)
@@ -109,6 +81,7 @@ function init(self)
 		["pipe_empty_4_2"] = {"droite", "bas"},
 		["pipe_empty_4_3"] = {"gauche", "haut"},
 		["pipe_empty_4_4"] = {"droite", "haut"},
+		["empty"] = {},
 		["starter_pipe_top"] = {"haut"},
 		["starter_pipe_bot"] = {"bas"},
 		["starter_pipe_left"] = {"gauche"},
@@ -143,10 +116,10 @@ function init(self)
 	
 	go.delete(self.board_id[self.starter_y][self.starter_x]) -- suppression du pipe
 
-	local id = factory.create("/board#board_factory", vmath.vector3(64 * self.starter_x + 32, 64 * self.starter_y + 32, 0.25), nil, {number = 9})
+	local id = factory.create("/board#board_factory", vmath.vector3(64 * self.starter_x + 32, 64 * self.starter_y + 32, 0.25), nil, {number = 10})
 	self.board_id[self.starter_y][self.starter_x] = id
-	self.board[self.starter_y][self.starter_x] = 9
-	self.board_continuity[self.starter_y][self.starter_x] = 1
+	self.board[self.starter_y][self.starter_x] = 10
+	self.board_continuity[self.starter_y][self.starter_x] = 2
 end
 
 function final(self)
@@ -188,6 +161,7 @@ function on_input(self, action_id, action)
 				msg.post("/Script#incomming_pipes", "give_me_next_pipe")
 
 				-- tests des continuités
+				update_table_continuity(self)
 				
 			end
 		end

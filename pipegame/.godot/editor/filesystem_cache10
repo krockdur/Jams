@@ -1,0 +1,9 @@
+63f7b34db8d8cdea90c76aacccf841ec
+::res://::1764941209
+board.tscn::PackedScene::1471753533737430240::1764862257::0::1::::<><><>0<>0<><>::uid://dr2jfeiirngv3::::res://scripts/board_scene.gd
+icon.svg::CompressedTexture2D::986849739899124469::1764850487::1764850494::1::::<><><>0<>0<>16a8859b05ce2987d21264e8125bae74<>res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.ctex::
+::res://assets/::1764851167
+pipe-sheet.png::CompressedTexture2D::32920952399560166::1762258103::1764851167::1::::<><><>0<>0<>06218a80466c764f8d3c6124d5530284<>res://.godot/imported/pipe-sheet.png-13cbdf14ac68294ca86109ccc0bb670b.ctex::
+::res://scripts/::1764862257
+Board.gd::GDScript::5323854577573819290::1764862257::0::1::::Board<>RefCounted<><>0<>0<><>::
+board_scene.gd::GDScript::8408766197028445942::1764853069::0::1::::<>Node<><>0<>0<><>::

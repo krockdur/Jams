@@ -1,16 +1,21 @@
 go.property("number", 8)
 function init(self)
+
 	self.type_pipes = {
-		"pipe_empty_1",
-		"pipe_empty_2",
-		"pipe_empty_3",
-		"pipe_empty_4_1",
-		"pipe_empty_4_2",
-		"pipe_empty_4_3",
-		"pipe_empty_4_4",
-		"empty",
-		"starter_pipe"
+		"pipe_empty_1", 	-- ==
+		"pipe_empty_2",		-- ||
+		"pipe_empty_3",		-- +
+		"pipe_empty_4_1",	-- ┐
+		"pipe_empty_4_2",	-- ┌
+		"pipe_empty_4_3",	-- ┘
+		"pipe_empty_4_4",	-- └
+		"empty",			--
+		"starter_pipe_top", --  ┘└
+		"starter_pipe_bot", --  ┐┌
+		"starter_pipe_left", -- ==|
+		"starter_pipe_right" -- |==
 	}
+	
 
 	sprite.play_flipbook("#sprite", hash( self.type_pipes[self.number] ) )
 end
