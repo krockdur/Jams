@@ -1,2 +1,3 @@
 res://board.tscn
-res://scripts/Board.gd
+res://scripts/Global.gd
+res://scripts/board_scene.gd

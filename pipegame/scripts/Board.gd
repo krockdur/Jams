@@ -2,9 +2,15 @@ extends Node2D
 
 class_name	Board
 
-var NB_TILE_X = 15
-var NB_TILE_Y = 10
-
+# Create the board
 var board = []
-func _init():
-	print("new board")
+func _init():	
+	
+	for j in range(Global.NB_TILE_Y):
+		var row = []
+		for i in range (Global.NB_TILE_X):
+			var tmp_tile = Tile.new(i, j, 8)
+			row.append(tmp_tile)
+		board.append(row)
+	
+	print("Board created")
