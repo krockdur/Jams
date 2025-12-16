@@ -3,6 +3,7 @@ extends Node
 var NB_TILE_X = 15
 var NB_TILE_Y = 10
 
+# TILES TYPES
 var HORIZONTAL_FLAT_PIPE = 	{ "name": "HORIZONTAL_FLAT_PIPE", 	"tile": Vector2i(0, 0), "alternative_tile": 0 }
 var CROSS_PIPE = 			{ "name": "CROSS_PIPE", 			"tile": Vector2i(0, 1), "alternative_tile": 0 }
 var VERTICAL_FLAT_PIPE = 	{ "name": "VERTICAL_FLAT_PIPE", 	"tile": Vector2i(0, 2), "alternative_tile": 0 }
