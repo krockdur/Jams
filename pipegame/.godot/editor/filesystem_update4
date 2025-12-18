@@ -1,3 +1,4 @@
+res://HUD.tscn
+res://scripts/hud.gd
 res://board.tscn
-res://scripts/board_scene.gd
-res://scripts/Board.gd
+res://scripts/hud_scene.gd
