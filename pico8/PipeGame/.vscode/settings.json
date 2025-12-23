@@ -1,0 +1,12 @@
+{
+    "Lua.diagnostics.globals": [
+        "_init",
+        "_update",
+        "_draw",
+        "cls",
+        "rnd",
+        "map",
+        "pset",
+        "btnp"
+    ]
+}
