@@ -1,0 +1,26 @@
+pipes = {}
+
+pipes["start_bot_wet"] = 1
+pipes["start_top_wet"] = 2
+pipes["start_right_wet"] = 3
+pipes["start_left_wet"] = 4
+pipes["hori_wet"] = 5
+pipes["verti_wet"] = 6
+pipes["corner_top_left_wet"] = 7
+pipes["corner_top_rigth_wet"] = 8
+pipes["corner_bot_left_wet"] = 9
+pipes["corner_bot_rigth_wet"] = 10
+pipes["cross_full_wet"] = 11
+pipes["start_bot_dry"] = 12
+pipes["start_bot_dry"] = 13
+pipes["start_bot_dry"] = 14
+pipes["start_bot_dry"] = 15
+pipes["start_bot_dry"] = 16
+pipes["start_bot_dry"] = 17
+pipes["start_bot_dry"] = 18
+pipes["start_bot_dry"] = 19
+pipes["start_bot_dry"] = 20
+pipes["start_bot_dry"] = 21
+pipes["start_bot_dry"] = 22
+pipes["start_bot_dry"] = 23
+pipes["start_bot_dry"] = 24
