@@ -11,6 +11,8 @@ function _update()
 end
 
 function _draw()
+    rectfill(0,0, 128,128, 0)
     draw_board()
     draw_hud()
+
 end

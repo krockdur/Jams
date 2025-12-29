@@ -8,10 +8,12 @@ board={}
 --board[j][i] = {type, wet}
 
 function init_board()
+
 end
 
 function update_board()
 end
 
 function draw_board()
+    map()
 end

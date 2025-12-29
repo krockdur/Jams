@@ -1,5 +1,26 @@
 pipes = {}
 
+pipes[1] = "start_bot"
+pipes[2] = "start_top"
+pipes[3] = "start_right"
+pipes[4] = "start_left"
+pipes[5] = "hori_wet"
+pipes[6] = "hori_dry"
+pipes[7] = "verti_wet"
+pipes[8] = "verti_dry"
+pipes[9] = "full_cross_wet"
+pipes[10] = "full_cross_dry"
+pipes[25] = "half_cross_hori_wet"
+pipes[26] = "half_cross_verti_wet"
+pipes[17] = "corner_bot_left_wet"
+pipes[18] = "corner_bot_left_dry"
+pipes[19] = "corner_top_left_wet"
+pipes[20] = "corner_top_left_dry"
+pipes[22] = "corner_bot_right_wet"
+pipes[21] = "corner_bot_right_dry"
+pipes[24] = "corner_top_right_wet"
+pipes[23] = "corner_top_right_dry"
+
 pipes["start_bot"]={}
 pipes["start_bot"]["tile"]=1
 pipes["start_bot"]["connected"]={"bot"}
