@@ -16,20 +16,23 @@ function get_rand_pipe()
 end
 
 hud.tab_incommings_pipe={}
--- pour simulation
-hud.tab_incommings_pipe[1]=get_rand_pipe()
-hud.tab_incommings_pipe[2]=get_rand_pipe()
-hud.tab_incommings_pipe[3]=get_rand_pipe()
+
 
 hud.selected_cell = {}
-hud.selected_cell.x = 5
-hud.selected_cell.y = 5
-hud.selected_cell.tile = 11
-hud.selected_cell.alpha_color = 9
 
 
 
 function init_hud()
+    -- pour simulation
+    hud.tab_incommings_pipe[1]=get_rand_pipe()
+    hud.tab_incommings_pipe[2]=get_rand_pipe()
+    hud.tab_incommings_pipe[3]=get_rand_pipe()
+
+    hud.selected_cell.x = 5
+    hud.selected_cell.y = 5
+    hud.selected_cell.tile = 11
+    hud.selected_cell.alpha_color = 9
+
 end
 
 function update_hud()
@@ -47,14 +50,33 @@ function update_hud()
     end
 
     if btnp(5) then
-        mset(hud.selected_cell.x, hud.selected_cell.y, pipes[hud.tab_incommings_pipe[1]]["tile"])
+        mset(hud.selected_cell.x, hud.selected_cell.y, pipes[hud.tab_incommings_pipe[1]]["tile_dry"])
+        deli(hud.tab_incommings_pipe, 1)
+        add(hud.tab_incommings_pipe, get_rand_pipe())
+        global.update_board = true
     end
 end
 
 function draw_hud()
+    -- full rect
+    rect(0, 127-16+2, 127, 127, 8)
+    -- rectangle pipe3
+    rect(0, 127-16+2, 16, 127, 8)
+    -- rect pipe 2
+    rect(16, 127-16+2, 32, 127, 8)
+    -- rect pipe 1
+    rect(32, 127-16+2, 48, 127, 8)
+    -- rect current pipe
+    rect(32+1, 127-16+2+1, 48-1, 127-1, 10)
     
+    -- cursor
     palt(hud.selected_cell.alpha_color, true)
     spr(hud.selected_cell.tile, hud.selected_cell.x * 8 , hud.selected_cell.y * 8)
     palt()
+
+    -- incommings pipes
+    spr(pipes[hud.tab_incommings_pipe[3]]["tile_dry"], 4, 127-8-2)
+    spr(pipes[hud.tab_incommings_pipe[2]]["tile_dry"], 20, 127-8-2)
+    spr(pipes[hud.tab_incommings_pipe[1]]["tile_dry"], 36, 127-8-2)
 
 end

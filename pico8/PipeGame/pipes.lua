@@ -4,22 +4,22 @@ pipes[1] = "start_bot"
 pipes[2] = "start_top"
 pipes[3] = "start_right"
 pipes[4] = "start_left"
-pipes[5] = "hori_wet"
-pipes[6] = "hori_dry"
-pipes[7] = "verti_wet"
-pipes[8] = "verti_dry"
-pipes[9] = "full_cross_wet"
-pipes[10] = "full_cross_dry"
+pipes[5] = "hori"
+pipes[6] = "hori"
+pipes[7] = "verti"
+pipes[8] = "verti"
+pipes[9] = "full_cross"
+pipes[10] = "full_cross"
 pipes[25] = "half_cross_hori_wet"
 pipes[26] = "half_cross_verti_wet"
-pipes[17] = "corner_bot_left_wet"
-pipes[18] = "corner_bot_left_dry"
-pipes[19] = "corner_top_left_wet"
-pipes[20] = "corner_top_left_dry"
-pipes[22] = "corner_bot_right_wet"
-pipes[21] = "corner_bot_right_dry"
-pipes[24] = "corner_top_right_wet"
-pipes[23] = "corner_top_right_dry"
+pipes[17] = "corner_bot_left"
+pipes[18] = "corner_bot_left"
+pipes[19] = "corner_top_left"
+pipes[20] = "corner_top_left"
+pipes[22] = "corner_bot_right"
+pipes[21] = "corner_bot_right"
+pipes[24] = "corner_top_right"
+pipes[23] = "corner_top_right"
 
 pipes["start_bot"]={}
 pipes["start_bot"]["tile"]=1
@@ -37,29 +37,23 @@ pipes["start_left"]={}
 pipes["start_left"]["tile"]=4
 pipes["start_left"]["connected"]={"left"}
 
-pipes["hori_wet"]={}
-pipes["hori_wet"]["tile"]=5
-pipes["hori_wet"]["connected"]={"left", "right"}
+pipes["hori"]={}
+pipes["hori"]["tile_dry"]=6
+pipes["hori"]["tile_wet"]=5
+pipes["hori"]["connected"]={"left", "right"}
 
-pipes["hori_dry"]={}
-pipes["hori_dry"]["tile"]=6
-pipes["hori_dry"]["connected"]={"left", "right"}
 
-pipes["verti_wet"]={}
-pipes["verti_wet"]["tile"]=7
-pipes["verti_wet"]["connected"]={"top", "bot"}
+pipes["verti"]={}
+pipes["verti"]["tile_dry"]=8
+pipes["verti"]["tile_wet"]=7
+pipes["verti"]["connected"]={"top", "bot"}
 
-pipes["verti_dry"]={}
-pipes["verti_dry"]["tile"]=8
-pipes["verti_dry"]["connected"]={"top", "bot"}
 
-pipes["full_cross_wet"]={}
-pipes["full_cross_wet"]["tile"]=9
-pipes["full_cross_wet"]["connected"]={"top", "bot", "left", "right"}
+pipes["full_cross"]={}
+pipes["full_cross"]["tile_dry"]=10
+pipes["full_cross"]["tile_wet"]=9
+pipes["full_cross"]["connected"]={"top", "bot", "left", "right"}
 
-pipes["full_cross_dry"]={}
-pipes["full_cross_dry"]["tile"]=10
-pipes["full_cross_dry"]["connected"]={"top", "bot", "left", "right"}
 
 pipes["half_cross_hori_wet"]={}
 pipes["half_cross_hori_wet"]["tile"]=25
@@ -69,34 +63,23 @@ pipes["half_cross_verti_wet"]={}
 pipes["half_cross_verti_wet"]["tile"]=26
 pipes["half_cross_verti_wet"]["connected"]={"top", "bot", "left", "right"}
 
-pipes["corner_bot_left_wet"]={}
-pipes["corner_bot_left_wet"]["tile"]=17
-pipes["corner_bot_left_wet"]["connected"]={"top", "right"}
+pipes["corner_bot_left"]={}
+pipes["corner_bot_left"]["tile_dry"]=18
+pipes["corner_bot_left"]["tile_wet"]=17
+pipes["corner_bot_left"]["connected"]={"top", "right"}
 
-pipes["corner_bot_left_dry"]={}
-pipes["corner_bot_left_dry"]["tile"]=18
-pipes["corner_bot_left_dry"]["connected"]={"top", "right"}
 
-pipes["corner_top_left_wet"]={}
-pipes["corner_top_left_wet"]["tile"]=19
-pipes["corner_top_left_wet"]["connected"]={"bot", "right"}
+pipes["corner_top_left"]={}
+pipes["corner_top_left"]["tile_dry"]=20
+pipes["corner_top_left"]["tile_wet"]=19
+pipes["corner_top_left"]["connected"]={"bot", "right"}
 
-pipes["corner_top_left_dry"]={}
-pipes["corner_top_left_dry"]["tile"]=20
-pipes["corner_top_left_dry"]["connected"]={"bot", "right"}
+pipes["corner_bot_right"]={}
+pipes["corner_bot_right"]["tile_dry"]=21
+pipes["corner_bot_right"]["tile_wet"]=22
+pipes["corner_bot_right"]["connected"]={"top", "left"}
 
-pipes["corner_bot_right_wet"]={}
-pipes["corner_bot_right_wet"]["tile"]=22
-pipes["corner_bot_right_wet"]["connected"]={"top", "left"}
-
-pipes["corner_bot_right_dry"]={}
-pipes["corner_bot_right_dry"]["tile"]=21
-pipes["corner_bot_right_dry"]["connected"]={"top", "left"}
-
-pipes["corner_top_right_wet"]={}
-pipes["corner_top_right_wet"]["tile"]=24
-pipes["corner_top_right_wet"]["connected"]={"bot", "left"}
-
-pipes["corner_top_right_dry"]={}
-pipes["corner_top_right_dry"]["tile"]=23
-pipes["corner_top_right_dry"]["connected"]={"bot", "left"}
+pipes["corner_top_right"]={}
+pipes["corner_top_right"]["tile_dry"]=23
+pipes["corner_top_right"]["tile_wet"]=24
+pipes["corner_top_right"]["connected"]={"bot", "left"}

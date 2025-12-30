@@ -1,4 +1,6 @@
 
+global = {}
+global.update_board = false
 
 function _init()
     init_board()
@@ -11,7 +13,8 @@ function _update()
 end
 
 function _draw()
-    rectfill(0,0, 128,128, 0)
+    cls()
+
     draw_board()
     draw_hud()
 
