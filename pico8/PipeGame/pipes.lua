@@ -10,8 +10,8 @@ pipes[7] = "verti"
 pipes[8] = "verti"
 pipes[9] = "full_cross"
 pipes[10] = "full_cross"
-pipes[25] = "half_cross_hori_wet"
-pipes[26] = "half_cross_verti_wet"
+pipes[25] = "full_cross"
+pipes[26] = "full_cross"
 pipes[17] = "corner_bot_left"
 pipes[18] = "corner_bot_left"
 pipes[19] = "corner_top_left"
@@ -58,6 +58,8 @@ pipes["verti"]["connected"]={1, 1, 0, 0}
 pipes["full_cross"]={}
 pipes["full_cross"]["tile_dry"]=10
 pipes["full_cross"]["tile_wet"]=9
+pipes["full_cross"]["tile_wet_hori"]=25
+pipes["full_cross"]["tile_wet_verti"]=26
 pipes["full_cross"]["connected"]={1, 1, 1, 1}
 
 

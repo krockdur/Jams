@@ -6,7 +6,7 @@ function get_rand_pipe()
     
     local tab_pipe_to_rand = {6, 8, 10, 18, 20, 21, 23}
     while a == 0 do
-        a = flr(rnd(7))
+        a = flr(rnd(8))
         if a ~= 0 then
             return pipes[tab_pipe_to_rand[a]]
         end
