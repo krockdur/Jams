@@ -20,8 +20,21 @@ pipes[22] = "corner_bot_right"
 pipes[21] = "corner_bot_right"
 pipes[24] = "corner_top_right"
 pipes[23] = "corner_top_right"
+pipes[49] = "multiplied_2"
+pipes[50] = "divided_2"
+pipes[52] = "target"
 
 -- connected : top, bot, left, right
+
+pipes["target"] = {}
+pipes["target"]["connected"]={1, 1, 1, 1}
+
+pipes["multiplied_2"] = {}
+pipes["multiplied_2"]["connected"]={0, 1, 0, 0}
+
+pipes["divided_2"] = {}
+pipes["divided_2"]["connected"]={1, 0, 0, 0}
+
 
 pipes["start_bot"]={}
 pipes["start_bot"]["tile_wet"]=1
