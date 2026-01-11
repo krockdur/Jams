@@ -44,8 +44,8 @@ function draw_hud()
     palt()
 
     -- incommings pipes
-    spr(pipes[game.tab_incommings_pipe[3]]["tile_dry"], 4, 127-8-2)
-    spr(pipes[game.tab_incommings_pipe[2]]["tile_dry"], 20, 127-8-2)
-    spr(pipes[game.tab_incommings_pipe[1]]["tile_dry"], 36, 127-8-2)
+    spr(pipes[game.tab_deck_tiles[3]]["tile_dry"], 4, 127-8-2)
+    spr(pipes[game.tab_deck_tiles[2]]["tile_dry"], 20, 127-8-2)
+    spr(pipes[game.tab_deck_tiles[1]]["tile_dry"], 36, 127-8-2)
 
 end

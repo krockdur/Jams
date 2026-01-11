@@ -1,6 +1,6 @@
 
 game = {}
-game.tab_incommings_pipe={}
+game.tab_deck_tiles={}
 
 
 function get_rand_pipe()
@@ -21,18 +21,18 @@ end
 function init_game()
 
     -- pour simulation
-    game.tab_incommings_pipe[2]=get_rand_pipe()
-    game.tab_incommings_pipe[1]=get_rand_pipe()
-    game.tab_incommings_pipe[3]=get_rand_pipe()
+    game.tab_deck_tiles[2]=get_rand_pipe()
+    game.tab_deck_tiles[1]=get_rand_pipe()
+    game.tab_deck_tiles[3]=get_rand_pipe()
 	
 end
 
 function update_game()
 
     if btnp(5) then
-        mset(global.selected_cell.x, global.selected_cell.y, pipes[game.tab_incommings_pipe[1]]["tile_dry"])
-        deli(game.tab_incommings_pipe, 1)
-        add(game.tab_incommings_pipe, get_rand_pipe())
+        mset(global.selected_cell.x, global.selected_cell.y, pipes[game.tab_deck_tiles[1]]["tile_dry"])
+        deli(game.tab_deck_tiles, 1)
+        add(game.tab_deck_tiles, get_rand_pipe())
         global.update_board = true
     end
 	
