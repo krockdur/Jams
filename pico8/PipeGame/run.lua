@@ -2,6 +2,7 @@
 global = {}
 global.update_board = false
 global.selected_cell = {}
+global.sel_index_deck_pipe = 0
 
 function _init()
     global.selected_cell.x = 5

@@ -1,7 +1,7 @@
 
 game = {}
 game.tab_deck_tiles={}
-
+game.selected_pipe_deck=1
 
 function get_rand_pipe()
     local a = 0
@@ -29,10 +29,18 @@ end
 
 function update_game()
 
+	-- update selected pipe from deck
+	game.selected_pipe_deck = pipes[game.tab_deck_tiles[global.sel_index_deck_pipe+1]]["tile_dry"]
+
+	-- Add pipe on the board
     if btnp(5) then
-        mset(global.selected_cell.x, global.selected_cell.y, pipes[game.tab_deck_tiles[1]]["tile_dry"])
-        deli(game.tab_deck_tiles, 1)
+		-- add pipe
+        mset(global.selected_cell.x, global.selected_cell.y, game.selected_pipe_deck)
+        -- delete pipe from deck
+		deli(game.tab_deck_tiles, global.sel_index_deck_pipe+1)
+		-- add pipe to the deck
         add(game.tab_deck_tiles, get_rand_pipe())
+		-- update board
         global.update_board = true
     end
 	
