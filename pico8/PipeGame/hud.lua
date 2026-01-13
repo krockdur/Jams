@@ -44,17 +44,15 @@ function draw_hud()
 
     
     -- cursor
-    palt(hud.selected_cell_style.alpha_color, true)
-    spr(hud.selected_cell_style.tile, global.selected_cell.x * 8 , global.selected_cell.y * 8)
-    palt()
 	spr(game.selected_pipe_deck, global.selected_cell.x * 8 , global.selected_cell.y * 8)
+	rect(global.selected_cell.x * 8 - 1, global.selected_cell.y * 8 - 1, global.selected_cell.x * 8 + 8 , global.selected_cell.y * 8 + 8 , 11)
 	
 	-- deck selected pipe
-    rect( global.sel_index_deck_pipe * 16 + 1, 127-16+2+1, global.sel_index_deck_pipe * 16 + 16 -1, 127-1, 10)
+    rect( global.sel_index_deck_pipe * 16 + 1, 127-16+2+1, global.sel_index_deck_pipe * 16 + 16 -1, 127-1, 10 )
 
-    -- incommings pipes
-    spr(pipes[game.tab_deck_tiles[3]]["tile_dry"], 4, 127-8-2)
+    -- deck
+    spr(pipes[game.tab_deck_tiles[1]]["tile_dry"], 4, 127-8-2)
     spr(pipes[game.tab_deck_tiles[2]]["tile_dry"], 20, 127-8-2)
-    spr(pipes[game.tab_deck_tiles[1]]["tile_dry"], 36, 127-8-2)
+    spr(pipes[game.tab_deck_tiles[3]]["tile_dry"], 36, 127-8-2)
 
 end

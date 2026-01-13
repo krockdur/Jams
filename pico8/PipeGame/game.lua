@@ -2,6 +2,13 @@
 game = {}
 game.tab_deck_tiles={}
 game.selected_pipe_deck=1
+game.energy = 100
+--[[
+	dry pipe = -10
+	wet pipe = +10
+	bonus
+	end
+]]
 
 function get_rand_pipe()
     local a = 0
@@ -30,7 +37,7 @@ end
 function update_game()
 
 	-- update selected pipe from deck
-	game.selected_pipe_deck = pipes[game.tab_deck_tiles[global.sel_index_deck_pipe+1]]["tile_dry"]
+	game.selected_pipe_deck = pipes[game.tab_deck_tiles[global.sel_index_deck_pipe + 1]]["tile_dry"]
 
 	-- Add pipe on the board
     if btnp(5) then
