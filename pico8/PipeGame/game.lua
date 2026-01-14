@@ -41,6 +41,8 @@ function update_game()
 
 	-- Add pipe on the board
     if btnp(5) then
+        --energy
+        game.energy -= 10
 		-- add pipe
         mset(global.selected_cell.x, global.selected_cell.y, game.selected_pipe_deck)
         -- delete pipe from deck

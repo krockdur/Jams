@@ -34,25 +34,33 @@ end
 
 function draw_hud()
     -- full rect
-    rect(0, 127-16+2, 127, 127, 8)
+    --rect(0, 127-16+2, 127, 127, 8)
+    line(0, 127-16+2, 127, 127-16+2, 8)
     -- rectangle pipe3
-    rect(0, 127-16+2, 16, 127, 8)
+    --rect(0, 127-16+2, 16, 127, 8)
     -- rect pipe 2
-    rect(16, 127-16+2, 32, 127, 8)
+    --rect(16, 127-16+2, 32, 127, 8)
     -- rect pipe 1
-    rect(32, 127-16+2, 48, 127, 8)
+    --rect(32, 127-16+2, 48, 127, 8)
 
     
     -- cursor
 	spr(game.selected_pipe_deck, global.selected_cell.x * 8 , global.selected_cell.y * 8)
 	rect(global.selected_cell.x * 8 - 1, global.selected_cell.y * 8 - 1, global.selected_cell.x * 8 + 8 , global.selected_cell.y * 8 + 8 , 11)
 	
-	-- deck selected pipe
-    rect( global.sel_index_deck_pipe * 16 + 1, 127-16+2+1, global.sel_index_deck_pipe * 16 + 16 -1, 127-1, 10 )
+	-- deck selected pipe- a finir
+    --rect( global.sel_index_deck_pipe * 8 , 127-16+2+1, global.sel_index_deck_pipe * 16 + 10 -1, 127-1, 10 )
+    if global.sel_index_deck_pipe == 0 then rect( 0 , 114, 9, 126, 9 ) end
+    if global.sel_index_deck_pipe == 1 then rect( 0+8+2 , 114, 9+8+2, 126, 10 ) end
+    if global.sel_index_deck_pipe == 2 then rect( 0+8+8+4 , 114, 9+8+8+4, 126, 8 ) end
 
     -- deck
-    spr(pipes[game.tab_deck_tiles[1]]["tile_dry"], 4, 127-8-2)
-    spr(pipes[game.tab_deck_tiles[2]]["tile_dry"], 20, 127-8-2)
-    spr(pipes[game.tab_deck_tiles[3]]["tile_dry"], 36, 127-8-2)
+    spr(pipes[game.tab_deck_tiles[1]]["tile_dry"], 1, 127-8-2)
+    spr(pipes[game.tab_deck_tiles[2]]["tile_dry"], 1+8+2, 127-8-2)
+    spr(pipes[game.tab_deck_tiles[3]]["tile_dry"], 1+8+2+8+2, 127-8-2)
 
+    -- energy
+    for i = 0, -1+game.energy/10 do
+        spr(11, 38+i*8, 117)
+    end
 end
