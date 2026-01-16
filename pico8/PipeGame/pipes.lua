@@ -20,8 +20,10 @@ pipes[22] = "corner_bot_right"
 pipes[21] = "corner_bot_right"
 pipes[24] = "corner_top_right"
 pipes[23] = "corner_top_right"
-pipes[49] = "multiplied_2"
-pipes[50] = "divided_2"
+pipes[33] = "bonus_1"
+pipes[49] = "bonus_1"
+pipes[34] = "bonus_2"
+pipes[50] = "bonus_2"
 pipes[52] = "target"
 
 -- connected : top, bot, left, right
@@ -29,11 +31,15 @@ pipes[52] = "target"
 pipes["target"] = {}
 pipes["target"]["connected"]={1, 1, 1, 1}
 
-pipes["multiplied_2"] = {}
-pipes["multiplied_2"]["connected"]={0, 1, 0, 0}
+pipes["bonus_1"] = {}
+pipes["bonus_1"]["tile_wet"]=33
+pipes["bonus_1"]["tile_dry"]=49
+pipes["bonus_1"]["connected"]={1, 1, 1, 1}
 
-pipes["divided_2"] = {}
-pipes["divided_2"]["connected"]={1, 0, 0, 0}
+pipes["bonus_2"] = {}
+pipes["bonus_2"]["tile_wet"]=34
+pipes["bonus_2"]["tile_dry"]=50
+pipes["bonus_2"]["connected"]={1, 1, 1, 1}
 
 
 pipes["start_bot"]={}

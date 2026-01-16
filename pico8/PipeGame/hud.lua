@@ -34,15 +34,7 @@ end
 
 function draw_hud()
     -- full rect
-    --rect(0, 127-16+2, 127, 127, 8)
     line(0, 127-16+2, 127, 127-16+2, 8)
-    -- rectangle pipe3
-    --rect(0, 127-16+2, 16, 127, 8)
-    -- rect pipe 2
-    --rect(16, 127-16+2, 32, 127, 8)
-    -- rect pipe 1
-    --rect(32, 127-16+2, 48, 127, 8)
-
     
     -- cursor
 	spr(game.selected_pipe_deck, global.selected_cell.x * 8 , global.selected_cell.y * 8)
@@ -63,4 +55,7 @@ function draw_hud()
     for i = 0, -1+game.energy/10 do
         spr(11, 38+i*8, 117)
     end
+
+    -- bonus
+    print(game.nb_bonus_wet, 122, 119, 10)
 end

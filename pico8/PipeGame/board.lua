@@ -34,6 +34,8 @@ function are_pipe_conn_to_down(p1, p2)
 end
 
 function are_pipe_conn_to_top(p1, p2)
+	print(p1, 10, 10, 10)
+	print(p2 ,10, 30, 10)
     local connected = false
     if p1 ~= 0 and p2 ~= 0 then
         if pipes[pipes[p1]].connected[1] == 1 and pipes[pipes[p2]].connected[2] == 1 then
@@ -67,7 +69,7 @@ function update_board()
         -- make all pipes dry and get offline map
         for j = 0, 15 do
             for i = 0, 15 do
-                if fget(mget(i, j)) == 2 then
+                if is_wet(i, j) or is_cross_hori_wet(i, j) or is_cross_verti_wet(i, j) then
                     mset(i, j, pipes[pipes[mget(i, j)]].tile_dry)
                 end
             end
@@ -76,6 +78,7 @@ function update_board()
         while updating do
 
             updating = false
+            game.nb_bonus_wet = 0
             for j = 0, 15 do
                 for i = 0, 15 do
 
@@ -132,12 +135,21 @@ function update_board()
 						end
 						
 						if c_tile == 25 or c_tile == 26 then
-							if ((c_to_down and is_wet(i, j + 1)) or (c_to_top and is_wet(i, j - 1))) and ((c_to_left and is_wet(i - 1, j)) or (c_to_right and is_wet(i + 1, j))) then
+							if ( (c_to_down and is_wet(i, j + 1) ) or (c_to_top and is_wet(i, j - 1))) and ((c_to_left and is_wet(i - 1, j)) or (c_to_right and is_wet(i + 1, j))) then
 								mset(i, j, pipes[pipes[mget(i, j)] ].tile_wet)
 								updating = true
 							end							
                         end
 
+                        -- check if bonus tile connected to a wet pipe
+                        if (c_tile == 49 or c_tile == 50) then
+							if ( (c_to_top and (is_wet(i, j - 1) or is_cross_verti_wet(i, j - 1)) ) or (c_to_down and (is_wet(i, j + 1) or is_cross_verti_wet(i, j + 1)) ) or (c_to_left and (is_wet(i-1, j) or is_cross_hori_wet(i-1, j)) ) or (c_to_right and (is_wet(i+1, j) or is_cross_hori_wet(i+1, j)) ) ) then
+								mset(i, j, pipes[pipes[mget(i, j)] ].tile_wet)
+								game.nb_bonus_wet += 1
+								game.energy = 100
+								updating = true
+							end
+                        end
                     end
 
                 end
