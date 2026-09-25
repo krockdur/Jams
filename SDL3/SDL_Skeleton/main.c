@@ -15,6 +15,7 @@ int main()
 
     uint16_t width = 320;
     uint16_t height = 200;
+    const double target_frame = 1.0 / 60.0;
 
     uint32_t framebuffer[width * height];
 
@@ -34,7 +35,8 @@ int main()
     }
 
     clearFrameBuffer(0xffffff, framebuffer, width*height);
-    framebuffer[16500] = 0xff0000;
+
+    drawPixel(30, 5, width, height, framebuffer, 0xff0000);
 
     bool is_running = true;
 
@@ -44,6 +46,7 @@ int main()
     SDL_Event e;
     while (is_running)
     {
+        uint64_t start = SDL_GetPerformanceCounter();
 
         while (SDL_PollEvent( &e ))
         {
@@ -61,6 +64,11 @@ int main()
         SDL_RenderTexture(renderer, texture, NULL, NULL);
         SDL_RenderPresent( renderer );
 
+        uint64_t end = SDL_GetPerformanceCounter();
+        double elapsed = (double)(end - start) / (double)SDL_GetPerformanceFrequency();
+        if (elapsed < target_frame) {
+          SDL_Delay((uint32_t)((target_frame - elapsed) * 1000.0));
+        }
     }
 
 
