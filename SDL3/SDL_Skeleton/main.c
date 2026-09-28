@@ -7,14 +7,20 @@
 int main()
 {
 
+    //Test moteur :
+    uint16_t posPlayerX = 10;
+    uint16_t posPlayerY = 10;
+
+    //
+
     SDL_Window* window = NULL;
     SDL_Renderer* renderer = NULL;
     SDL_Texture* texture = NULL;
 
-    uint8_t scale = 3;
+    uint8_t scale = 4;
 
-    uint16_t width = 320;
-    uint16_t height = 200;
+    uint16_t width = 320; //320;
+    uint16_t height = 200; //200;
     const double target_frame = 1.0 / 60.0;
 
     uint32_t framebuffer[width * height];
@@ -33,10 +39,6 @@ int main()
         SDL_Quit();
         return -1;
     }
-
-    clearFrameBuffer(0xffffff, framebuffer, width*height);
-
-    drawPixel(30, 5, width, height, framebuffer, 0xff0000);
 
     bool is_running = true;
 
@@ -57,6 +59,15 @@ int main()
             }
 
         }
+
+
+        clearFrameBuffer(0xffffff, framebuffer, width, height);
+
+
+
+
+        posPlayerX++;
+        drawFilledCircle(posPlayerX, posPlayerY, 5, width, height, framebuffer, 0x56F5F3);
 
         SDL_UpdateTexture(texture, NULL, framebuffer, width * sizeof(uint32_t));
 
