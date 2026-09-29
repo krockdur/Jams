@@ -78,17 +78,17 @@ int main()
                 is_running = false;
             }
         }
-        int *keyboard ;
-        SDL_GetKeyboardState(keyboard);
-//
-//        uint8_t leftInput  = keyboard[SDL_SCANCODE_Q];
-//        uint8_t rightInput = keyboard[SDL_SCANCODE_D];
-//        uint8_t upInput    = keyboard[SDL_SCANCODE_Z];
-//        uint8_t downInput  = keyboard[SDL_SCANCODE_S];
 
+        SDL_PumpEvents();
+        const bool *keyboardState = SDL_GetKeyboardState(NULL);
+
+        printf("%d", keyboardState[SDL_GetScancodeFromKey(SDLK_Z, NULL )]);
+        printf("%d", keyboardState[SDL_GetScancodeFromKey(SDLK_Q, NULL)]);
+        printf("%d", keyboardState[SDL_GetScancodeFromKey(SDLK_S, NULL)]);
+        printf("%d", keyboardState[SDL_GetScancodeFromKey(SDLK_D, NULL)]);
 
         system("cls");
-        printf("INPUT : %d%d%d%dr\n", leftInput, rightInput, upInput, downInput);
+        //printf("INPUT : %d%d%d%dr\n", leftInput, rightInput, upInput, downInput);
 
         // Efface le framebuffer
         clearFrameBuffer(0xffffff, framebuffer, width, height);
