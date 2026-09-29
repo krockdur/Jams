@@ -6,12 +6,9 @@
 
 int main()
 {
-
-    //Test moteur :
-    uint16_t posPlayerX = 10;
-    uint16_t posPlayerY = 10;
-
-    //
+    // Position du joueur (float pour mouvement fluide)
+    float posPlayerX = 10.0f;
+    float posPlayerY = 10.0f;
 
     SDL_Window* window = NULL;
     SDL_Renderer* renderer = NULL;
@@ -19,76 +16,130 @@ int main()
 
     uint8_t scale = 4;
 
-    uint16_t width = 320; //320;
-    uint16_t height = 200; //200;
+    // Taille de la grille de pixels (framebuffer logiciel)
+    uint16_t width = 320;
+    uint16_t height = 200;
+
+    // Durée théorique d'une frame à 60 FPS
     const double target_frame = 1.0 / 60.0;
 
+    // Framebuffer logiciel (rendu CPU)
     uint32_t framebuffer[width * height];
 
-
-    if (!SDL_Init( SDL_INIT_VIDEO ))
+    // Initialisation de SDL
+    if (!SDL_Init(SDL_INIT_VIDEO))
     {
-		SDL_Log( "SDL_Init failed: %s", SDL_GetError() );
+        SDL_Log("SDL_Init failed: %s", SDL_GetError());
         return -1;
     }
 
-
-    if( !SDL_CreateWindowAndRenderer( "SDL_Skeleton", width * scale, height * scale, SDL_WINDOW_RESIZABLE | SDL_WINDOW_HIGH_PIXEL_DENSITY, &window, &renderer ))
+    // Création fenêtre + renderer
+    if (!SDL_CreateWindowAndRenderer(
+            "SDL_Skeleton",
+            width * scale,
+            height * scale,
+            SDL_WINDOW_RESIZABLE | SDL_WINDOW_HIGH_PIXEL_DENSITY,
+            &window, &renderer))
     {
-        SDL_Log( "CreateWindowAndRenderer: %s", SDL_GetError() );
+        SDL_Log("CreateWindowAndRenderer: %s", SDL_GetError());
         SDL_Quit();
         return -1;
     }
 
     bool is_running = true;
 
-    texture = SDL_CreateTexture( renderer, SDL_PIXELFORMAT_XRGB8888 , SDL_TEXTUREACCESS_STREAMING, width, height );
+    // Texture dans laquelle on upload le framebuffer
+    texture = SDL_CreateTexture(renderer,
+                                SDL_PIXELFORMAT_XRGB8888,
+                                SDL_TEXTUREACCESS_STREAMING,
+                                width, height);
+
     SDL_SetTextureScaleMode(texture, SDL_SCALEMODE_NEAREST);
 
+    // Delta‑time initial : toujours la valeur théorique
+    double elapsed = target_frame;
+
     SDL_Event e;
+
     while (is_running)
     {
+        // Début de la mesure du temps de frame
         uint64_t start = SDL_GetPerformanceCounter();
 
-        while (SDL_PollEvent( &e ))
+        // Gestion des événements
+        uint8_t leftInput = 0;
+        uint8_t rightInput = 0;
+        uint8_t upInput = 0;
+        uint8_t downInput = 0;
+        while (SDL_PollEvent(&e))
         {
             if (e.type == SDL_EVENT_KEY_DOWN && e.key.key == SDLK_ESCAPE)
             {
                 is_running = false;
-                printf( "key down" );
             }
-
         }
+        int *keyboard ;
+        SDL_GetKeyboardState(keyboard);
+//
+//        uint8_t leftInput  = keyboard[SDL_SCANCODE_Q];
+//        uint8_t rightInput = keyboard[SDL_SCANCODE_D];
+//        uint8_t upInput    = keyboard[SDL_SCANCODE_Z];
+//        uint8_t downInput  = keyboard[SDL_SCANCODE_S];
 
 
+        system("cls");
+        printf("INPUT : %d%d%d%dr\n", leftInput, rightInput, upInput, downInput);
+
+        // Efface le framebuffer
         clearFrameBuffer(0xffffff, framebuffer, width, height);
 
+        // Log debug
+        //printf("elapsed : %f | posPlayerX : %f\r\n", elapsed, posPlayerX);
 
+        // Déplacement du joueur basé sur le delta‑time
+        posPlayerX += 30.0f * elapsed;
 
+        // Dessin du joueur
+        drawFilledCircle((uint16_t)posPlayerX,
+                         (uint16_t)posPlayerY,
+                         5,
+                         width, height,
+                         framebuffer,
+                         0x56F5F3);
 
-        posPlayerX++;
-        drawFilledCircle(posPlayerX, posPlayerY, 5, width, height, framebuffer, 0x56F5F3);
-
+        // Upload du framebuffer dans la texture
         SDL_UpdateTexture(texture, NULL, framebuffer, width * sizeof(uint32_t));
 
-        SDL_RenderClear( renderer );
+        // Rendu SDL
+        SDL_RenderClear(renderer);
         SDL_RenderTexture(renderer, texture, NULL, NULL);
-        SDL_RenderPresent( renderer );
+        SDL_RenderPresent(renderer);
 
+        // Fin de la mesure du temps de frame
         uint64_t end = SDL_GetPerformanceCounter();
-        double elapsed = (double)(end - start) / (double)SDL_GetPerformanceFrequency();
-        if (elapsed < target_frame) {
-          SDL_Delay((uint32_t)((target_frame - elapsed) * 1000.0));
+        double frameTime = (double)(end - start) / (double)SDL_GetPerformanceFrequency();
+
+        // Si la frame a été plus rapide que 60 FPS → on dort pour stabiliser
+        if (frameTime < target_frame)
+        {
+            SDL_Delay((uint32_t)((target_frame - frameTime) * 1000.0));
+
+            // IMPORTANT :
+            // On fixe le delta‑time à la valeur théorique.
+            // Cela évite les sauts et garantit un mouvement constant.
+            elapsed = target_frame;
+        }
+        else
+        {
+            // Si la frame est plus lente → on utilise le vrai temps
+            elapsed = frameTime;
         }
     }
 
-
-
-
-    SDL_DestroyTexture( texture );
-    SDL_DestroyRenderer( renderer );
-    SDL_DestroyWindow( window );
-
+    // Nettoyage SDL
+    SDL_DestroyTexture(texture);
+    SDL_DestroyRenderer(renderer);
+    SDL_DestroyWindow(window);
 
     return 0;
 }
