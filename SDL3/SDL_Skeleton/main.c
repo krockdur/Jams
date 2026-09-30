@@ -79,6 +79,10 @@ int main()
             {
                 is_running = false;
             }
+            if (e.type == SDL_EVENT_KEY_DOWN && e.key.key == SDLK_SPACE)
+            {
+                printf("debug\r\n");
+            }
         }
 
         float directionX = 0.0f;
@@ -103,25 +107,27 @@ int main()
         float cursorX;
         float cursorY;
         SDL_GetMouseState(&cursorX, &cursorY);
-        printf("posPlayerX %f | posPlayerY %f\r\n", cursorX, cursorY);
 
         computeDirectionToCursor(posPlayerX, posPlayerY, cursorX, cursorY, &directionX, &directionY);
 
-        // Efface le framebuffer
-        clearFrameBuffer(0xffffff, framebuffer, width, height);
-
-
         //printf("posPlayerX %f | posPlayerY %f\r\n", posPlayerX, posPlayerY);
+        printf("directionX %f | directionY %f\r\n", directionX, directionY);
+        /*
         float len = SDL_sqrtf(directionX*directionX + directionY*directionY);
         if (len > 0.0f) {
             directionX /= len;
             directionY /= len;
         }
+        */
         // Déplacement du joueur basé sur le delta‑time
         posPlayerX += 30.0f * elapsed * directionX;
         posPlayerY += 30.0f * elapsed * directionY;
 
 
+
+
+        // Efface le framebuffer
+        clearFrameBuffer(0xffffff, framebuffer, width, height);
 
 
         // Dessin du joueur
@@ -191,5 +197,6 @@ void computeDirectionToCursor(
     // Normalisation du vecteur (vitesse constante)
     *directionX = dx / len;
     *directionY = dy / len;
+
 }
 

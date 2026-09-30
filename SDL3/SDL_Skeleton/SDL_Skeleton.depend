@@ -500,7 +500,7 @@
 1790574873 source:d:\dev\jams\sdl3\sdl_skeleton\helper.c
 	"helper.h"
 
-1790738062 source:f:\dev\jams\sdl3\sdl_skeleton\main.c
+1790795773 source:f:\dev\jams\sdl3\sdl_skeleton\main.c
 	<SDL3/SDL.h>
 	<stdio.h>
 	<stdint.h>
