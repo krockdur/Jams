@@ -4,6 +4,12 @@
 
 #include "helper.h"
 
+void computeDirectionToCursor(
+    float playerX, float playerY,
+    float cursorX, float cursorY,
+    float *directionX, float *directionY
+);
+
 int main()
 {
     // Position du joueur (float pour mouvement fluide)
@@ -93,11 +99,19 @@ int main()
             directionX = 1.0f;
         }
 
+        // Gestion de la souris
+        float cursorX;
+        float cursorY;
+        SDL_GetMouseState(&cursorX, &cursorY);
+        printf("posPlayerX %f | posPlayerY %f\r\n", cursorX, cursorY);
+
+        computeDirectionToCursor(posPlayerX, posPlayerY, cursorX, cursorY, &directionX, &directionY);
+
         // Efface le framebuffer
         clearFrameBuffer(0xffffff, framebuffer, width, height);
 
 
-        printf("posPlayerX %f | posPlayerY %f\r\n", posPlayerX, posPlayerY);
+        //printf("posPlayerX %f | posPlayerY %f\r\n", posPlayerX, posPlayerY);
         float len = SDL_sqrtf(directionX*directionX + directionY*directionY);
         if (len > 0.0f) {
             directionX /= len;
@@ -154,3 +168,28 @@ int main()
 
     return 0;
 }
+
+void computeDirectionToCursor(
+    float playerX, float playerY,
+    float cursorX, float cursorY,
+    float *directionX, float *directionY
+){
+    // Calcul du vecteur entre le joueur et le curseur
+    float dx = cursorX - playerX;
+    float dy = cursorY - playerY;
+
+    // Calcul de la longueur du vecteur
+    float len = SDL_sqrtf(dx*dx + dy*dy);
+
+    // Si la souris est exactement sur le joueur → pas de direction
+    if (len == 0.0f) {
+        *directionX = 0.0f;
+        *directionY = 0.0f;
+        return;
+    }
+
+    // Normalisation du vecteur (vitesse constante)
+    *directionX = dx / len;
+    *directionY = dy / len;
+}
+
