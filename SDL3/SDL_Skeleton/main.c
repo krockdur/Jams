@@ -67,10 +67,6 @@ int main()
         uint64_t start = SDL_GetPerformanceCounter();
 
         // Gestion des événements
-        uint8_t leftInput = 0;
-        uint8_t rightInput = 0;
-        uint8_t upInput = 0;
-        uint8_t downInput = 0;
         while (SDL_PollEvent(&e))
         {
             if (e.type == SDL_EVENT_KEY_DOWN && e.key.key == SDLK_ESCAPE)
@@ -79,25 +75,40 @@ int main()
             }
         }
 
+        float directionX = 0.0f;
+        float directionY = 0.0f;
         SDL_PumpEvents();
         const bool *keyboardState = SDL_GetKeyboardState(NULL);
 
-        printf("%d", keyboardState[SDL_GetScancodeFromKey(SDLK_Z, NULL )]);
-        printf("%d", keyboardState[SDL_GetScancodeFromKey(SDLK_Q, NULL)]);
-        printf("%d", keyboardState[SDL_GetScancodeFromKey(SDLK_S, NULL)]);
-        printf("%d", keyboardState[SDL_GetScancodeFromKey(SDLK_D, NULL)]);
-
-        system("cls");
-        //printf("INPUT : %d%d%d%dr\n", leftInput, rightInput, upInput, downInput);
+        if ( keyboardState[SDL_GetScancodeFromKey(SDLK_Z, NULL )] ){
+            directionY = -1.0f;
+        }
+        if ( keyboardState[SDL_GetScancodeFromKey(SDLK_Q, NULL )] ){
+            directionX = -1.0f;
+        }
+        if ( keyboardState[SDL_GetScancodeFromKey(SDLK_S, NULL )] ){
+            directionY = 1.0f;
+        }
+        if ( keyboardState[SDL_GetScancodeFromKey(SDLK_D, NULL )] ){
+            directionX = 1.0f;
+        }
 
         // Efface le framebuffer
         clearFrameBuffer(0xffffff, framebuffer, width, height);
 
-        // Log debug
-        //printf("elapsed : %f | posPlayerX : %f\r\n", elapsed, posPlayerX);
 
+        printf("posPlayerX %f | posPlayerY %f\r\n", posPlayerX, posPlayerY);
+        float len = SDL_sqrtf(directionX*directionX + directionY*directionY);
+        if (len > 0.0f) {
+            directionX /= len;
+            directionY /= len;
+        }
         // Déplacement du joueur basé sur le delta‑time
-        posPlayerX += 30.0f * elapsed;
+        posPlayerX += 30.0f * elapsed * directionX;
+        posPlayerY += 30.0f * elapsed * directionY;
+
+
+
 
         // Dessin du joueur
         drawFilledCircle((uint16_t)posPlayerX,
