@@ -104,13 +104,21 @@ int main()
         }
 
         // Gestion de la souris
-        float cursorX;
-        float cursorY;
-        SDL_GetMouseState(&cursorX, &cursorY);
+        float realCursorX;
+        float realCursorY;
+        SDL_GetMouseState(&realCursorX, &realCursorY);
+
+
+        // Application du scale aux coordonnées de la souris
+        float cursorX = realCursorX / (float)scale;
+        float cursorY = realCursorY / (float)scale;
+
 
         computeDirectionToCursor(posPlayerX, posPlayerY, cursorX, cursorY, &directionX, &directionY);
 
-        //printf("posPlayerX %f | posPlayerY %f\r\n", posPlayerX, posPlayerY);
+        printf("-----------------------------\r\n");
+        printf("cursorX %f | cursorY %f\r\n", cursorX, cursorY);
+        printf("posPlayerX %f | posPlayerY %f\r\n", posPlayerX, posPlayerY);
         printf("directionX %f | directionY %f\r\n", directionX, directionY);
         /*
         float len = SDL_sqrtf(directionX*directionX + directionY*directionY);
@@ -120,10 +128,10 @@ int main()
         }
         */
         // Déplacement du joueur basé sur le delta‑time
-        posPlayerX += 30.0f * elapsed * directionX;
-        posPlayerY += 30.0f * elapsed * directionY;
+        posPlayerX += 60.0f * elapsed * directionX;
+        posPlayerY += 60.0f * elapsed * directionY;
 
-
+        printf("-----------------------------\r\n");
 
 
         // Efface le framebuffer
