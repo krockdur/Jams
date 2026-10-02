@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1790832816 source:d:\dev\jams\sdl3\sdl_skeleton\main.c
+1790833444 source:d:\dev\jams\sdl3\sdl_skeleton\main.c
 	<SDL3/SDL.h>
 	<stdio.h>
 	<stdint.h>
@@ -492,12 +492,12 @@
 1772561442 d:\libs\sdl3-3.4.16\include\sdl3\sdl_oldnames.h
 	<SDL3/SDL_platform_defines.h>
 
-1790574873 d:\dev\jams\sdl3\sdl_skeleton\helper.h
+1790920675 d:\dev\jams\sdl3\sdl_skeleton\helper.h
 	<stdint.h>
 	<stdio.h>
 	<math.h>
 
-1790574873 source:d:\dev\jams\sdl3\sdl_skeleton\helper.c
+1790919271 source:d:\dev\jams\sdl3\sdl_skeleton\helper.c
 	"helper.h"
 
 1790795773 source:f:\dev\jams\sdl3\sdl_skeleton\main.c

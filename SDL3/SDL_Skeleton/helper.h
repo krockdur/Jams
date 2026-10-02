@@ -5,6 +5,15 @@
 #include <stdio.h>
 #include <math.h>
 
+typedef struct {
+    float x;      // position X du coin supérieur gauche
+    float y;      // position Y du coin supérieur gauche
+    float w;      // largeur
+    float h;      // hauteur
+} Rect;
+
+bool rectIntersect(const Rect *a, const Rect *b);
+
 /**
 efface la grille du monde :
 color           couleur au format 0xRRGGBBAA

@@ -3,12 +3,22 @@
 #include <stdint.h>
 
 #include "helper.h"
+#include "objects.h"
+
+#define MAX_OBJECTS 128
+GameObject objects[MAX_OBJECTS];
+int objectCount = 0;
+
 
 void computeDirectionToCursor(
     float playerX, float playerY,
     float cursorX, float cursorY,
     float *directionX, float *directionY
 );
+
+GameObject* createObject(float x, float y, float w, float h, uint32_t color);
+
+
 
 int main()
 {
@@ -25,6 +35,9 @@ int main()
     // Taille de la grille de pixels (framebuffer logiciel)
     uint16_t width = 320;
     uint16_t height = 200;
+
+
+
 
     // Durée théorique d'une frame à 60 FPS
     const double target_frame = 1.0 / 60.0;
@@ -208,3 +221,20 @@ void computeDirectionToCursor(
 
 }
 
+GameObject* createObject(float x, float y, float w, float h, uint32_t color)
+{
+    if (objectCount >= MAX_OBJECTS)
+        return NULL; // tableau plein
+
+    GameObject *obj = &objects[objectCount++];
+
+    obj->x = x;
+    obj->y = y;
+    obj->vx = 0.0f;
+    obj->vy = 0.0f;
+    obj->w = w;
+    obj->h = h;
+    obj->color = color;
+
+    return obj;
+}
