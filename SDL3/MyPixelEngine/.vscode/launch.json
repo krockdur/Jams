@@ -1,0 +1,15 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug MyPixelEngine",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/bin/MyPixelEngine.exe",
+            "cwd": "${workspaceFolder}",
+            "MIMode": "gdb",
+            "miDebuggerPath": "F:/Libs/mingw64/bin/gdb.exe",
+            "externalConsole": false
+        }
+    ]
+}

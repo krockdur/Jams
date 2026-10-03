@@ -1,0 +1,57 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "BUILD",
+            "type": "shell",
+            "command": "gcc",
+            "args": [
+                "-std=c17",
+                "-Wall",
+                "-Wextra",
+
+                "-I", "${workspaceFolder}/include",
+                "-I", "${workspaceFolder}/libs/SDL3-3.4.16/include",
+
+                "-L", "${workspaceFolder}/libs/SDL3-3.4.16/lib",
+
+                "${workspaceFolder}/src/*.c",
+
+                "-lSDL3",
+
+                "-o", "${workspaceFolder}/bin/MyPixelEngine.exe"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": ["$gcc"]
+        },
+
+        {
+            "label": "RUN",
+            "type": "shell",
+            "command": "${workspaceFolder}/bin/MyPixelEngine.exe",
+            "group": "none",
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated"
+            }
+        },
+
+        {
+            "label": "CLEAN",
+            "type": "shell",
+            "command": "cmd",
+            "args": [
+                "/c",
+                "del /q \"${workspaceFolder}\\bin\\*.exe\" & del /q \"${workspaceFolder}\\bin\\*.o\""
+            ],
+            "group": "none",
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated"
+            }
+        }
+    ]
+}

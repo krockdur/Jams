@@ -1,0 +1,28 @@
+{
+  "buttons": [
+    {
+      "id": "BUILD",
+      "label": "BUILD",
+      "task": "BUILD",
+      "tooltip": "Build the project",
+      "color": "#569CD6",
+      "runningColor": "#CE9178"
+    },
+    {
+      "id": "CLEAN",
+      "label": "CLEAN",
+      "task": "CLEAN",
+      "tooltip": "Clean the project",
+      "color": "#569CD6",
+      "runningColor": "#CE9178"
+    },
+    {
+      "id": "RUN",
+      "label": "RUN",
+      "task": "RUN",
+      "tooltip": "Run the project",
+      "color": "#569CD6",
+      "runningColor": "#CE9178"
+    }
+  ]
+}
