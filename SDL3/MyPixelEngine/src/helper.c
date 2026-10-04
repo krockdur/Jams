@@ -31,49 +31,49 @@ void drawFilledSquare(uint16_t posx, uint16_t posy, uint16_t sizex, uint16_t siz
 }
 
 void drawLine( uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1, uint16_t canvasWidth, uint16_t canvasHeight, uint32_t *framebuffer, uint32_t color){
-    // Calcul de la différence horizontale entre les deux points
+    // Calcul de la diffï¿½rence horizontale entre les deux points
     int dx = (int)x1 - (int)x0;
     if (dx < 0) dx = -dx;   // Valeur absolue de dx
 
-    // Calcul de la différence verticale entre les deux points
+    // Calcul de la diffï¿½rence verticale entre les deux points
     int dy = (int)y1 - (int)y0;
     if (dy < 0) dy = -dy;   // Valeur absolue de dy
-    dy = -dy;               // Bresenham utilise dy négatif pour simplifier les calculs
+    dy = -dy;               // Bresenham utilise dy nï¿½gatif pour simplifier les calculs
 
-    // Détermination du sens de déplacement horizontal
+    // Dï¿½termination du sens de dï¿½placement horizontal
     int sx;
     if (x0 < x1) sx = 1;    // On avance vers la droite
     else sx = -1;           // On avance vers la gauche
 
-    // Détermination du sens de déplacement vertical
+    // Dï¿½termination du sens de dï¿½placement vertical
     int sy;
     if (y0 < y1) sy = 1;    // On avance vers le bas
     else sy = -1;           // On avance vers le haut
 
-    // Erreur initiale : combinaison des écarts horizontaux et verticaux
+    // Erreur initiale : combinaison des ï¿½carts horizontaux et verticaux
     int err = dx + dy;
 
-    // Boucle principale : on trace jusqu'à atteindre le point final
+    // Boucle principale : on trace jusqu'ï¿½ atteindre le point final
     while (1)
     {
-        // Vérification des bornes avant d'écrire dans le framebuffer
+        // Vï¿½rification des bornes avant d'ï¿½crire dans le framebuffer
         if (x0 < canvasWidth && y0 < canvasHeight)
             framebuffer[y0 * canvasWidth + x0] = color;
 
-        // Si on a atteint le point final, on arrête
+        // Si on a atteint le point final, on arrï¿½te
         if (x0 == x1 && y0 == y1)
             break;
 
-        // Double de l’erreur : utilisé pour décider du prochain déplacement
+        // Double de lï¿½erreur : utilisï¿½ pour dï¿½cider du prochain dï¿½placement
         int e2 = 2 * err;
 
-        // Déplacement horizontal si l’erreur le permet
+        // Dï¿½placement horizontal si lï¿½erreur le permet
         if (e2 >= dy) {
             err += dy;
             x0 += sx;
         }
 
-        // Déplacement vertical si l’erreur le permet
+        // Dï¿½placement vertical si lï¿½erreur le permet
         if (e2 <= dx) {
             err += dx;
             y0 += sy;
@@ -88,7 +88,7 @@ void drawCircle( uint16_t cx, uint16_t cy, uint16_t radius, uint16_t canvasWidth
 
     while (x >= y)
     {
-        // Chaque point est dessiné dans les 8 octants du cercle
+        // Chaque point est dessinï¿½ dans les 8 octants du cercle
         if (cx + x < canvasWidth && cy + y < canvasHeight)
             framebuffer[(cy + y) * canvasWidth + (cx + x)] = color;
 
@@ -133,7 +133,7 @@ void drawFilledCircle( uint16_t cx, uint16_t cy, uint16_t radius, uint16_t canva
     while (x >= y)
     {
         // --- Pour chaque "ligne" horizontale du cercle ---
-        // On dessine des segments entre les points symétriques
+        // On dessine des segments entre les points symï¿½triques
 
         // Ligne horizontale en haut
         if (cy + y < canvasHeight) {
@@ -161,7 +161,7 @@ void drawFilledCircle( uint16_t cx, uint16_t cy, uint16_t radius, uint16_t canva
             }
         }
 
-        // Ligne horizontale à gauche et droite (pour x >= y)
+        // Ligne horizontale ï¿½ gauche et droite (pour x >= y)
         if (cy + x < canvasHeight) {
             int start = cx - y;
             if (start < 0) start = 0;

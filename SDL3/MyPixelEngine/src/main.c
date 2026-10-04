@@ -16,7 +16,6 @@ void computeDirectionToCursor(
     float *directionX, float *directionY
 );
 
-GameObject* createObject(float x, float y, float w, float h, uint32_t color);
 
 
 
@@ -218,20 +217,3 @@ void computeDirectionToCursor(
 
 }
 
-GameObject* createObject(float x, float y, float w, float h, uint32_t color)
-{
-    if (objectCount >= MAX_OBJECTS)
-        return NULL; // tableau plein
-
-    GameObject *obj = &objects[objectCount++];
-
-    obj->x = x;
-    obj->y = y;
-    obj->vx = 0.0f;
-    obj->vy = 0.0f;
-    obj->w = w;
-    obj->h = h;
-    obj->color = color;
-
-    return obj;
-}
