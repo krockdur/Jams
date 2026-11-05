@@ -1,0 +1,26 @@
+Time to shoot
+
+Time to dodge 
+
+
+Shoot em up
+
+
+
+Vaisseau
+-> position souris
+-> position doigt
+
+30s of lives
+
+1 kill += 1s
+1 touche -= 2s
+
+Enemies colors
+red 	=> stop counter for 3s
+green 	=> add 1s
+blue 	=> add 5s
+orange	=> give a bomb - 3 max
+
+use gun will decrease real time
+use bomb will decrease 5s

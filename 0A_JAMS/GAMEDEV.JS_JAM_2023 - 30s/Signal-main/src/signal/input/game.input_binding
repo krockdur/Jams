@@ -1,0 +1,12 @@
+key_trigger {
+  input: KEY_SPACE
+  action: "toto"
+}
+mouse_trigger {
+  input: MOUSE_BUTTON_1
+  action: "touch"
+}
+mouse_trigger {
+  input: MOUSE_BUTTON_RIGHT
+  action: "touch_bomb"
+}

@@ -1,0 +1,34 @@
+function init(self)
+	self.position = go.get_position()
+end
+
+function final(self)
+
+end
+
+function update(self, dt)
+
+end
+
+function fixed_update(self, dt)
+	self.position.y = self.position.y - 1 * 500 *  dt
+	go.set_position(self.position)
+
+	if (self.position.y < 0) then
+		go.delete()
+	end
+end
+
+function on_message(self, message_id, message, sender)
+	if (message_id == hash("collision_response") and message.other_group == hash("player")) then
+		go.delete()
+	end
+end
+
+function on_input(self, action_id, action)
+
+end
+
+function on_reload(self)
+
+end

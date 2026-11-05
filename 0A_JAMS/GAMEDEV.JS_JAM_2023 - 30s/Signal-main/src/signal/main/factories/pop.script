@@ -1,0 +1,157 @@
+local config = require("main.defines")
+
+function init(self)
+
+	-- 0 40 80 120 160 200 240 280 320 360 400 440 480 520 560 600
+	
+	self.pos = vmath.vector3(0, 900, 0)
+
+	self.spawn_enemies = {}
+
+	self.debug_list_enemies = {}
+	
+end
+
+function final(self)
+
+end
+
+function update(self, dt)
+
+end
+
+
+local time_to_pop = 0		-- simple enemy pop timer
+local time_to_pop_hard = 0	-- hard enemy pop timer
+local time_top_pop_boss = 0	-- boss pop timer
+local time_before_pop_boss = 0
+local is_an_hard_enemy = 0
+
+local autorize_top_pop_enemies = true
+local phase_boss = false
+
+local launch_boss = true
+
+function fixed_update(self, dt)
+
+	------------------------------------------------------------------------
+	-- timer top pop a boss
+	if (phase_boss == false) then
+		time_before_pop_boss = time_before_pop_boss + dt
+
+		if (time_before_pop_boss > config.TIME_BETWEEN_BOSS_POP and phase_boss == false) then
+
+			phase_boss = true
+			autorize_top_pop_enemies = false
+
+		end
+		
+	end
+
+
+
+	if (phase_boss == true and launch_boss == true) then
+
+		time_top_pop_boss = time_top_pop_boss + dt
+
+		if (time_top_pop_boss > config.PRETIME_BOSS_POP) then
+		
+			factory.create("#factory_boss", vmath.vector3(320, 1200, 0))
+			launch_boss = false
+			time_before_pop_boss = 0
+			time_top_pop_boss = 0
+			-- phase_boss = false + launch_boss mettre ca avec le message indiquant la mort du boss
+		end
+		
+	end
+
+	------------------------------------------------------------------------
+	if (autorize_top_pop_enemies == true) then
+	
+		-- timer to pop an hard enemy
+		time_to_pop_hard = time_to_pop_hard + dt
+		if (time_to_pop_hard > config.TIME_BETWEEN_ENEMY_POP_HARD) then
+			print("-- HARD ENEMY -- ")
+			is_an_hard_enemy = 1
+			time_to_pop_hard = 0
+		end
+		
+		-- timer pop an enemy
+		time_to_pop = time_to_pop + dt
+		if(time_to_pop > config.TIME_BETWEEN_ENEMY_POP) then
+			-- pop an enemy
+			local pos_on_grid = math.random(0, 15)
+			self.pos.x = pos_on_grid * config.ENEMY_WIDTH + config.ENEMY_WIDTH / 2
+
+			local type_enemy = math.random(1, 4)
+			
+			if (type_enemy == 1) then
+				if (is_an_hard_enemy == 0) then	
+					table.insert(self.spawn_enemies, factory.create("#factory_enemy_yellow", self.pos, nil, { who = config.TYPE_ENEMY_YELLOW, hard = is_an_hard_enemy }, nil))
+				elseif(is_an_hard_enemy == 1) then
+					table.insert(self.spawn_enemies, factory.create("#factory_enemy_yellow", self.pos, nil, { who = config.TYPE_ENEMY_YELLOW, hard = is_an_hard_enemy }, vmath.vector3(2,2,1)))
+					is_an_hard_enemy = 0
+				end
+				table.insert(self.debug_list_enemies, "yellow")
+			end
+			
+			if (type_enemy == 2) then
+				if (is_an_hard_enemy == 0) then	
+					table.insert(self.spawn_enemies, factory.create("#factory_enemy_green", self.pos, nil, { who = config.TYPE_ENEMY_GREEN, hard = is_an_hard_enemy }, nil))
+				elseif(is_an_hard_enemy == 1) then
+					table.insert(self.spawn_enemies, factory.create("#factory_enemy_green", self.pos, nil, { who = config.TYPE_ENEMY_GREEN, hard = is_an_hard_enemy }, vmath.vector3(2,2,1)))
+					is_an_hard_enemy = 0
+				end
+				table.insert(self.debug_list_enemies, "green")
+			end
+			
+			if (type_enemy == 3) then
+				if (is_an_hard_enemy == 0) then	
+					table.insert(self.spawn_enemies, factory.create("#factory_enemy_white", self.pos, nil, { who = config.TYPE_ENEMY_WHITE, hard = is_an_hard_enemy }, nil))
+				elseif(is_an_hard_enemy == 1) then
+					table.insert(self.spawn_enemies, factory.create("#factory_enemy_white", self.pos, nil, { who = config.TYPE_ENEMY_WHITE, hard = is_an_hard_enemy }, vmath.vector3(2,2,1)))
+					is_an_hard_enemy = 0
+				end
+				table.insert(self.debug_list_enemies, "white")
+			end
+			
+			if (type_enemy == 4) then
+				if (is_an_hard_enemy == 0) then	
+					table.insert(self.spawn_enemies, factory.create("#factory_enemy_red", self.pos, nil, { who = config.TYPE_ENEMY_RED, hard = is_an_hard_enemy }, nil))
+				elseif(is_an_hard_enemy == 1) then
+					table.insert(self.spawn_enemies, factory.create("#factory_enemy_red", self.pos, nil, { who = config.TYPE_ENEMY_RED, hard = is_an_hard_enemy }, vmath.vector3(2,2,1)))
+					is_an_hard_enemy = 0
+					table.insert(self.debug_list_enemies, "red")
+				end
+			end
+			
+		
+			time_to_pop = 0
+		end
+	end
+	
+end
+
+function on_message(self, message_id, message, sender)
+	if (message_id == hash("bomb")) then
+		--for _, enemy_id in ipairs(self.spawn_enemies) do	
+		go.delete(self.spawn_enemies)			
+		--end
+	end
+
+	if (message_id == hash("boss_destroyed")) then
+		print("boss dead")
+		phase_boss = false
+		launch_boss = true
+		autorize_top_pop_enemies = true
+	end
+end
+
+function on_input(self, action_id, action)
+
+
+end
+
+function on_reload(self)
+
+end

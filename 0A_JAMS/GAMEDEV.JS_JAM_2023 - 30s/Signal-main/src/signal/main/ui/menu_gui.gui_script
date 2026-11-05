@@ -1,0 +1,83 @@
+
+
+
+function init(self)
+	gui.set_visible(gui.get_node("Combo_Panel"), false)
+	msg.post(".", "acquire_input_focus")
+	print("init menu")
+
+	self.combo_panel_active = false
+end
+
+function final(self)
+	-- Add finalization code here
+	-- Learn more: https://defold.com/manuals/script/
+	-- Remove this function if not needed
+end
+
+function update(self, dt)
+	-- Add update code here
+	-- Learn more: https://defold.com/manuals/script/
+	-- Remove this function if not needed
+end
+
+function on_message(self, message_id, message, sender)
+
+	if(message_id == hash("init_menu_gui")) then
+		msg.post(".", "acquire_input_focus")
+	end
+	
+end
+
+function on_input(self, action_id, action)
+	local btn_start = gui.get_node("Btn_Play")
+	local btn_combo = gui.get_node("Btn_Combo")
+
+	-- play button action
+	if action_id == hash("touch") and action.pressed then
+		
+
+		if gui.pick_node(btn_start, action.x, action.y) then
+			--msg.post("/main#script", "start_game")
+			msg.post("/main#main", "play_game")
+
+			msg.post(".", "release_input_focus")
+		end
+		
+		if gui.pick_node(btn_combo, action.x, action.y) then
+			if (self.combo_panel_active == false) then
+				gui.set_visible(gui.get_node("Combo_Panel"), true)
+				self.combo_panel_active = true
+			else
+				gui.set_visible(gui.get_node("Combo_Panel"), false)
+				self.combo_panel_active = false
+			end
+		end
+		
+	end
+
+	-- Mouse over play button
+	if gui.pick_node(btn_start, action.x, action.y) then
+		gui.set_texture(btn_start, "main_atlas")
+		gui.play_flipbook(btn_start, "play_btn_over")
+	else
+		gui.set_texture(btn_start, "main_atlas")
+		gui.play_flipbook(btn_start, "play_btn")
+	end
+
+	-- Mouse over combo button
+	if gui.pick_node(btn_combo, action.x, action.y) then
+		gui.set_texture(btn_combo, "main_atlas")
+		gui.play_flipbook(btn_combo, "combo_btn_over")
+	else
+		gui.set_texture(btn_combo, "main_atlas")
+		gui.play_flipbook(btn_combo, "combo_btn")
+	end
+	
+end
+
+function on_reload(self)
+	-- Add reload-handling code here
+	-- Learn more: https://defold.com/manuals/hot-reload/
+	-- Remove this function if not needed
+end

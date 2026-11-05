@@ -1,0 +1,71 @@
+function init(self)
+	self.position = go.get_position()
+
+	
+		
+end
+
+function final(self)
+
+end
+
+function update(self, dt)
+	
+end
+
+
+function fixed_update(self, dt)
+
+	self.position.y = self.position.y + 1 * 700 *  dt
+	go.set_position(self.position)
+
+	if (self.position.y > 1000) then
+		go.delete()
+	end
+end
+
+local function explode(self)
+	go.delete()
+end
+
+function on_message(self, message_id, message, sender)
+	if (message_id == hash("collision_response")) then
+
+		if (message.other_group == hash("boss_target_1")) then
+			
+			msg.post(message.other_id, "boom_boss_target_1")
+			
+		elseif (message.other_group == hash("boss_target_2")) then
+			
+			msg.post(message.other_id, "boom_boss_target_2")
+			
+		elseif(message.other_group == hash("boss_target_3")) then
+			
+			msg.post(message.other_id, "boom_boss_target_3")
+			
+		elseif(message.other_group == hash("boss_target_4")) then
+			
+			msg.post(message.other_id, "boom_boss_target_4")
+			
+		elseif(message.other_group == hash("boss_target_5")) then
+			
+			msg.post(message.other_id, "boom_boss_target_5")
+		else
+			
+			msg.post(message.other_id, "boom")
+			
+		end
+
+		explode(self)
+	end
+end
+
+
+
+function on_input(self, action_id, action)
+
+end
+
+function on_reload(self)
+
+end

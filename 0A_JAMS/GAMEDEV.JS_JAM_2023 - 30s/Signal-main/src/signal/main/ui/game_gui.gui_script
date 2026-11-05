@@ -1,0 +1,203 @@
+local config = require("main.defines")
+
+
+
+
+function reset_combo_ui(self)
+
+
+
+	gui.set_visible(gui.get_node("box_cb_green_p1"), false)
+	gui.set_visible(gui.get_node("box_cb_yellow_p1"), false)
+	gui.set_visible(gui.get_node("box_cb_white_p1"), false)
+	gui.set_visible(gui.get_node("box_cb_red_p1"), false)
+
+
+	gui.set_visible(gui.get_node("box_cb_green_p2"), false)
+	gui.set_visible(gui.get_node("box_cb_yellow_p2"), false)
+	gui.set_visible(gui.get_node("box_cb_white_p2"), false)
+	gui.set_visible(gui.get_node("box_cb_red_p2"), false)
+
+
+	gui.set_visible(gui.get_node("box_cb_green_p3"), false)
+	gui.set_visible(gui.get_node("box_cb_yellow_p3"), false)
+	gui.set_visible(gui.get_node("box_cb_white_p3"), false)
+	gui.set_visible(gui.get_node("box_cb_red_p3"), false)
+
+
+	gui.set_visible(gui.get_node("box_cb_green_p4"), false)
+	gui.set_visible(gui.get_node("box_cb_yellow_p4"), false)
+	gui.set_visible(gui.get_node("box_cb_white_p4"), false)
+	gui.set_visible(gui.get_node("box_cb_red_p4"), false)
+
+
+	gui.set_visible(gui.get_node("box_cb_green_p5"), false)
+	gui.set_visible(gui.get_node("box_cb_yellow_p5"), false)
+	gui.set_visible(gui.get_node("box_cb_white_p5"), false)
+	gui.set_visible(gui.get_node("box_cb_red_p5"), false)
+
+end
+
+
+
+function init(self)
+
+	self.active_combo_lbl = false
+	gui.set_visible(gui.get_node("text_lbl_combo"), false)
+
+	
+	self.pie_time = gui.get_node("pie_time")
+
+	self.player_time = config.MAX_PLAYER_TIME
+	-- 30s = 360°
+	-- 
+	gui.set_fill_angle(self.pie_time, 360)
+	gui.set_text(gui.get_node("lbl_time_left"), tostring(self.player_time))
+
+	gui.set_visible(gui.get_node("bomb_1"), false)
+	gui.set_visible(gui.get_node("bomb_2"), false)
+	gui.set_visible(gui.get_node("bomb_3"), false)
+
+	reset_combo_ui(self)
+	
+end
+
+function final(self)
+
+end
+
+
+local timer_show_comb_lbl = 0
+function update(self, dt)
+	
+	if (self.active_combo_lbl == true) then
+		timer_show_comb_lbl = timer_show_comb_lbl + dt
+
+		if (timer_show_comb_lbl >= 1) then
+			timer_show_comb_lbl = 0
+			self.active_combo_lbl = false
+		end
+	end
+
+	if (self.active_combo_lbl == true) then
+		gui.set_visible(gui.get_node("text_lbl_combo"), true)
+	else
+		gui.set_visible(gui.get_node("text_lbl_combo"), false)
+	end
+	
+	local angle = (self.player_time * 360) / config.MAX_PLAYER_TIME
+	gui.set_fill_angle(self.pie_time, angle)
+	print(self.player_time)
+	gui.set_text(gui.get_node("lbl_time_left"), tostring(self.player_time))
+end
+
+function on_message(self, message_id, message, sender)
+
+	if (message_id == hash("active_combo")) then
+		gui.set_visible(gui.get_node("text_lbl_combo"), false)
+		self.active_combo_lbl = true
+	end
+	
+	if (message_id == hash("player_time")) then
+		self.player_time = message.player_time
+	end
+
+	if (message_id == hash("up_score")) then
+		gui.set_text(gui.get_node("text_score"), message.score_value)
+	end
+
+	if (message_id == hash("player_nb_bombs")) then
+
+		if (message.player_nb_bombs == 1) then
+			gui.set_visible(gui.get_node("bomb_1"), true)
+			gui.set_visible(gui.get_node("bomb_2"), false)
+			gui.set_visible(gui.get_node("bomb_3"), false)
+			
+		elseif(message.player_nb_bombs == 2) then
+			gui.set_visible(gui.get_node("bomb_1"), true)
+			gui.set_visible(gui.get_node("bomb_2"), true)
+			gui.set_visible(gui.get_node("bomb_3"), false)
+			
+		elseif(message.player_nb_bombs == 3) then
+			gui.set_visible(gui.get_node("bomb_1"), true)
+			gui.set_visible(gui.get_node("bomb_2"), true)
+			gui.set_visible(gui.get_node("bomb_3"), true)
+			
+		else
+			gui.set_visible(gui.get_node("bomb_1"), false)
+			gui.set_visible(gui.get_node("bomb_2"), false)
+			gui.set_visible(gui.get_node("bomb_3"), false)
+			
+		end
+	end
+
+	if (message_id == hash("player_combo_table")) then
+		update_combo_gui(self, message.player_combo_table)
+	end
+	
+end
+
+function update_combo_gui(self, table_combo)
+
+	reset_combo_ui(self)
+	
+	if (table_combo[1] == "green") then
+		gui.set_visible(gui.get_node("box_cb_green_p1"), true)
+	elseif (table_combo[1] == "yellow") then
+		gui.set_visible(gui.get_node("box_cb_yellow_p1"), true)
+	elseif (table_combo[1] == "white") then
+		gui.set_visible(gui.get_node("box_cb_white_p1"), true)
+	elseif (table_combo[1] == "red") then
+		gui.set_visible(gui.get_node("box_cb_red_p1"), true)
+	end
+
+	if (table_combo[2] == "green") then
+		gui.set_visible(gui.get_node("box_cb_green_p2"), true)
+	elseif (table_combo[2] == "yellow") then
+		gui.set_visible(gui.get_node("box_cb_yellow_p2"), true)
+	elseif (table_combo[2] == "white") then
+		gui.set_visible(gui.get_node("box_cb_white_p2"), true)
+	elseif (table_combo[2] == "red") then
+		gui.set_visible(gui.get_node("box_cb_red_p2"), true)
+	end
+
+	if (table_combo[3] == "green") then
+		gui.set_visible(gui.get_node("box_cb_green_p3"), true)
+	elseif (table_combo[3] == "yellow") then
+		gui.set_visible(gui.get_node("box_cb_yellow_p3"), true)
+	elseif (table_combo[3] == "white") then
+		gui.set_visible(gui.get_node("box_cb_white_p3"), true)
+	elseif (table_combo[3] == "red") then
+		gui.set_visible(gui.get_node("box_cb_red_p3"), true)
+	end
+
+	if (table_combo[4] == "green") then
+		gui.set_visible(gui.get_node("box_cb_green_p4"), true)
+	elseif (table_combo[4] == "yellow") then
+		gui.set_visible(gui.get_node("box_cb_yellow_p4"), true)
+	elseif (table_combo[4] == "white") then
+		gui.set_visible(gui.get_node("box_cb_white_p4"), true)
+	elseif (table_combo[4] == "red") then
+		gui.set_visible(gui.get_node("box_cb_red_p4"), true)
+	end
+
+	if (table_combo[5] == "green") then
+		gui.set_visible(gui.get_node("box_cb_green_p5"), true)
+	elseif (table_combo[5] == "yellow") then
+		gui.set_visible(gui.get_node("box_cb_yellow_p5"), true)
+	elseif (table_combo[5] == "white") then
+		gui.set_visible(gui.get_node("box_cb_white_p5"), true)
+	elseif (table_combo[5] == "red") then
+		gui.set_visible(gui.get_node("box_cb_red_p5"), true)
+	end
+
+end
+
+
+function on_input(self, action_id, action)
+
+end
+
+function on_reload(self)
+
+end

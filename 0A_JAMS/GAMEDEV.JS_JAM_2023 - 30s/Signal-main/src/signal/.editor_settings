@@ -1,0 +1,57 @@
+{
+  :code {
+    :breakpoints [
+    ]
+  }
+  :scene {
+    :resource-settings {
+      "/main/main.collection" {
+        :camera {
+          :focus-point [
+            328.5
+            476.75
+            0.0
+          ]
+          :fov-x 2103.1427083333333
+          :fov-y 1109.3500000000001
+          :position [
+            328.5
+            476.75
+            5000.0
+          ]
+          :projection :orthographic
+          :rotation [
+            0.0
+            0.0
+            0.0
+            1.0
+          ]
+        }
+      }
+    }
+  }
+  :workflow {
+    :open-tabs [
+      [
+        [
+          "/game.project"
+          :form
+        ]
+        [
+          "/main/main.collection"
+          :scene
+        ]
+      ]
+    ]
+    :recent-files [
+      [
+        "/game.project"
+        :form
+      ]
+      [
+        "/main/main.collection"
+        :scene
+      ]
+    ]
+  }
+}

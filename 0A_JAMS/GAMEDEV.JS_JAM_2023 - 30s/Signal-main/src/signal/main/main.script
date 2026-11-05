@@ -1,0 +1,95 @@
+function init(self)
+	msg.post(".", "acquire_input_focus")
+	
+	
+	msg.post("/gui#game_gui", "disable")
+	
+	msg.post("/gui#loose_gui", "disable")
+	
+	msg.post("/gui#menu_gui", "enable")
+
+	
+end
+
+function final(self)
+	-- Add finalization code here
+	-- Learn more: https://defold.com/manuals/script/
+	-- Remove this function if not needed
+end
+
+function update(self, dt)
+	-- Add update code here
+	-- Learn more: https://defold.com/manuals/script/
+	-- Remove this function if not needed
+end
+
+function fixed_update(self, dt)
+	-- This function is called if 'Fixed Update Frequency' is enabled in the Engine section of game.project
+	-- Can be coupled with fixed updates of the physics simulation if 'Use Fixed Timestep' is enabled in
+	-- Physics section of game.project
+	-- Add update code here
+	-- Learn more: https://defold.com/manuals/script/
+	-- Remove this function if not needed
+end
+
+function on_message(self, message_id, message, sender)
+
+	-- return after proxy collection loading
+	if (message_id == hash("proxy_loaded")) then
+		msg.post(sender, "init")
+
+		msg.post("game:/player#player", "load_lvl_1")
+		
+		msg.post(sender, "enable")
+	end	
+
+	-- from menu_gui => play button
+	if (message_id == hash("play_game")) then
+
+		msg.post("/gui#menu_gui", "disable")
+		msg.post("/gui#loose_gui", "disable")
+		
+		msg.post("/gui#game_gui", "enable")
+		
+		msg.post("#game_proxy", "load")
+	end
+
+	-- lose game
+	if (message_id == hash("lose_game")) then
+
+		msg.post("/gui#menu_gui", "disable")
+
+		msg.post("/gui#game_gui", "disable")
+
+		msg.post("#game_proxy", "unload")
+
+		--msg.post("/gui#loose_gui", "init")
+		msg.post("/gui#loose_gui", "init_lose_gui", {score = message.score})
+		msg.post("/gui#loose_gui", "enable")
+		
+	end
+
+	-- return to menu
+	if (message_id == hash("return_menu")) then
+
+		--msg.post("#game_proxy", "unload")
+		msg.post("/gui#loose_gui", "disable")
+		msg.post("/gui#game_gui", "disable")
+		msg.post("/gui#menu_gui", "init_menu_gui")
+		msg.post("/gui#menu_gui", "enable")
+		
+	end
+	
+end
+
+function on_input(self, action_id, action)
+
+
+	
+end
+
+function on_reload(self)
+	-- Add reload-handling code here
+	-- Learn more: https://defold.com/manuals/hot-reload/
+	-- Remove this function if not needed
+end

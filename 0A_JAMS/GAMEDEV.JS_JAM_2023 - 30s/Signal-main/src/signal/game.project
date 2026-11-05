@@ -1,0 +1,24 @@
+[bootstrap]
+main_collection = /main/main.collectionc
+
+[script]
+shared_state = 1
+
+[display]
+width = 640
+height = 960
+
+[android]
+input_method = HiddenInputField
+
+[project]
+title = signal
+
+[html5]
+show_fullscreen_button = 0
+show_made_with_defold = 0
+htmlfile = /builtins/manifests/web/engine_template.html
+splash_image = /main/assets/menu.png
+scale_mode = downscale_fit
+show_console_banner = 0
+
