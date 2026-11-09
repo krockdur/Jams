@@ -29,8 +29,6 @@ end
 ---------------------------------------------------
 
 function Player.keypressed(key, scancode, isrepeat)
-
-
 end
 
 
@@ -42,7 +40,6 @@ end
 ---------------------------------------------------
 
 function Player.mousepressed(x, y, button, istouch)
-
 end
 
 ---------------------------------------------------

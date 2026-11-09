@@ -153,22 +153,16 @@ function Board.update_grid_to_draw()
         for i = 1, Board.nb_card_x do
             if Board.grid_status[j][i][2] == 0 then
                 Board.grid_to_draw[j][i] = Board.cards.type.back
-
             elseif Board.grid_status[j][i][2] == 1 and Board.grid_status[j][i][1] == 1 then
                 Board.grid_to_draw[j][i] = Board.cards.type.block
-
             elseif Board.grid_status[j][i][2] == 1 and Board.grid_status[j][i][1] == 2 then
                 Board.grid_to_draw[j][i] = Board.cards.type.damage_X1
-
             elseif Board.grid_status[j][i][2] == 1 and Board.grid_status[j][i][1] == 3 then
                 Board.grid_to_draw[j][i] = Board.cards.type.damage_X2
-
             elseif Board.grid_status[j][i][2] == 1 and Board.grid_status[j][i][1] == 4 then
                 Board.grid_to_draw[j][i] = Board.cards.type.damage_X3
-
             elseif Board.grid_status[j][i][2] == 1 and Board.grid_status[j][i][1] == 5 then
                 Board.grid_to_draw[j][i] = Board.cards.type.block
-                
             end
         end
     end
@@ -195,7 +189,6 @@ end
 -- =================================================================== --
 
 function Board.update(dt)
-
     -- test
     Board.grid_status[4][2][2] = 1
 
@@ -203,6 +196,12 @@ function Board.update(dt)
 end
 
 -- =================================================================== --
+local x_first_card = 115.5
+local y_first_card = 140
+local card_width = 50
+local card_height = 75
+local card_interval = 25
+
 
 function Board.draw()
     for j = 1, Board.nb_card_y do
@@ -221,9 +220,36 @@ function Board.draw()
             elseif Board.grid_to_draw[j][i] == 5 then
                 sprite_to_draw = Board.spr_card_not_lucky
             end
-            love.graphics.draw(sprite_to_draw, 117.5 + ((i - 1) * 75), 140 + (j - 1) * 100)
+            love.graphics.draw(sprite_to_draw, x_first_card + ((i - 1) * (card_width + card_interval)), y_first_card + (j - 1) * (card_height + card_interval))
         end
     end
+end
+
+function Board.is_card_clicked(x, y)
+    for j = 1, Board.nb_card_y do
+        for i = 1, Board.nb_card_x do
+            if x > x_first_card + (card_width + card_interval) * (i - 1)
+                and x < x_first_card + card_width + (card_width + card_interval) * (i - 1)
+                and y > y_first_card + (card_height + card_interval) * (j - 1)
+                and y < y_first_card + card_height + (card_height + card_interval) * (j - 1)
+            then
+                Board.click_card(i, j)
+            end
+        end
+    end
+end
+
+function Board.click_card(x, y)
+    print("card : x " .. x .. " y " .. y)
+    if Board.grid_status[y][x][2] == 0 then
+        Board.grid_status[y][x][2] = 1
+    end
+end
+
+---------------------------------------------------
+
+function Board.mousepressed(x, y, button, istouch)
+    Board.is_card_clicked(x, y)
 end
 
 return Board

@@ -90,7 +90,7 @@ end
 -----------------------------------------------------------------------
 
 function Game.mousepressed(x, y, button, istouch)
-  
+  board.mousepressed(x, y, button, istouch)
 end
 
 -----------------------------------------------------------------------
