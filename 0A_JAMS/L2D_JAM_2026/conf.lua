@@ -14,12 +14,12 @@ function love.conf(t)
   
   t.window.width = 960
   t.window.height = 540
-  t.window.highdpi = false
+  t.window.highdpi = true
   t.window.fullscreen = false         -- Enable fullscreen (boolean)
-  t.window.vsync = 1 
+  t.window.vsync = 1
     
   t.window.title = "LOVE2D JAM 2026 B-SIDE"
 
-  t.console = true
+  t.console = false
   
 end

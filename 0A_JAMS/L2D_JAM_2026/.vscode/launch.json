@@ -5,7 +5,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "debug love2D",
+            "name": "debug love2D macos",
             "type": "lua-local",
             "request": "launch",
             "program": {
@@ -14,6 +14,18 @@
             "args": [
                 "/Users/krock/Dev/Jams/0A_JAMS/L2D_JAM_2026",
             ]
+        },
+        {
+            "name": "debug love2D win",
+            "type": "lua-local",
+            "request": "launch",
+            "program": {
+                "command": "F:\\Libs\\LOVE\\love.exe"
+            },
+            "args": [
+                "${workspaceFolder}"
+            ],
+            "stopOnEntry": false
         }
     ]
 }
