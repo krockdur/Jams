@@ -23,6 +23,26 @@ Board.cards.type.not_lucky = 5
 
 -- =================================================================== --
 
+function Board.randomize_grid(nb_cards, card_type)
+    for e = 1, nb_cards do
+        local success = false
+
+        while not success do
+            local rx = math.random(1, 10)
+            local ry = math.random(1, 4)
+
+            if Board.grid_status[ry][rx][1] == 0 then
+                Board.grid_status[ry][rx] = {
+                    card_type,
+                    0,
+                    0
+                }
+                success = true
+            end
+        end
+    end
+end
+
 function Board.InitGrid()
     --randoms :
     local nb_cards_block = 8
@@ -43,100 +63,11 @@ function Board.InitGrid()
         end
     end
 
-    -- block
-    for e = 1, nb_cards_block do
-        local success = false
-
-        while not success do
-            local rx = math.random(1, 10)
-            local ry = math.random(1, 4)
-
-            if Board.grid_status[ry][rx][1] == 0 then
-                Board.grid_status[ry][rx] = {
-                    Board.cards.type.block,
-                    0,
-                    0
-                }
-                success = true
-            end
-        end
-    end
-
-    -- damage_X1
-    for e = 1, nb_cards_damage_x1 do
-        local success = false
-
-        while not success do
-            local rx = math.random(1, 10)
-            local ry = math.random(1, 4)
-
-            if Board.grid_status[ry][rx][1] == 0 then
-                Board.grid_status[ry][rx] = {
-                    Board.cards.type.damage_X1,
-                    0,
-                    0
-                }
-                success = true
-            end
-        end
-    end
-
-    -- damage_X2
-    for e = 1, nb_cards_damage_x2 do
-        local success = false
-
-        while not success do
-            local rx = math.random(1, 10)
-            local ry = math.random(1, 4)
-
-            if Board.grid_status[ry][rx][1] == 0 then
-                Board.grid_status[ry][rx] = {
-                    Board.cards.type.damage_X2,
-                    0,
-                    0
-                }
-                success = true
-            end
-        end
-    end
-
-    -- damage_X3
-    for e = 1, nb_cards_damage_x3 do
-        local success = false
-
-        while not success do
-            local rx = math.random(1, 10)
-            local ry = math.random(1, 4)
-
-            if Board.grid_status[ry][rx][1] == 0 then
-                Board.grid_status[ry][rx] = {
-                    Board.cards.type.damage_X3,
-                    0,
-                    0
-                }
-                success = true
-            end
-        end
-    end
-
-    -- not lucky
-    for e = 1, nb_cards_not_lucky do
-        local success = false
-
-        while not success do
-            local rx = math.random(1, 10)
-            local ry = math.random(1, 4)
-
-            if Board.grid_status[ry][rx][1] == 0 then
-                Board.grid_status[ry][rx] = {
-                    Board.cards.type.not_lucky,
-                    0,
-                    0
-                }
-                success = true
-            end
-        end
-    end
+    Board.randomize_grid(nb_cards_block, Board.cards.type.block)
+    Board.randomize_grid(nb_cards_damage_x1, Board.cards.type.damage_x1)
+    Board.randomize_grid(nb_cards_damage_x2, Board.cards.type.damage_x2)
+    Board.randomize_grid(nb_cards_damage_x3, Board.cards.type.damage_x3)
+    Board.randomize_grid(nb_cards_not_lucky, Board.cards.type.not_lucky)
 end
 
 function Board.init_grid_to_draw()
@@ -151,18 +82,25 @@ end
 function Board.update_grid_to_draw()
     for j = 1, Board.nb_card_y do
         for i = 1, Board.nb_card_x do
+            --
             if Board.grid_status[j][i][2] == 0 then
                 Board.grid_to_draw[j][i] = Board.cards.type.back
+                --
             elseif Board.grid_status[j][i][2] == 1 and Board.grid_status[j][i][1] == 1 then
                 Board.grid_to_draw[j][i] = Board.cards.type.block
+                --
             elseif Board.grid_status[j][i][2] == 1 and Board.grid_status[j][i][1] == 2 then
                 Board.grid_to_draw[j][i] = Board.cards.type.damage_X1
+                --
             elseif Board.grid_status[j][i][2] == 1 and Board.grid_status[j][i][1] == 3 then
                 Board.grid_to_draw[j][i] = Board.cards.type.damage_X2
+                --
             elseif Board.grid_status[j][i][2] == 1 and Board.grid_status[j][i][1] == 4 then
                 Board.grid_to_draw[j][i] = Board.cards.type.damage_X3
+                --
             elseif Board.grid_status[j][i][2] == 1 and Board.grid_status[j][i][1] == 5 then
                 Board.grid_to_draw[j][i] = Board.cards.type.block
+                --
             end
         end
     end
@@ -207,19 +145,27 @@ function Board.draw()
     for j = 1, Board.nb_card_y do
         for i = 1, Board.nb_card_x do
             local sprite_to_draw
+            --
             if Board.grid_to_draw[j][i] == 0 then
                 sprite_to_draw = Board.spr_card_back
+                --
             elseif Board.grid_to_draw[j][i] == 1 then
                 sprite_to_draw = Board.spr_card_block
+                --
             elseif Board.grid_to_draw[j][i] == 2 then
                 sprite_to_draw = Board.spr_card_damage_X1
+                --
             elseif Board.grid_to_draw[j][i] == 3 then
                 sprite_to_draw = Board.spr_card_damage_X2
+                --
             elseif Board.grid_to_draw[j][i] == 4 then
                 sprite_to_draw = Board.spr_card_damage_X3
+                --
             elseif Board.grid_to_draw[j][i] == 5 then
                 sprite_to_draw = Board.spr_card_not_lucky
+                --
             end
+            --
             love.graphics.draw(sprite_to_draw, x_first_card + ((i - 1) * (card_width + card_interval)),
                 y_first_card + (j - 1) * (card_height + card_interval))
         end
@@ -268,24 +214,30 @@ function Board.click_card(x, y)
 
         -- Est ce que les deux cartes sont identiques
         if card_1_clicked and card_2_clicked then
-            -- si oui
+            -- IDENTIQUES
             if Board.grid_status[card_1_clicked_y][card_1_clicked_x][1] == Board.grid_status[card_2_clicked_y][card_2_clicked_x][1] then
                 -- on les marque comme découverte
                 Board.grid_status[card_1_clicked_y][card_1_clicked_x][3] = 1
                 Board.grid_status[card_2_clicked_y][card_2_clicked_x][3] = 1
-                -- sinon
+
+                card_1_clicked = false
+                card_2_clicked = false
+
+                -- DIFFERENTES
             else
                 -- on les masque
                 Board.grid_status[card_1_clicked_y][card_1_clicked_x][2] = 0
                 Board.grid_status[card_2_clicked_y][card_2_clicked_x][2] = 0
+
+                card_1_clicked = false
+                card_2_clicked = false
             end
-
-            card_1_clicked = false
-            card_2_clicked = false
-
         end
-
     end
+end
+
+function Board.flip_card(x, y)
+
 end
 
 ---------------------------------------------------
