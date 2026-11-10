@@ -220,10 +220,22 @@ function Board.draw()
             elseif Board.grid_to_draw[j][i] == 5 then
                 sprite_to_draw = Board.spr_card_not_lucky
             end
-            love.graphics.draw(sprite_to_draw, x_first_card + ((i - 1) * (card_width + card_interval)), y_first_card + (j - 1) * (card_height + card_interval))
+            love.graphics.draw(sprite_to_draw, x_first_card + ((i - 1) * (card_width + card_interval)),
+                y_first_card + (j - 1) * (card_height + card_interval))
         end
     end
 end
+
+-- =================================================================== --
+
+local card_1_clicked = false
+local card_1_clicked_x = 0
+local card_1_clicked_y = 0
+
+local card_2_clicked = false
+local card_2_clicked_x = 0
+local card_2_clicked_y = 0
+
 
 function Board.is_card_clicked(x, y)
     for j = 1, Board.nb_card_y do
@@ -234,15 +246,45 @@ function Board.is_card_clicked(x, y)
                 and y < y_first_card + card_height + (card_height + card_interval) * (j - 1)
             then
                 Board.click_card(i, j)
+                return
             end
         end
     end
 end
 
 function Board.click_card(x, y)
-    print("card : x " .. x .. " y " .. y)
     if Board.grid_status[y][x][2] == 0 then
         Board.grid_status[y][x][2] = 1
+
+        if not card_1_clicked and not card_2_clicked then
+            card_1_clicked = true
+            card_1_clicked_x = x
+            card_1_clicked_y = y
+        elseif card_1_clicked and not card_2_clicked then
+            card_2_clicked = true
+            card_2_clicked_x = x
+            card_2_clicked_y = y
+        end
+
+        -- Est ce que les deux cartes sont identiques
+        if card_1_clicked and card_2_clicked then
+            -- si oui
+            if Board.grid_status[card_1_clicked_y][card_1_clicked_x][1] == Board.grid_status[card_2_clicked_y][card_2_clicked_x][1] then
+                -- on les marque comme découverte
+                Board.grid_status[card_1_clicked_y][card_1_clicked_x][3] = 1
+                Board.grid_status[card_2_clicked_y][card_2_clicked_x][3] = 1
+                -- sinon
+            else
+                -- on les masque
+                Board.grid_status[card_1_clicked_y][card_1_clicked_x][2] = 0
+                Board.grid_status[card_2_clicked_y][card_2_clicked_x][2] = 0
+            end
+
+            card_1_clicked = false
+            card_2_clicked = false
+
+        end
+
     end
 end
 

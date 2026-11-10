@@ -26,6 +26,18 @@
                 "${workspaceFolder}"
             ],
             "stopOnEntry": false
+        },
+        {
+            "name": "debug love2D win2",
+            "type": "lua-local",
+            "request": "launch",
+            "program": {
+                "command": "C:\\Libs\\love-11.5-win64\\love.exe"
+            },
+            "args": [
+                "${workspaceFolder}"
+            ],
+            "stopOnEntry": false
         }
     ]
 }
