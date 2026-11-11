@@ -33,9 +33,9 @@ function Board.randomize_grid(nb_cards, card_type)
 
             if Board.grid_status[ry][rx][1] == 0 then
                 Board.grid_status[ry][rx] = {
-                    card_type,
-                    0,
-                    0
+                    card_type,  --type carte
+                    0,          --0 = caché / 1 = découverte
+                    0           --1 = paire découverte
                 }
                 success = true
             end
@@ -64,9 +64,9 @@ function Board.InitGrid()
     end
 
     Board.randomize_grid(nb_cards_block, Board.cards.type.block)
-    Board.randomize_grid(nb_cards_damage_x1, Board.cards.type.damage_x1)
-    Board.randomize_grid(nb_cards_damage_x2, Board.cards.type.damage_x2)
-    Board.randomize_grid(nb_cards_damage_x3, Board.cards.type.damage_x3)
+    Board.randomize_grid(nb_cards_damage_x1, Board.cards.type.damage_X1)
+    Board.randomize_grid(nb_cards_damage_x2, Board.cards.type.damage_X2)
+    Board.randomize_grid(nb_cards_damage_x3, Board.cards.type.damage_X3)
     Board.randomize_grid(nb_cards_not_lucky, Board.cards.type.not_lucky)
 end
 
@@ -110,12 +110,23 @@ end
 
 function Board.load()
     -- sprites
-    Board.spr_card_back = love.graphics.newImage("Assets/back.png")
+    Board.spr_tileset = love.graphics.newImage("Assets/tileset.png")
+    local imgWidth, imgHeight = Board.spr_tileset:getDimensions()
+
+ --[[    Board.spr_card_back = love.graphics.newImage("Assets/back.png")
     Board.spr_card_block = love.graphics.newImage("Assets/block.png")
     Board.spr_card_damage_X1 = love.graphics.newImage("Assets/damage_X1.png")
     Board.spr_card_damage_X2 = love.graphics.newImage("Assets/damage_X2.png")
     Board.spr_card_damage_X3 = love.graphics.newImage("Assets/damage_X3.png")
-    Board.spr_card_not_lucky = love.graphics.newImage("Assets/not_lucky.png")
+    Board.spr_card_not_lucky = love.graphics.newImage("Assets/not_lucky.png") ]]
+
+    Board.spr_card_back = love.graphics.newQuad(0, 0, 50, 75, imgWidth, imgHeight)
+    Board.spr_card_block = love.graphics.newQuad(350, 0, 50, 75, imgWidth, imgHeight)
+    Board.spr_card_damage_X1 = love.graphics.newQuad(350, 75, 50, 75, imgWidth, imgHeight)
+    Board.spr_card_damage_X2 = love.graphics.newQuad(350, 150, 50, 75, imgWidth, imgHeight)
+    Board.spr_card_damage_X3 = love.graphics.newQuad(350, 225, 50, 75, imgWidth, imgHeight)
+    Board.spr_card_not_lucky = love.graphics.newQuad(350, 300, 50, 75, imgWidth, imgHeight)
+
 
     -- init board grid game
     Board.InitGrid()
@@ -166,7 +177,7 @@ function Board.draw()
                 --
             end
             --
-            love.graphics.draw(sprite_to_draw, x_first_card + ((i - 1) * (card_width + card_interval)),
+            love.graphics.draw(Board.spr_tileset, sprite_to_draw, x_first_card + ((i - 1) * (card_width + card_interval)),
                 y_first_card + (j - 1) * (card_height + card_interval))
         end
     end
@@ -244,6 +255,10 @@ end
 
 function Board.mousepressed(x, y, button, istouch)
     Board.is_card_clicked(x, y)
+
+    if button == 2 then
+        print("debug")
+    end
 end
 
 return Board
