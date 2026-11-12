@@ -17,6 +17,12 @@ Board.cards.type.damage_X2 = 3
 Board.cards.type.damage_X3 = 4
 Board.cards.type.not_lucky = 5
 
+-- contient les sprites d'animation
+Board.anim_card_block = {}
+Board.anim_card_damage_X1 = {}
+Board.anim_card_damage_X2 = {}
+Board.anim_card_damage_X3 = {}
+Board.anim_card_not_lucky = {}
 
 
 
@@ -121,19 +127,15 @@ function Board.load()
     Board.spr_card_damage_X3 = love.graphics.newQuad(350, 225, 50, 75, imgWidth, imgHeight)
     Board.spr_card_not_lucky = love.graphics.newQuad(350, 300, 50, 75, imgWidth, imgHeight)
 
-    Board.anim_card_block = {}
-    Board.anim_card_damage_X1 = {}
-    Board.anim_card_damage_X2 = {}
-    Board.anim_card_damage_X3 = {}
-    Board.anim_card_not_lucky = {}
+
+    -- 8 images par sprite
     for i = 1, 8 do
         Board.anim_card_block[i] = love.graphics.newQuad((i - 1) * 50, 0, 50, 75, imgWidth, imgHeight)
-        Board.anim_card_block[i] = love.graphics.newQuad((i - 1) * 50, 0, 50, 75, imgWidth, imgHeight)
-        Board.anim_card_block[i] = love.graphics.newQuad((i - 1) * 50, 0, 50, 75, imgWidth, imgHeight)
-        Board.anim_card_block[i] = love.graphics.newQuad((i - 1) * 50, 0, 50, 75, imgWidth, imgHeight)
-        Board.anim_card_block[i] = love.graphics.newQuad((i - 1) * 50, 0, 50, 75, imgWidth, imgHeight)
+        Board.anim_card_damage_X1[i] = love.graphics.newQuad((i - 1) * 50, 75, 50, 75, imgWidth, imgHeight)
+        Board.anim_card_damage_X2[i] = love.graphics.newQuad((i - 1) * 50, 150, 50, 75, imgWidth, imgHeight)
+        Board.anim_card_damage_X3[i] = love.graphics.newQuad((i - 1) * 50, 225, 50, 75, imgWidth, imgHeight)
+        Board.anim_card_not_lucky[i] = love.graphics.newQuad((i - 1) * 50, 300, 50, 75, imgWidth, imgHeight)
     end
-
 
 
     -- init board grid game
@@ -163,22 +165,22 @@ function Board.draw()
             local sprite_to_draw
             --
             if Board.grid_to_draw[j][i] == 0 then
-                sprite_to_draw = Board.spr_card_back
+                sprite_to_draw = Board.anim_card_block[1] --Board.spr_card_back
                 --
             elseif Board.grid_to_draw[j][i] == 1 then
-                sprite_to_draw = Board.spr_card_block
+                sprite_to_draw = Board.anim_card_block[8]
                 --
             elseif Board.grid_to_draw[j][i] == 2 then
-                sprite_to_draw = Board.spr_card_damage_X1
+                sprite_to_draw = Board.anim_card_damage_X1[8]
                 --
             elseif Board.grid_to_draw[j][i] == 3 then
-                sprite_to_draw = Board.spr_card_damage_X2
+                sprite_to_draw = Board.anim_card_damage_X2[8]
                 --
             elseif Board.grid_to_draw[j][i] == 4 then
-                sprite_to_draw = Board.spr_card_damage_X3
+                sprite_to_draw = Board.anim_card_damage_X3[8]
                 --
             elseif Board.grid_to_draw[j][i] == 5 then
-                sprite_to_draw = Board.spr_card_not_lucky
+                sprite_to_draw = Board.anim_card_not_lucky[8]
                 --
             end
             --
