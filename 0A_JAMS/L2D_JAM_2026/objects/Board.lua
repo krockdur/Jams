@@ -192,6 +192,13 @@ end
 
 -- =================================================================== --
 
+function Board.play_animation(card_type)
+
+end
+
+
+-- =================================================================== --
+
 local card_1_clicked = false
 local card_1_clicked_x = 0
 local card_1_clicked_y = 0
@@ -254,9 +261,6 @@ function Board.click_card(x, y)
     end
 end
 
-function Board.flip_card(x, y)
-
-end
 
 ---------------------------------------------------
 
