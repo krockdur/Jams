@@ -18,11 +18,46 @@ Board.cards.type.damage_X3 = 4
 Board.cards.type.not_lucky = 5
 
 -- contient les sprites d'animation
-Board.anim_card_block = {}
-Board.anim_card_damage_X1 = {}
-Board.anim_card_damage_X2 = {}
-Board.anim_card_damage_X3 = {}
-Board.anim_card_not_lucky = {}
+Board.animations = {
+    card_block = {
+        row = 1,
+        frames = 8,
+        duration = 2
+    },
+    card_damage_x1 = {
+        row = 2,
+        frames = 8,
+        duration = 2
+        
+    },
+    card_damage_x2 = {
+        row = 3,
+        frames = 8,
+        duration = 2
+
+    },
+    card_damage_x3 = {
+        row = 4,
+        frames = 8,
+        duration = 2
+
+    },
+    card_not_lucky = {
+        row = 5,
+        frames = 8,
+        duration = 2
+
+    }
+
+}
+
+
+Board.anim.anim_card_block = {}
+Board.anim.anim_card_damage_X1 = {}
+Board.anim.anim_card_damage_X2 = {}
+Board.anim.anim_card_damage_X3 = {}
+Board.anim.anim_card_not_lucky = {}
+
 
 
 
@@ -226,6 +261,7 @@ end
 function Board.click_card(x, y)
     if Board.grid_status[y][x][2] == 0 then
         Board.grid_status[y][x][2] = 1
+        play_animation(Board.grid_status[y][x])
 
         if not card_1_clicked and not card_2_clicked then
             card_1_clicked = true
