@@ -17,7 +17,7 @@ Board.cards.type.damage_X2 = 3
 Board.cards.type.damage_X3 = 4
 Board.cards.type.not_lucky = 5
 
--- contient les sprites d'animation
+-- contient la description des animations
 Board.animations = {
     card_block = {
         row = 1,
@@ -51,19 +51,22 @@ Board.animations = {
 
 }
 
-
-Board.anim.anim_card_block = {}
-Board.anim.anim_card_damage_X1 = {}
-Board.anim.anim_card_damage_X2 = {}
-Board.anim.anim_card_damage_X3 = {}
-Board.anim.anim_card_not_lucky = {}
+-- contient les sprites des animations
+Board.tab_spr_animation = {}
+Board.tab_spr_animation.anim_card_block = {}
+Board.tab_spr_animation.anim_card_damage_X1 = {}
+Board.tab_spr_animation.anim_card_damage_X2 = {}
+Board.tab_spr_animation.anim_card_damage_X3 = {}
+Board.tab_spr_animation.anim_card_not_lucky = {}
 
 
 
 
 
 -- =================================================================== --
-
+-- positionne aléatoire sur la grille des cartes du même type
+-- card_type => le type de carte à randomiser
+-- nb_cards => combien de cartes à randomiser dans ce type
 function Board.randomize_grid(nb_cards, card_type)
     for e = 1, nb_cards do
         local success = false
@@ -84,6 +87,9 @@ function Board.randomize_grid(nb_cards, card_type)
     end
 end
 
+-- =================================================================== --
+-- Initialise grid_status = 0
+-- positionne aléatoirement chaque carte sur la grille
 function Board.InitGrid()
     --randoms :
     local nb_cards_block = 8
@@ -111,6 +117,8 @@ function Board.InitGrid()
     Board.randomize_grid(nb_cards_not_lucky, Board.cards.type.not_lucky)
 end
 
+-- =================================================================== --
+-- Initialise grid_to_draw => A VOIR
 function Board.init_grid_to_draw()
     for j = 1, Board.nb_card_y do
         Board.grid_to_draw[j] = {}
@@ -120,6 +128,8 @@ function Board.init_grid_to_draw()
     end
 end
 
+-- =================================================================== --
+-- Met à jour grid_to_draw à partir du status de chaque carte dans grid_status
 function Board.update_grid_to_draw()
     for j = 1, Board.nb_card_y do
         for i = 1, Board.nb_card_x do
@@ -154,35 +164,28 @@ function Board.load()
     Board.spr_tileset = love.graphics.newImage("Assets/tileset.png")
     local imgWidth, imgHeight = Board.spr_tileset:getDimensions()
 
-
-    Board.spr_card_back = love.graphics.newQuad(0, 0, 50, 75, imgWidth, imgHeight)
-    Board.spr_card_block = love.graphics.newQuad(350, 0, 50, 75, imgWidth, imgHeight)
-    Board.spr_card_damage_X1 = love.graphics.newQuad(350, 75, 50, 75, imgWidth, imgHeight)
-    Board.spr_card_damage_X2 = love.graphics.newQuad(350, 150, 50, 75, imgWidth, imgHeight)
-    Board.spr_card_damage_X3 = love.graphics.newQuad(350, 225, 50, 75, imgWidth, imgHeight)
-    Board.spr_card_not_lucky = love.graphics.newQuad(350, 300, 50, 75, imgWidth, imgHeight)
-
-
     -- 8 images par sprite
     for i = 1, 8 do
-        Board.anim_card_block[i] = love.graphics.newQuad((i - 1) * 50, 0, 50, 75, imgWidth, imgHeight)
-        Board.anim_card_damage_X1[i] = love.graphics.newQuad((i - 1) * 50, 75, 50, 75, imgWidth, imgHeight)
-        Board.anim_card_damage_X2[i] = love.graphics.newQuad((i - 1) * 50, 150, 50, 75, imgWidth, imgHeight)
-        Board.anim_card_damage_X3[i] = love.graphics.newQuad((i - 1) * 50, 225, 50, 75, imgWidth, imgHeight)
-        Board.anim_card_not_lucky[i] = love.graphics.newQuad((i - 1) * 50, 300, 50, 75, imgWidth, imgHeight)
+        Board.tab_spr_animation.anim_card_block[i] = love.graphics.newQuad((i - 1) * 50, 0, 50, 75, imgWidth, imgHeight)
+        Board.tab_spr_animation.anim_card_damage_X1[i] = love.graphics.newQuad((i - 1) * 50, 75, 50, 75, imgWidth, imgHeight)
+        Board.tab_spr_animation.anim_card_damage_X2[i] = love.graphics.newQuad((i - 1) * 50, 150, 50, 75, imgWidth, imgHeight)
+        Board.tab_spr_animation.anim_card_damage_X3[i] = love.graphics.newQuad((i - 1) * 50, 225, 50, 75, imgWidth, imgHeight)
+        Board.tab_spr_animation.anim_card_not_lucky[i] = love.graphics.newQuad((i - 1) * 50, 300, 50, 75, imgWidth, imgHeight)
     end
 
 
     -- init board grid game
     Board.InitGrid()
     Board.init_grid_to_draw()
-
     Board.update_grid_to_draw()
 end
 
 -- =================================================================== --
 
 function Board.update(dt)
+
+
+
     Board.update_grid_to_draw()
 end
 
@@ -200,22 +203,22 @@ function Board.draw()
             local sprite_to_draw
             --
             if Board.grid_to_draw[j][i] == 0 then
-                sprite_to_draw = Board.anim_card_block[1] --Board.spr_card_back
+                sprite_to_draw = Board.tab_spr_animation.anim_card_block[1] --Board.spr_card_back
                 --
             elseif Board.grid_to_draw[j][i] == 1 then
-                sprite_to_draw = Board.anim_card_block[8]
+                sprite_to_draw = Board.tab_spr_animation.anim_card_block[8]
                 --
             elseif Board.grid_to_draw[j][i] == 2 then
-                sprite_to_draw = Board.anim_card_damage_X1[8]
+                sprite_to_draw = Board.tab_spr_animation.anim_card_damage_X1[8]
                 --
             elseif Board.grid_to_draw[j][i] == 3 then
-                sprite_to_draw = Board.anim_card_damage_X2[8]
+                sprite_to_draw = Board.tab_spr_animation.anim_card_damage_X2[8]
                 --
             elseif Board.grid_to_draw[j][i] == 4 then
-                sprite_to_draw = Board.anim_card_damage_X3[8]
+                sprite_to_draw = Board.tab_spr_animation.anim_card_damage_X3[8]
                 --
             elseif Board.grid_to_draw[j][i] == 5 then
-                sprite_to_draw = Board.anim_card_not_lucky[8]
+                sprite_to_draw = Board.tab_spr_animation.anim_card_not_lucky[8]
                 --
             end
             --
@@ -227,7 +230,10 @@ end
 
 -- =================================================================== --
 
-function Board.play_animation(card_type)
+local start_animation
+function Board.play_animation(dt)
+
+
 
 end
 
@@ -258,10 +264,13 @@ function Board.is_card_clicked(x, y)
     end
 end
 
+
+-- =================================================================== --
+
 function Board.click_card(x, y)
     if Board.grid_status[y][x][2] == 0 then
         Board.grid_status[y][x][2] = 1
-        play_animation(Board.grid_status[y][x])
+        --play_animation(Board.grid_status[y][x])
 
         if not card_1_clicked and not card_2_clicked then
             card_1_clicked = true
@@ -297,8 +306,7 @@ function Board.click_card(x, y)
     end
 end
 
-
----------------------------------------------------
+-- =================================================================== --
 
 function Board.mousepressed(x, y, button, istouch)
     Board.is_card_clicked(x, y)
@@ -309,7 +317,8 @@ function Board.mousepressed(x, y, button, istouch)
     end
 end
 
----------------------------------------------------
+
+-- =================================================================== --
 
 function Board.debug_print_grid()
     print(" ")
@@ -328,5 +337,8 @@ function Board.debug_print_grid()
     end
     print("==================================================")
 end
+
+
+-- =================================================================== --
 
 return Board
