@@ -190,6 +190,19 @@ function Board.update(dt)
 end
 
 -- =================================================================== --
+--[[ 
+anime une carte
+
+]]
+
+local start_animation
+function Board.play_animation(dt, card_x, card_y)
+
+
+
+end
+
+-- =================================================================== --
 local x_first_card = 115.5
 local y_first_card = 140
 local card_width = 50
@@ -226,15 +239,6 @@ function Board.draw()
                 y_first_card + (j - 1) * (card_height + card_interval))
         end
     end
-end
-
--- =================================================================== --
-
-local start_animation
-function Board.play_animation(dt)
-
-
-
 end
 
 
