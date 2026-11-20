@@ -195,8 +195,26 @@ anime une carte
 
 ]]
 
-local start_animation
+local is_animation_started = false      --bool
+local start_timer_animation             --secondes
+local duration_timer_animation = 0      --secondes
 function Board.play_animation(dt, card_x, card_y)
+
+    -- début animation
+    if not is_animation_started then
+        start_timer_animation = love.timer.getTime()        
+        is_animation_started = true
+    end
+
+    -- durée de l'animation
+    duration_timer_animation = love.timer.getTime() - start_timer_animation
+
+    -- 
+    if duration_timer_animation > 2 then
+        
+    end
+
+
 
 
 
