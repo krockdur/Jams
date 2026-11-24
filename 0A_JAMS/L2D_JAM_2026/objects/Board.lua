@@ -103,9 +103,10 @@ function Board.InitGrid()
         Board.grid_status[j] = {}
         for i = 1, Board.nb_card_x do
             Board.grid_status[j][i] = {
-                0, --type carte
-                0, --0 = caché / 1 = découverte
-                0  --1 = paire découverte
+                0,  --type carte
+                0,  --0 = caché / 1 = en cours de rotation / 1 = découverte
+                0,  --1 = paire découverte dans le cas où la bonne paire est découverte
+                0   --1,2,3,4... frame de rotation en cours
             }
         end
     end
