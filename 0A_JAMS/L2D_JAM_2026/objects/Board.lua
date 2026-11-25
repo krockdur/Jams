@@ -1,365 +1,43 @@
 local Board = {}
 
--- board description
-Board.grid_status = {}  --représente l'état du plateau
-Board.grid_to_draw = {} --représente les carte à afficher
+local Card = require('objects.Card')
+
 Board.nb_card_x = 10
 Board.nb_card_y = 4
 
--- cards description
-Board.cards = {}
-
-Board.cards.type = {}
-Board.cards.type.back = 0
-Board.cards.type.block = 1
-Board.cards.type.damage_X1 = 2
-Board.cards.type.damage_X2 = 3
-Board.cards.type.damage_X3 = 4
-Board.cards.type.not_lucky = 5
-
--- contient la description des animations
-Board.animations = {
-    card_block = {
-        row = 1,
-        frames = 8,
-        duration = 2
-    },
-    card_damage_x1 = {
-        row = 2,
-        frames = 8,
-        duration = 2
-        
-    },
-    card_damage_x2 = {
-        row = 3,
-        frames = 8,
-        duration = 2
-
-    },
-    card_damage_x3 = {
-        row = 4,
-        frames = 8,
-        duration = 2
-
-    },
-    card_not_lucky = {
-        row = 5,
-        frames = 8,
-        duration = 2
-
-    }
-
-}
-
--- contient les sprites des animations
-Board.tab_spr_animation = {}
-Board.tab_spr_animation.anim_card_block = {}
-Board.tab_spr_animation.anim_card_damage_X1 = {}
-Board.tab_spr_animation.anim_card_damage_X2 = {}
-Board.tab_spr_animation.anim_card_damage_X3 = {}
-Board.tab_spr_animation.anim_card_not_lucky = {}
-
-
-
-
-
--- =================================================================== --
--- positionne aléatoire sur la grille des cartes du même type
--- card_type => le type de carte à randomiser
--- nb_cards => combien de cartes à randomiser dans ce type
-function Board.randomize_grid(nb_cards, card_type)
-    for e = 1, nb_cards do
-        local success = false
-
-        while not success do
-            local rx = math.random(1, 10)
-            local ry = math.random(1, 4)
-
-            if Board.grid_status[ry][rx][1] == 0 then
-                Board.grid_status[ry][rx] = {
-                    card_type, --type carte
-                    0,         --0 = caché / 1 = découverte
-                    0          --1 = paire découverte
-                }
-                success = true
-            end
-        end
-    end
-end
-
--- =================================================================== --
--- Initialise grid_status = 0
--- positionne aléatoirement chaque carte sur la grille
-function Board.InitGrid()
-    --randoms :
-    local nb_cards_block = 8
-    local nb_cards_damage_x1 = 8
-    local nb_cards_damage_x2 = 8
-    local nb_cards_damage_x3 = 8
-    local nb_cards_not_lucky = 8
-
-    -- init
-    for j = 1, Board.nb_card_y do
-        Board.grid_status[j] = {}
-        for i = 1, Board.nb_card_x do
-            Board.grid_status[j][i] = {
-                0,  --type carte
-                0,  --0 = caché / 1 = en cours de rotation / 1 = découverte
-                0,  --1 = paire découverte dans le cas où la bonne paire est découverte
-                0   --1,2,3,4... frame de rotation en cours
-            }
-        end
-    end
-
-    Board.randomize_grid(nb_cards_block, Board.cards.type.block)
-    Board.randomize_grid(nb_cards_damage_x1, Board.cards.type.damage_X1)
-    Board.randomize_grid(nb_cards_damage_x2, Board.cards.type.damage_X2)
-    Board.randomize_grid(nb_cards_damage_x3, Board.cards.type.damage_X3)
-    Board.randomize_grid(nb_cards_not_lucky, Board.cards.type.not_lucky)
-end
-
--- =================================================================== --
--- Initialise grid_to_draw => A VOIR
-function Board.init_grid_to_draw()
-    for j = 1, Board.nb_card_y do
-        Board.grid_to_draw[j] = {}
-        for i = 1, Board.nb_card_x do
-            Board.grid_to_draw[j][i] = Board.cards.type.back
-        end
-    end
-end
-
--- =================================================================== --
--- Met à jour grid_to_draw à partir du status de chaque carte dans grid_status
-function Board.update_grid_to_draw()
-    for j = 1, Board.nb_card_y do
-        for i = 1, Board.nb_card_x do
-            --
-            if Board.grid_status[j][i][2] == 0 then
-                Board.grid_to_draw[j][i] = Board.cards.type.back
-                --
-            elseif Board.grid_status[j][i][2] == 1 and Board.grid_status[j][i][1] == 1 then
-                Board.grid_to_draw[j][i] = Board.cards.type.block
-                --
-            elseif Board.grid_status[j][i][2] == 1 and Board.grid_status[j][i][1] == 2 then
-                Board.grid_to_draw[j][i] = Board.cards.type.damage_X1
-                --
-            elseif Board.grid_status[j][i][2] == 1 and Board.grid_status[j][i][1] == 3 then
-                Board.grid_to_draw[j][i] = Board.cards.type.damage_X2
-                --
-            elseif Board.grid_status[j][i][2] == 1 and Board.grid_status[j][i][1] == 4 then
-                Board.grid_to_draw[j][i] = Board.cards.type.damage_X3
-                --
-            elseif Board.grid_status[j][i][2] == 1 and Board.grid_status[j][i][1] == 5 then
-                Board.grid_to_draw[j][i] = Board.cards.type.not_lucky
-                --
-            end
-        end
-    end
-end
+Board.grid = {}
 
 -- =================================================================== --
 
 function Board.load()
-    -- sprites
-    Board.spr_tileset = love.graphics.newImage("Assets/tileset.png")
-    local imgWidth, imgHeight = Board.spr_tileset:getDimensions()
 
-    -- 8 images par sprite
-    for i = 1, 8 do
-        Board.tab_spr_animation.anim_card_block[i] = love.graphics.newQuad((i - 1) * 50, 0, 50, 75, imgWidth, imgHeight)
-        Board.tab_spr_animation.anim_card_damage_X1[i] = love.graphics.newQuad((i - 1) * 50, 75, 50, 75, imgWidth, imgHeight)
-        Board.tab_spr_animation.anim_card_damage_X2[i] = love.graphics.newQuad((i - 1) * 50, 150, 50, 75, imgWidth, imgHeight)
-        Board.tab_spr_animation.anim_card_damage_X3[i] = love.graphics.newQuad((i - 1) * 50, 225, 50, 75, imgWidth, imgHeight)
-        Board.tab_spr_animation.anim_card_not_lucky[i] = love.graphics.newQuad((i - 1) * 50, 300, 50, 75, imgWidth, imgHeight)
+    for j = 1, Board.nb_card_y do
+        Board.grid_status[j] = {}
+        for i = 1, Board.nb_card_x do
+            Board.grid_status[j][i] = {
+
+            }
+        end
     end
 
-
-    -- init board grid game
-    Board.InitGrid()
-    Board.init_grid_to_draw()
-    Board.update_grid_to_draw()
 end
 
 -- =================================================================== --
 
 function Board.update(dt)
 
-
-
-    Board.update_grid_to_draw()
 end
 
 -- =================================================================== --
---[[ 
-anime une carte
-
-]]
-
-local is_animation_started = false      --bool
-local start_timer_animation             --secondes
-local duration_timer_animation = 0      --secondes
-function Board.play_animation(dt, card_x, card_y)
-
-    -- début animation
-    if not is_animation_started then
-        start_timer_animation = love.timer.getTime()        
-        is_animation_started = true
-    end
-
-    -- durée de l'animation
-    duration_timer_animation = love.timer.getTime() - start_timer_animation
-
-    -- 
-    if duration_timer_animation > 2 then
-        
-    end
-
-
-
-
-
-end
-
--- =================================================================== --
-local x_first_card = 115.5
-local y_first_card = 140
-local card_width = 50
-local card_height = 75
-local card_interval = 25
-
 
 function Board.draw()
-    for j = 1, Board.nb_card_y do
-        for i = 1, Board.nb_card_x do
-            local sprite_to_draw
-            --
-            if Board.grid_to_draw[j][i] == 0 then
-                sprite_to_draw = Board.tab_spr_animation.anim_card_block[1] --Board.spr_card_back
-                --
-            elseif Board.grid_to_draw[j][i] == 1 then
-                sprite_to_draw = Board.tab_spr_animation.anim_card_block[8]
-                --
-            elseif Board.grid_to_draw[j][i] == 2 then
-                sprite_to_draw = Board.tab_spr_animation.anim_card_damage_X1[8]
-                --
-            elseif Board.grid_to_draw[j][i] == 3 then
-                sprite_to_draw = Board.tab_spr_animation.anim_card_damage_X2[8]
-                --
-            elseif Board.grid_to_draw[j][i] == 4 then
-                sprite_to_draw = Board.tab_spr_animation.anim_card_damage_X3[8]
-                --
-            elseif Board.grid_to_draw[j][i] == 5 then
-                sprite_to_draw = Board.tab_spr_animation.anim_card_not_lucky[8]
-                --
-            end
-            --
-            love.graphics.draw(Board.spr_tileset, sprite_to_draw, x_first_card + ((i - 1) * (card_width + card_interval)),
-                y_first_card + (j - 1) * (card_height + card_interval))
-        end
-    end
+
 end
 
-
--- =================================================================== --
-
-local card_1_clicked = false
-local card_1_clicked_x = 0
-local card_1_clicked_y = 0
-
-local card_2_clicked = false
-local card_2_clicked_x = 0
-local card_2_clicked_y = 0
+-- =================================================================== --.
 
 
-function Board.is_card_clicked(x, y)
-    for j = 1, Board.nb_card_y do
-        for i = 1, Board.nb_card_x do
-            if x > x_first_card + (card_width + card_interval) * (i - 1)
-                and x < x_first_card + card_width + (card_width + card_interval) * (i - 1)
-                and y > y_first_card + (card_height + card_interval) * (j - 1)
-                and y < y_first_card + card_height + (card_height + card_interval) * (j - 1)
-            then
-                Board.click_card(i, j)
-                return
-            end
-        end
-    end
-end
 
-
--- =================================================================== --
-
-function Board.click_card(x, y)
-    if Board.grid_status[y][x][2] == 0 then
-        Board.grid_status[y][x][2] = 1
-        --play_animation(Board.grid_status[y][x])
-
-        if not card_1_clicked and not card_2_clicked then
-            card_1_clicked = true
-            card_1_clicked_x = x
-            card_1_clicked_y = y
-        elseif card_1_clicked and not card_2_clicked then
-            card_2_clicked = true
-            card_2_clicked_x = x
-            card_2_clicked_y = y
-        end
-
-        -- Est ce que les deux cartes sont identiques
-        if card_1_clicked and card_2_clicked then
-            -- IDENTIQUES
-            if Board.grid_status[card_1_clicked_y][card_1_clicked_x][1] == Board.grid_status[card_2_clicked_y][card_2_clicked_x][1] then
-                -- on les marque comme découverte
-                Board.grid_status[card_1_clicked_y][card_1_clicked_x][3] = 1
-                Board.grid_status[card_2_clicked_y][card_2_clicked_x][3] = 1
-
-                card_1_clicked = false
-                card_2_clicked = false
-
-                -- DIFFERENTES
-            else
-                -- on les masque
-                Board.grid_status[card_1_clicked_y][card_1_clicked_x][2] = 0
-                Board.grid_status[card_2_clicked_y][card_2_clicked_x][2] = 0
-
-                card_1_clicked = false
-                card_2_clicked = false
-            end
-        end
-    end
-end
-
--- =================================================================== --
-
-function Board.mousepressed(x, y, button, istouch)
-    Board.is_card_clicked(x, y)
-
-    if button == 2 then
-        print("debug")
-        Board.debug_print_grid()
-    end
-end
-
-
--- =================================================================== --
-
-function Board.debug_print_grid()
-    print(" ")
-    print("card 1 clicked : " .. tostring(card_1_clicked))
-    print("card 2 clicked : " .. tostring(card_2_clicked))
-    print(" ")
-    print("=== ÉTAT DE LA GRILLE (4 lignes x 10 colonnes) ===")
-    for j = 1, Board.nb_card_y do
-        local row_str = ""
-        for i = 1, Board.nb_card_x do
-            local cell = Board.grid_status[j][i]
-            -- On formate chaque cellule pour garder un affichage aligné
-            row_str = row_str .. string.format("[%d,%d,%d] ", cell[1], cell[2], cell[3])
-        end
-        print("Ligne " .. j .. " : " .. row_str)
-    end
-    print("==================================================")
-end
 
 
 -- =================================================================== --
